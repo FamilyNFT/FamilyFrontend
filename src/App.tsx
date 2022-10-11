@@ -1,15 +1,20 @@
 import React from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { BrowserRouter as Router } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "redux/hooks/redux-hooks";
 import { RootState } from "./redux/store";
-import "react-toastify/dist/ReactToastify.css";
 
-function App() {
-  return (
-    <>
-      <div className="App">cgs</div>
-      <ToastContainer />
-    </>
-  );
-}
+import LoadingScreen from "./components/LoadingScreen";
+import Application from "./routes";
+
+const App: React.FC = () => {
+  const [isLoading, setLoading] = useState(true);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setLoading(false);
+  }, [dispatch]);
+  return <Router>{isLoading ? <LoadingScreen /> : <Application />}</Router>;
+};
 
 export default App;
