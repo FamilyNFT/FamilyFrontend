@@ -1,20 +1,13 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import pathUtils from "../utils/pathUtils";
-
-import Dashboard from "../pages/Dashboard";
-
-const routes = [
-  {
-    path: pathUtils.DASHBOARD,
-    element: <Dashboard />,
-  },
-];
+import Dashboard from "pages/Dashboard";
 
 const Application: React.FC = () => {
   return (
     <Routes>
-      {routes.map((route, index) => (
-        <Route key={index} {...route} />
+      <Route element={<Dashboard />} path="/" />
+      {pathUtils.map((route, index: number) => (
+        <Route key={index} element={route.element} path={route.path} />
       ))}
     </Routes>
   );
