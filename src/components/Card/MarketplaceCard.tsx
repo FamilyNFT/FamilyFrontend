@@ -2,10 +2,14 @@ import Typography from "components/Typography";
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { LazyLoadImage } from "react-lazy-load-image-component";
+
 import ThreeLineImg from "assets/img/symbols/three.png";
 import BlackColor from "assets/img/symbols/black-color.png";
 import WhitieColor from "assets/img/symbols/white-color.png";
 import PurpleColor from "assets/img/symbols/purple-color.png";
+
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 interface PropsType {
   id: string;
@@ -36,7 +40,12 @@ const MarketplaceCard: React.FC<PropsType> = ({
           />
           <p className="text-[25px] font-semibold">{amount}</p>
         </div>
-        <img src={imgSrc} alt="goods" className="w-full" />
+        <LazyLoadImage
+          src={imgSrc}
+          alt="goods"
+          className="w-full img-lazy"
+          effect="blur"
+        />
 
         <div className="flex justify-between text-white">
           <Typography

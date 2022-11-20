@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Autocomplete from "react-google-autocomplete";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import Select from "react-select";
 
 import Typography from "components/Typography";
@@ -123,12 +124,21 @@ const InventoryCard = React.memo(function (props: any) {
             className="text-[#A09D9D] text-[16px] leading-[24px]"
           />
         </div>
-        <img
+
+        <LazyLoadImage
+          src={cover}
+          alt="goods"
+          className="h-[250px] md:h-[450px] w-[250px] md:w-[450px] rounded-lg img-lazy"
+          effect="blur"
+          draggable={false}
+        />
+
+        {/* <img
           className="h-[250px] md:h-[450px] w-[250px] md:w-[450px] rounded-lg "
           draggable={false}
           src={cover}
           alt=""
-        />
+        /> */}
 
         <div className="flex justify-between items-end">
           <Typography
