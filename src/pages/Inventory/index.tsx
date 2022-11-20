@@ -1,70 +1,41 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import Layout from "components/Layout";
-
-import AliceCarousel from "react-alice-carousel";
-import "react-alice-carousel/lib/alice-carousel.css";
-
-import Card from "components/Card";
-import Modal from "components/Modal";
+import LoadingScreen from "components/LoadingScreen";
+import Typography from "components/Typography";
+import CenterCarousel from "components/CenterCarousel";
 
 const Inventory = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const [isDrag, setIsDrag] = useState(false);
-
-  const handleClick = () => {
-    if (isDrag) return;
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  const items = [
-    <Card handleClick={handleClick} key={1}>
-      <video
-        src="https://link.us1.storjshare.io/raw/14WhrdmBRutvM6jDQYH5bVbVVuwygv16P9QpfSxoA5cF1vdizK6WLBKFygeBU3LugzqmZXdGYmdJR9VnyPynEtLBXfdbBvHP18ayLGge6XdEFGYnuW2F1ajxC6SfxWz3bhqTMApvB8jXr452TnLEnGV7MdkY7us5o8zMUCaHpXTkAKy4PPftg6isxBp1UEFfqhcmtNorYNaoHKCpGWZbVY1pHrpqcbZqzTRJw1RWj9Vj1zy7PBMt4UUTx8aen9MwVsWvpkHQCsGrbM2eMt6nFUhfHQ5TWHQkSoMcPzyNazdeRYtKCW7nJYShb7y/entre-dev/videos/bd6f7295093247efac2449eff01128df.mp4"
-        role="presentation"
-        autoPlay={true}
-        className="rounded-md object-cover ease-in-out duration-500 group-hover:rotate-6 group-hover:scale-125"
-      />
-    </Card>,
-    <Card handleClick={handleClick} key={2}>
-      <video
-        src="https://link.us1.storjshare.io/raw/14WhrdmBRutvM6jDQYH5bVbVVuwygv16P9QpfSxoA5cF1vdizK6WLBKFygeBU3LugzqmZXdGYmdJR9VnyPynEtLBXfdbBvHP18ayLGge6XdEFGYnuW2F1ajxC6SfxWz3bhqTMApvB8jXr452TnLEnGV7MdkY7us5o8zMUCaHpXTkAKy4PPftg6isxBp1UEFfqhcmtNorYNaoHKCpGWZbVY1pHrpqcbZqzTRJw1RWj9Vj1zy7PBMt4UUTx8aen9MwVsWvpkHQCsGrbM2eMt6nFUhfHQ5TWHQkSoMcPzyNazdeRYtKCW7nJYShb7y/entre-dev/videos/bd6f7295093247efac2449eff01128df.mp4"
-        role="presentation"
-        autoPlay={true}
-      />
-    </Card>,
-    <Card handleClick={handleClick} key={3}>
-      <video
-        src="https://link.us1.storjshare.io/raw/14WhrdmBRutvM6jDQYH5bVbVVuwygv16P9QpfSxoA5cF1vdizK6WLBKFygeBU3LugzqmZXdGYmdJR9VnyPynEtLBXfdbBvHP18ayLGge6XdEFGYnuW2F1ajxC6SfxWz3bhqTMApvB8jXr452TnLEnGV7MdkY7us5o8zMUCaHpXTkAKy4PPftg6isxBp1UEFfqhcmtNorYNaoHKCpGWZbVY1pHrpqcbZqzTRJw1RWj9Vj1zy7PBMt4UUTx8aen9MwVsWvpkHQCsGrbM2eMt6nFUhfHQ5TWHQkSoMcPzyNazdeRYtKCW7nJYShb7y/entre-dev/videos/bd6f7295093247efac2449eff01128df.mp4"
-        role="presentation"
-        autoPlay={true}
-      />
-    </Card>,
-  ];
-
+  const [isLoading, setIsLoading] = useState(false);
   return (
-    <div>
-      <div className="mt-3">
-        <AliceCarousel
-          mouseTracking
-          items={items}
-          responsive={{
-            0: {
-              items: 1,
-            },
-            1024: {
-              items: 2,
-            },
-          }}
-        />
-      </div>
-      <Modal __isOpen={modalOpen} dispatchModal={closeModal} />
-    </div>
+    <React.Fragment>
+      {isLoading ? (
+        <LoadingScreen />
+      ) : (
+        <Layout>
+          <div>
+            <div className="block md:flex items-end">
+              <h1 className="text-white  pt-[10px] md:pt-0 text-[75px] clash-font font-semibold leading-[0.8] z-10">
+                Inventory
+              </h1>
+              <Typography
+                children="50 pieces"
+                className="text-white pl-0 text-[20px] ml-0 md:ml-10"
+              />
+            </div>
+            {isLoading && <LoadingScreen />}
+
+            <div className="mt-[30px]">
+              <CenterCarousel
+                className="w-full"
+                customScales={[1, 0.85, 0.7, 0.55]}
+                isInventory
+              />
+            </div>
+          </div>
+        </Layout>
+      )}
+    </React.Fragment>
   );
 };
 

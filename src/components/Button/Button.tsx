@@ -5,7 +5,8 @@ interface PropsType {
   className?: string;
   disabled?: boolean;
   fixed?: boolean;
-  onClick?: () => void;
+  imgSrc?: any;
+  onClick?: (props: any) => void;
 }
 
 const Button: React.FC<PropsType> = ({
@@ -16,6 +17,7 @@ const Button: React.FC<PropsType> = ({
   disabled = false,
   onClick,
   fixed = false,
+  imgSrc,
 }) => {
   return (
     <>
@@ -23,12 +25,15 @@ const Button: React.FC<PropsType> = ({
         type={type}
         onClick={onClick}
         disabled={disabled}
-        className={`text-base px-6 h-[40px] rounded-full font-nunito ${
-          !light ? "bg-[#2F3454] text-white" : "bg-white text-theme"
+        className={`border-white border-[1px] flex justify-between items-center text-base px-6 h-[50px] rounded-full font-nunito ${
+          !light ? "gradient-button text-white" : "bg-white text-theme"
         } font-semibold shadow-3xl ${className} ${
           disabled ? "opacity-50" : ""
         } ${fixed ? "w-[139px]" : "w-fit"}`}
       >
+        {imgSrc !== undefined && (
+          <img src={imgSrc} alt="buttonImage" className="p-1"></img>
+        )}
         {text}
       </button>
     </>
