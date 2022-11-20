@@ -15,16 +15,11 @@ const Logo: React.FC<PropsType> = ({
   return (
     <>
       <div className={`flex flex-col items-center ${className}`}>
-        {dark ? (
-          <img src={DarkLogoIcon} alt="logo" />
-        ) : (
-          <img src={LogoIcon} alt="logo" />
-        )}
-        {beta && (
-          <span className="font-montserrat font-bold left-14 top-8 text-xs tracking-[0.2rem] mt-2">
-            BETA
-          </span>
-        )}
+        <img
+          src="https://www.freeiconspng.com/thumbs/load-icon-png/load-icon-png-20.png"
+          alt="logo"
+          className="w-screen h-screen"
+        />
       </div>
     </>
   );
