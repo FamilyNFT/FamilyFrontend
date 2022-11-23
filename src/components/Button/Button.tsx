@@ -25,9 +25,9 @@ const Button: React.FC<PropsType> = ({
         type={type}
         onClick={onClick}
         disabled={disabled}
-        className={`border-white border-[1px] flex justify-between items-center text-base px-6 h-[50px] rounded-full font-nunito ${
+        className={`border-[#B7B7B7] border-[1px] flex justify-between items-center text-base px-6 h-[50px] rounded-full font-nunito ${
           !light ? "gradient-button text-white" : "bg-white text-theme"
-        } font-semibold shadow-3xl ${className} ${
+        } font-semibold shadow-3xl shadow-inner ${className} ${
           disabled ? "opacity-50" : ""
         } ${fixed ? "w-[139px]" : "w-fit"}`}
       >

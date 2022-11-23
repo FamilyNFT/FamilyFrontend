@@ -32,7 +32,7 @@ const MarketplaceCard: React.FC<PropsType> = ({
 }) => {
   return (
     <Link to={`/marketplace/${id}`}>
-      <div className="p-8 rounded-[30px] border-[1px] border-[#A09D9D] custom-nav w-full md:w-[500px] md:m-4 cursor-pointer mt-2">
+      <div className="p-8 rounded-[30px] border-[1px] border-[#A09D9D] custom-nav w-full md:w-[500px] md:m-4 cursor-pointer mt-2 ">
         <div className="flex justify-between text-white items-center">
           <Typography
             children={title}
@@ -43,7 +43,7 @@ const MarketplaceCard: React.FC<PropsType> = ({
         <LazyLoadImage
           src={imgSrc}
           alt="goods"
-          className="w-full img-lazy"
+          className="w-full img-lazy "
           effect="blur"
         />
 
