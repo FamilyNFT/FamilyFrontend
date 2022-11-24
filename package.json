@@ -45,7 +45,8 @@
     "typescript": "^4.8.4",
     "url": "^0.11.0",
     "web-vitals": "^2.1.4",
-    "web3": "^1.8.0"
+    "web3": "^1.8.0",
+    "zoom-level": "^2.5.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
