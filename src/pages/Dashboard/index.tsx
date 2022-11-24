@@ -83,7 +83,7 @@ const Dashboard = () => {
                       ></img>
                     </div>
                   </Link>
-                  <Link to="https://www.instagram.com/familylukso/">
+                  {/* <Link to="https://www.instagram.com/familylukso/">
                     <div className="rounded-[50%] w-[56px] h-[56px] bg-[#272727] flex justify-center items-center ml-2">
                       {" "}
                       <img
@@ -92,17 +92,17 @@ const Dashboard = () => {
                         className="p-2"
                       ></img>
                     </div>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
-              <div className="flex flex-col items-center mt-[3.5em] fade-effect">
+              <div className="flex flex-col items-center mt-0 md:-mt-5 fade-effect">
                 <img
                   src={starImg}
                   alt="starImg"
                   className="w-[160px]"
                   id="startImg"
                 ></img>
-                <div className="block xl:flex text-center md:mt-10">
+                <div className="block xl:flex text-center md:mt-28 main-content">
                   <Typography
                     className="z-10 md:text-[80px] text-[60px]  text-white clash-font font-semibold tracking-wider leading-[98.4px]"
                     children="The Home Of "
