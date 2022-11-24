@@ -30,7 +30,7 @@ const Dashboard = () => {
   useEffect(() => {
     setInterval(() => {
       setIsDisplayed(true);
-    }, 3000);
+    }, 500);
   }, []);
 
   // window.addEventListener("resize", () => {
