@@ -13,16 +13,16 @@ type Props = PropsWithChildren & {
 };
 const Layout: FC<Props> = ({ children, isDashboard = false }) => {
   return (
-    <div className="bg-gradient-to-b from-[#0E0D0E] to-[#0E0E0E]  w-full min-h-screen z-[-1000]">
+    <div className="gradient-background w-full min-h-screen z-[-1000]">
       <Header isDashboard={isDashboard} />
-      <div>
-        <img
+      <div className="curve">
+        {/* <img
           src={curveImg}
           alt="curve"
-          className="absolute top-0 w-full h-full z-1 object-cover"
-        />
+          className="absolute top-0 w-full h-full z-1 bg-no-repeat bg-fixed object-cover"
+        /> */}
       </div>
-      <div className="px-[15px] md:px-[150px] w-full h-full py-5 relative">
+      <div className="px-[15px] md:px-[150px] w-full h-full py-5 relative bg-fixed">
         {children}
         <div className="md:hidden  flex justify-between rounded-3xl w-full h-[60px] bottom-nav py-2 px-10 border-[1px] border-[#A09D9D] mt-5">
           <a href="/marketplace" className="flex flex-col items-center">

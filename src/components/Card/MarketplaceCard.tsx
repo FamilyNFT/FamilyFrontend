@@ -36,14 +36,14 @@ const MarketplaceCard: React.FC<PropsType> = ({
         <div className="flex justify-between text-white items-center">
           <Typography
             children={title}
-            className="text-white text-[35px] leading-[30px] font-semibold  w-2/3 md:w-full "
+            className="text-white text-[35px] leading-[30px] font-semibold  w-2/3 md:w-full clash-font good-title"
           />
           <p className="text-[25px] font-semibold">{amount}</p>
         </div>
         <LazyLoadImage
           src={imgSrc}
           alt="goods"
-          className="w-full img-lazy "
+          className="w-full img-lazy h-[400px] text-align flex items-center"
           effect="blur"
         />
 

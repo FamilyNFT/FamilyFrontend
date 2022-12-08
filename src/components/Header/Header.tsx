@@ -4,10 +4,10 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import erc725schema from "@erc725/erc725.js/schemas/LSP3UniversalProfileMetadata.json";
 
 import Web3 from "web3";
-import logoImg1 from "assets/img/logo/logo-1.png";
-import FaceBookIcon from "assets/img/Dashboard/Frame 6.png";
-import DiscordIcon from "assets/img/Dashboard/Frame 7.png";
-import TelegramIcon from "assets/img/Dashboard/Frame 8.png";
+import logoImg1 from "assets/img/logo/logo-2.png";
+import FaceBookIcon from "assets/img/Dashboard/twitter.svg";
+import DiscordIcon from "assets/img/Dashboard/discord.svg";
+import TelegramIcon from "assets/img/Dashboard/instagram.svg";
 import mailSvg from "assets/svg/mail.svg";
 import Button from "components/Button";
 import pathUtils from "utils/pathUtils";
@@ -65,53 +65,61 @@ const Header: React.FC<Props> = ({ isDashboard = false }) => {
   };
 
   useEffect(() => {
-    console.log("+++", isDashboard);
     let urlPath = window.location.pathname;
     setCurrentPath(urlPath.replace("/", ""));
   }, []);
 
   return (
     <>
-      <nav className="custom-nav py-[20px]  w-full border-b border-[#71717a] relative z-10 px-[10px] md:px-[100px]">
+      <nav className="custom-nav py-[10px]  w-full relative z-10 px-[10px] md:px-[100px]">
         <div className="container flex flex-wrap justify-between items-center mx-auto]">
           <NavLink to="/">
-            <img className="w-[105px] h-[40px]" src={logoImg1} alt="logo"></img>
+            <img className="w-[6em] h-[3em] " src={logoImg1} alt="logo"></img>
           </NavLink>
           <div className="flex items-center md:order-2">
             {!isDashboard && (
               <div className=" hidden md:flex">
-                <NavLink to="#">
-                  <img
-                    src={FaceBookIcon}
-                    alt="faceBookIcon"
-                    className="px-2 w-[60px]"
-                  ></img>
+                <NavLink to="https://twitter.com/FamilyLYX">
+                  <div className="rounded-[50%] w-[40px] h-[40px] social-icon flex justify-center items-center">
+                    <img
+                      src={FaceBookIcon}
+                      alt="faceBookIcon"
+                      className="p-3"
+                    ></img>
+                  </div>
                 </NavLink>
-                <NavLink to="#">
-                  <img
-                    src={DiscordIcon}
-                    alt="discordIcon"
-                    className="px-2 w-[60px]"
-                  ></img>
+                <NavLink to="https://discord.gg/pvZb6JjRPZ">
+                  <div className="rounded-[50%] w-[40px] h-[40px] social-icon flex justify-center items-center ml-2">
+                    <img
+                      src={DiscordIcon}
+                      alt="discordIcon"
+                      className="p-3"
+                    ></img>
+                  </div>
                 </NavLink>
-                <NavLink to="#">
-                  <img
-                    src={TelegramIcon}
-                    alt="telegramIcon"
-                    className="px-2 w-[60px]"
-                  ></img>
-                </NavLink>
+                {/* <NavLink to="https://www.instagram.com/familylukso/">
+                  <div className="rounded-[50%] w-[56px] h-[56px] bg-[#272727] flex justify-center items-center ml-2">
+                    {" "}
+                    <img
+                      src={TelegramIcon}
+                      alt="telegramIcon"
+                      className="p-2"
+                    ></img>
+                  </div>
+                </NavLink> */}
               </div>
             )}
 
             <Button
               type="button"
-              text={auth === null ? "Connect" : auth.substring(0, 10) + "..."}
+              text={
+                auth === null ? "Connect Wallet" : auth.substring(0, 10) + "..."
+              }
               imgSrc={mailSvg}
               onClick={() => {
                 connectWallet();
               }}
-              className="ml-6"
+              className="ml-6 tracking-wider archivo-font text-[16px]"
             />
             {/* {!isDashboard && (
               <button
@@ -150,10 +158,10 @@ const Header: React.FC<Props> = ({ isDashboard = false }) => {
                     <li key={index}>
                       <NavLink to={path.path} aria-current="page">
                         <button
-                          className={`text-white text-[15px] px-4  ${
+                          className={`text-[#B9B9B9] text-[16px] px-4  ${
                             currentPath === path.title?.toLowerCase()
-                              ? "border-[1px] border-[#71717a] flex justify-between items-center text-base px-4 h-[40px] rounded-full font-nunito"
-                              : "border-[1px] border-transparent flex justify-between items-center text-base px-4 h-[40px] rounded-full font-nunito"
+                              ? "border-[1px]  flex justify-between items-center text-base px-[24px] h-[40px]   rounded-full font-nunito active-nav"
+                              : "border-[1px] border-transparent flex justify-between items-center text-base px-[24px] h-[40px]  rounded-full font-nunito"
                           }`}
                         >
                           {path.title}

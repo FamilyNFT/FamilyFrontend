@@ -77,7 +77,7 @@ const MarketPlace = () => {
     <Layout>
       <div>
         <div>
-          <h1 className="text-white text-[55px] md:text-[75px] pt-[10px] md:pt-0 clash-font font-semibold leading-[0.8]">
+          <h1 className="text-white text-[55px] md:text-[75px] pt-[10px] md:pt-0 clash-font font-semibold leading-[0.8] mt-10">
             Marketplace
           </h1>
           <div className="w-full flex justify-center md:justify-end mt-3 md:mt-0">

@@ -25,14 +25,14 @@ const Button: React.FC<PropsType> = ({
         type={type}
         onClick={onClick}
         disabled={disabled}
-        className={`border-[#B7B7B7] border-[1px]  flex justify-between items-center text-base px-6 h-[50px] rounded-full font-nunito ${
+        className={`border-[#B7B7B7] border-[1px]  flex justify-between items-center  px-6 h-[50px] rounded-full  ${
           !light ? "gradient-button text-white" : "bg-white text-theme"
         } font-semibold  ${className} ${disabled ? "opacity-70" : ""} ${
           fixed ? "w-[139px]" : "w-fit"
         }`}
       >
         {imgSrc !== undefined && (
-          <img src={imgSrc} alt="buttonImage" className="p-1"></img>
+          <img src={imgSrc} alt="buttonImage" className="pr-5"></img>
         )}
         {text}
       </button>
