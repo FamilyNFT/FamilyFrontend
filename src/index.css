@@ -285,8 +285,6 @@ div.ReactModal__Overlay {
 
   border-radius: 32px;
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
 }
 
 input[type="radio"] {
@@ -307,13 +305,20 @@ input[type="radio"] {
 
 input[type="radio"]:checked {
   /* cursor: pointer; */
-  padding: 5px;
-  background-color: #757575;
+  padding: 2.5px;
+  background-color: #bbbbbb;
   border: 2px solid #bbbbbb;
 }
 
 .gradient-background {
   background: linear-gradient(180deg, #232323 0%, #0e0e0e 100%);
+  background-image: url(./assets/img/Dashboard/Vector\ 2.png),
+    linear-gradient(180deg, #232323 0%, #0e0e0e 100%);
+  /* position: fixed; */
+  overflow: scroll;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .social-icon {
@@ -333,19 +338,34 @@ input[type="radio"]:checked {
 
 .curve {
   background-image: url(./assets/img/Dashboard/Vector\ 2.png);
-  position: fixed;
-  background-size: 100% 100%;
+  position: fixed !important;
+  /* background-size: 100vw 100vh; */
+  background-size: contain !important;
+
   top: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw !important;
+  height: 100vh !important;
   z-index: 0;
   object-fit: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
+  /* overflow: hidden; */
 }
 
 @media only screen and (max-width: 768px) {
   .curve {
     background-position: center;
   }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

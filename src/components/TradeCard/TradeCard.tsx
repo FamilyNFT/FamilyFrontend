@@ -50,109 +50,111 @@ const TradeCard = React.memo(function (props: any) {
   return (
     <div
       id={props.id}
-      className="w-full h-full px-[24px] py-[32px] gap-[32px] border-[1px] trade-card flex flex-wrap relative mt-5"
+      className=" px-[24px] py-[32px] gap-[32px] border-[1px] trade-card flex relative mt-5 justify-between flex-col lg:flex-row items-start sm:items-stretch"
     >
-      <div className="w-full md:w-[30%] md:border-r-[2px] border-r-[#212021] pr-5">
-        <div className="flex justify-between px-3">
-          <Typography
-            children="The Hoodie"
-            className="text-white text-[35px] leading-[30px] font-semibold  w-2/3 md:w-full "
-          />
-          <p className="text-[25px] font-semibold text-white">3</p>
-        </div>
-        <LazyLoadImage
-          src="https://i.ibb.co/0Bqtcyv/image-3.png"
-          alt="goods"
-          className="w-full img-lazy "
-          effect="blur"
-        />
-        <div className="flex">
-          <div className="flex">
-            <img src={PalletImg} alt="pallete" />
+      <div className="flex gap-6 flex-col sm:flex-row flex-auto items-stretch  w-full">
+        {/* left image */}
+        <div className="w-full sm:w-fit    border-2 border-t-0 border-l-0 md:border-b-transparent border-r-0 md:border-r-2 border-white/10 pb-4 md:pb-0 md:pr-5 max-w-sm lg:max-w-none ">
+          <div className="flex justify-between px-3">
             <Typography
-              children="Black"
-              className="text-[#BABABA] text-[18px] leading-[24px] font-medium archivo-font ml-2"
+              children="The Hoodie"
+              className="text-white text-[35px] leading-[30px] font-semibold  w-2/3 md:w-full "
             />
+            <p className="text-[25px] font-semibold text-white">3</p>
           </div>
-          <div className="flex ml-8">
-            <img src={ScissorImg} alt="scissor" />
-            <Typography
-              children="XS"
-              className="text-[#BABABA] text-[18px] leading-[24px] font-medium archivo-font ml-2"
-            />
+          <LazyLoadImage
+            src="https://i.ibb.co/0Bqtcyv/image-3.png"
+            alt="goods"
+            className="w-full  img-lazy max-h-300px"
+            effect="blur"
+          />
+          <div className="flex  flex-wrap gap-x-4 gap-3 w-11/12 p-2">
+            <div className="flex">
+              <img src={PalletImg} alt="pallete" />
+              <Typography
+                children="Black"
+                className="text-white/70 text-[18px] leading-[24px] font-medium archivo-font ml-2"
+              />
+            </div>
+            <div className="flex ">
+              <img src={ScissorImg} alt="scissor" />
+              <Typography
+                children="XS"
+                className="text-white/70 text-[18px] leading-[24px] font-medium archivo-font ml-2"
+              />
+            </div>
+
+            <div className="flex">
+              <img src={FlowerImg} alt="material" />
+              <Typography
+                children="100% Cotton"
+                className="text-white/70 text-[18px] leading-[24px] font-medium archivo-font ml-2"
+              />
+            </div>
+            <div className="flex ">
+              <img src={SparkleImg} alt="sparkle" />
+              <Typography
+                children="Made in Philippines"
+                className="text-white/70 text-[18px] leading-[24px] font-medium archivo-font ml-2"
+              />
+            </div>
           </div>
         </div>
 
-        <div className="md:flex mt-3">
-          <div className="flex">
-            <img src={FlowerImg} alt="material" />
+        {/* details */}
+        <div className="w-full  p-2 relative overflow-hidden ">
+          <p className="archivo-font font-semibold text-[18px]  text-white/50">
+            User involved
+          </p>
+          <div className="flex justify-between mt-2 w-1/2 items-center gap-4 max-w-[150px]">
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-[50%] bg-[#767676]"></div>
+              <Typography
+                children="Ninja"
+                className="text-white/70 text-md md:text-lg leading-[24px] font-semibold archivo-font "
+              />
+            </div>
+
             <Typography
-              children="100% Cotton"
-              className="text-[#BABABA] text-[18px] leading-[24px] font-medium archivo-font ml-2"
+              children="&"
+              className="text-[#BABABA] text-md leading-[24px] font-semibold archivo-font"
             />
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-[50%] bg-[#767676] "></div>
+              <Typography
+                children="James"
+                className="text-white/70 text-md md:text-lg leading-[24px] font-semibold archivo-font "
+              />
+            </div>
           </div>
-          <div className="flex mt-2 md:mt-0 md:ml-8">
-            <img src={SparkleImg} alt="sparkle" />
-            <Typography
-              children="Made in Philippines"
-              className="text-[#BABABA] text-[18px] leading-[24px] font-medium archivo-font ml-2"
-            />
-          </div>
+
+          <p className="archivo-font font-semibold text-[18px]  text-white/50 mt-10">
+            Tracking Details
+          </p>
+          <Typography
+            children="https://auspost.au/mypost/track/#/search"
+            className="text-white/70 text-md md:text-lg  leading-[24px] font-semibold archivo-font mt-2 max-w-[70vw] text-ellipsis overflow-hidden"
+          />
+
+          <p className="archivo-font font-semibold text-[18px]  text-white/50 mt-14">
+            Details
+          </p>
+          <Typography
+            children="-"
+            className="text-white/70 text-md md:text-lg leading-[24px] font-semibold archivo-font mt-2"
+          />
+
+          <p className="archivo-font font-semibold text-[18px]  text-white/50 mt-14">
+            Verify
+          </p>
+          <Typography
+            children="-"
+            className="text-white/70 text-md md:text-lg leading-[24px] font-semibold archivo-font mt-2"
+          />
         </div>
       </div>
-
-      <div className="w-full md:w-[35%]">
-        <p className="archivo-font font-semibold text-[18px]  text-[#8F8F8F]">
-          User involved
-        </p>
-        <div className="flex justify-between mt-2 w-1/2 items-center">
-          <div className="flex items-center">
-            <div className="w-[28px] h-[28px] rounded-[50%] bg-[#767676]"></div>
-            <Typography
-              children="Ninja"
-              className="text-[#BABABA] text-[22px] leading-[24px] font-semibold archivo-font ml-3"
-            />
-          </div>
-
-          <Typography
-            children="&"
-            className="text-[#BABABA] text-[22px] leading-[24px] font-semibold archivo-font ml-8"
-          />
-          <div className="flex items-center">
-            <div className="w-[28px] h-[28px] rounded-[50%] bg-[#767676] ml-8"></div>
-            <Typography
-              children="James"
-              className="text-[#BABABA] text-[22px] leading-[24px] font-semibold archivo-font ml-3"
-            />
-          </div>
-        </div>
-
-        <p className="archivo-font font-semibold text-[18px]  text-[#8F8F8F] mt-10">
-          Tracking Details
-        </p>
-        <Typography
-          children="https://auspost.au/mypost/track/#/search"
-          className="text-[#BABABA] text-[18px] md:text-[22px] leading-[24px] font-semibold archivo-font mt-2"
-        />
-
-        <p className="archivo-font font-semibold text-[18px]  text-[#8F8F8F] mt-14">
-          Details
-        </p>
-        <Typography
-          children="-"
-          className="text-[#BABABA] text-[22px] leading-[24px] font-semibold archivo-font mt-2"
-        />
-
-        <p className="archivo-font font-semibold text-[18px]  text-[#8F8F8F] mt-14">
-          Verify
-        </p>
-        <Typography
-          children="-"
-          className="text-[#BABABA] text-[22px] leading-[24px] font-semibold archivo-font mt-2"
-        />
-      </div>
-
-      <div className="w-full md:w-[30%]">
+      {/* controls */}
+      <div className="flex flex-col-reverse sm:flex-row lg:flex-col items-end justify-between gap-4  w-full lg:w-fit ">
         {registered ? (
           <div className="w-full  px-5">
             <Button
@@ -162,62 +164,70 @@ const TradeCard = React.memo(function (props: any) {
             />
           </div>
         ) : (
-          <div className="w-full  px-5">
-            <div className="flex">
-              <Button text="Contact James" imgSrc={messageImg} />
-              <Button
-                text="Report loss"
-                imgSrc={reportImg}
-                className="ml-4 report-btn"
-                onClick={() => handleReportButtonClick(props.id)}
-              />
+          <>
+            <div className="w-fit ">
+              <div className="flex gap-4 flex-wrap ">
+                <Button
+                  text="Contact James"
+                  imgSrc={messageImg}
+                  className="flex-1 gradient-button"
+                />
+                <Button
+                  text="Report loss"
+                  imgSrc={reportImg}
+                  className="report-btn flex-1"
+                  onClick={() => handleReportButtonClick(props.id)}
+                />
+              </div>
             </div>
             <Button
-              text="Confirm Reception"
+              text="Confirm"
               imgSrc={ScanImg}
-              className="md:absolute bottom-10 right-10 mt-5 md:mt-0"
+              className="gradient-button"
               onClick={() => handleRegisterButtonClick(props.id)}
             />
-          </div>
+          </>
         )}
       </div>
 
+      {/* confirm product modal*/}
       <Modal __isOpen={modalOpen} dispatchModal={() => {}}>
-        <div className="relative w-[350px] md:w-[600px] h-full md:h-auto mt-5">
-          <div className="relative bg-[#0E0E0E] rounded-[32px] shadow border-[1px] border-[#A09D9D] p-[15px]">
-            <button
-              type="button"
-              className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-              data-modal-toggle="authentication-modal"
-              onClick={() => {
-                closeModal();
-              }}
-            >
-              <img src={CloseButton} alt="closeButton" className="p-3" />
-              <span className="sr-only">Close modal</span>
-            </button>
-
-            <div className="py-6 px-2 md:px-6 lg:px-8">
-              <div className="flex items-center">
-                <img src={Chip} alt="chip" className="w-[25px] h-[25px]" />
-
-                <h3 className="ml-2 text-[18px] md:text-xl font-medium text-gray-900 dark:text-white">
-                  Register your phygital piece
-                </h3>
+        <div className="relative w-full max-w-xl p-2 md:px-4 h-full md:h-auto  ">
+          <div className="relative bg-[#0E0E0E] rounded-[32px] shadow border-[1px] border-[#A09D9D] p-2 md:p-5 pt-8">
+            <div className="flex items-center justify-between px-2 md:px-5">
+              <div className="flex items-center gap-2 md:gap-3 font-semibold text-xl md:text-2xl leading-8">
+                <img src={Chip} alt="chip" className="w-[25px]  h-[25px] " />
+                <p className="text-white clash-font">
+                  Scan to confirm the reception
+                </p>
               </div>
 
-              <div className="flex">
+              <button
+                type="button"
+                className=" text-gray-400 bg-transparent  rounded-lg text-sm "
+                data-modal-toggle="authentication-modal"
+                onClick={() => {
+                  closeModal();
+                }}
+              >
+                <img src={CloseButton} alt="closeButton" className="h-6" />
+                <span className="sr-only">Close modal</span>
+              </button>
+            </div>
+
+            <div className="py-6 px-2 md:px-6 lg:px-8">
+              <div className="flex relative">
                 {!registered ? (
                   <img
                     src="https://i.ibb.co/0Bqtcyv/image-3.png"
                     alt="goods"
-                    className="w-[60%] md:w-[70%]"
+                    className="w-[80%]"
                   />
                 ) : (
                   <img
                     src="https://i.ibb.co/0Bqtcyv/image-3.png"
                     alt="goods"
-                    className="w-[90%] md:w-[70%]"
+                    className="w-full"
                   />
                 )}
 
@@ -225,13 +235,13 @@ const TradeCard = React.memo(function (props: any) {
                   <img
                     src={ChipPhone}
                     alt="chip-phone"
-                    className="w-[90%] -ml-[120px] md:h-[180px] mt-[50px]"
+                    className="absolute w-[60%] top-12 -right-5 md:top-14"
                   />
                 ) : (
                   <img
                     src={FamilyMark}
                     alt="mark"
-                    className="w-[80px] h-[80px] -ml-[70px] md:-ml-[100px] mt-[100px] md:mt-[150px]"
+                    className="absolute w-14 right-[20%] top-[45%]"
                   />
                 )}
               </div>
@@ -239,11 +249,11 @@ const TradeCard = React.memo(function (props: any) {
               {!registered ? (
                 <Typography
                   children="To link your physical garment to its digital twin, you only need to scan the NFC ship on your  clothes directly with your phone."
-                  className="text-[#A09D9D] mt-5 text-center"
+                  className="text-[#A09D9D] mt-5 "
                 />
               ) : (
                 <Typography
-                  children="You have successfully registered your phygital fashion piece."
+                  children="You have successfully confirmed the reception of your physical fashion device."
                   className="text-[#A09D9D] mt-5 text-center"
                 />
               )}
@@ -251,7 +261,7 @@ const TradeCard = React.memo(function (props: any) {
               {!registered && (
                 <Button
                   text="Start Registering"
-                  className="mt-8"
+                  className="mt-8 text-lg gradient-button"
                   imgSrc={Chip}
                   onClick={() => {
                     ChipRegister(props.id);
@@ -263,88 +273,96 @@ const TradeCard = React.memo(function (props: any) {
         </div>
       </Modal>
 
+      {/* report product modal*/}
       <Modal __isOpen={reportModalOpen} dispatchModal={() => {}}>
-        <div className="relative w-[300px] md:w-[400px] h-full md:h-auto mt-5">
-          <div className="relative bg-[#0E0E0E] rounded-[32px] shadow border-[1px] border-[#A09D9D] p-[8px]">
-            <button
-              type="button"
-              className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-              data-modal-toggle="authentication-modal"
-              onClick={() => {
-                closeReportModal();
-              }}
-            >
-              <img src={CloseButton} alt="closeButton" className="p-3" />
-              <span className="sr-only">Close modal</span>
-            </button>
-
-            <div className="py-6 px-2 md:px-6 lg:px-8">
-              <div className="flex items-center">
-                <img src={Chip} alt="chip" className="w-[25px] h-[25px]" />
-
-                <h3 className="ml-2 text-[18px] md:text-xl font-medium text-gray-900 dark:text-white">
-                  Report an issue
-                </h3>
+        <div className="relative w-full max-w-md h-full md:h-auto mt-5 mx-4">
+          <div className="relative bg-[#0E0E0E] rounded-[32px] shadow border-[1px] border-[#A09D9D] p-8 flex flex-col gap-4">
+            <div className="flex items-center justify-between  ">
+              <div className="flex items-center gap-3 font-semibold text-lg md:text-2xl leading-8">
+                <img src={Chip} alt="chip" className="md:w-[25px] h-[25px] " />
+                <p className="text-white clash-font">Report an issue</p>
               </div>
 
-              <Typography
-                children="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
-                className="text-[#A09D9D] text-[16px] leading-[24px]"
-              />
+              <button
+                type="button"
+                className=" text-gray-400 bg-transparent  rounded-lg text-sm "
+                data-modal-toggle="authentication-modal"
+                onClick={() => {
+                  closeReportModal();
+                }}
+              >
+                <img src={CloseButton} alt="closeButton" className="" />
+                <span className="sr-only">Close modal</span>
+              </button>
+            </div>
 
+            <Typography
+              children="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+              className="text-white/70 text-lg font-medium leading-[24px]"
+            />
+            <div className="">
               <Typography
                 children="Select the type of your issue"
-                className="text-white text-[16px] leading-[24px]"
+                className="text-white text-md font-medium leading-[24px]"
               />
 
               {!optionClicked && (
                 <div>
-                  <div className="flex border-[1px] border-[#343434] rounded-[16px] py-[12px] px-[24px] items-center mt-2">
+                  <div className="flex border-[1px] border-[#343434] rounded-[16px] py-[12px] px-[24px] items-center mt-2 cursor-pointer">
                     <input
                       type="radio"
                       name="site_name"
+                      id="radio-report-01"
                       value={"one"}
                       onClick={(e: any) => {
                         setReportOption(e.target.value);
                       }}
                     />
-                    <Typography
-                      children="My product hasn’t arrived"
-                      className="text-[#8B8B8B] text-[16px] leading-[24px] ml-5"
-                    />
+                    <label
+                      htmlFor="radio-report-01"
+                      className="text-white/50 text-md leading-[24px] ml-5 cursor-pointer"
+                    >
+                      My product hasn’t arrived
+                    </label>
                   </div>
 
-                  <div className="flex border-[1px] border-[#343434] rounded-[16px] py-[12px] px-[24px] items-center  mt-2">
+                  <div className="flex border-[1px] border-[#343434] rounded-[16px] py-[12px] px-[24px] items-center cursor-pointer mt-2">
                     <input
                       type="radio"
                       name="site_name"
+                      id="radio-report-02"
                       value={"two"}
                       onClick={(e: any) => {
                         setReportOption(e.target.value);
                       }}
                     />
-                    <Typography
-                      children="My product doesn’t correspond"
-                      className="text-[#8B8B8B] text-[16px] leading-[24px] ml-5"
-                    />
+                    <label
+                      htmlFor="radio-report-02"
+                      className="text-white/50 text-md leading-[24px] ml-5 cursor-pointer"
+                    >
+                      My product doesn’t correspond
+                    </label>
                   </div>
                 </div>
               )}
 
-              <div className="flex border-[1px] border-[#343434] rounded-[16px] py-[12px] px-[24px] items-center  mt-2">
+              <div className="flex border-[1px] border-[#343434] rounded-[16px] py-[12px] px-[24px] items-center  mt-2 cursor-pointer">
                 <input
                   type="radio"
                   name="site_name"
+                  id="radio-report-03"
                   value={"three"}
                   onClick={(e: any) => {
                     setReportOption(e.target.value);
                     setOptionClicked(true);
                   }}
                 />
-                <Typography
-                  children="Other Option"
-                  className="text-[#8B8B8B] text-[16px] leading-[24px] ml-5"
-                />
+                <label
+                  htmlFor="radio-report-03"
+                  className="text-white/50 text-md leading-[24px] ml-5 cursor-pointer"
+                >
+                  Other Option
+                </label>
               </div>
 
               {optionClicked && (
@@ -354,9 +372,10 @@ const TradeCard = React.memo(function (props: any) {
                 ></textarea>
               )}
 
-              <div className="flex mt-5">
+              <div className="flex mt-5 gap-4">
                 <Button
                   text="Cancel"
+                  className="flex-1"
                   onClick={() => {
                     closeReportModal();
                     setOptionClicked(false);
@@ -364,7 +383,7 @@ const TradeCard = React.memo(function (props: any) {
                 />
                 <Button
                   text="Confirm"
-                  className="ml-4 report-btn"
+                  className=" report-btn flex-auto"
                   onClick={() => {}}
                 />
               </div>

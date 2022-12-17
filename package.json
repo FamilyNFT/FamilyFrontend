@@ -31,6 +31,7 @@
     "react-form-stepper": "1.2.10",
     "react-google-autocomplete": "^2.7.0",
     "react-i18next": "^11.18.6",
+    "react-input-mask": "^2.0.4",
     "react-lazy-load-image-component": "^1.5.6",
     "react-modal": "^3.15.1",
     "react-redux": "^8.0.4",
@@ -75,6 +76,7 @@
   "devDependencies": {
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
+    "@types/react-input-mask": "^3.0.2",
     "@types/react-lazy-load-image-component": "^1.5.2",
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.17",

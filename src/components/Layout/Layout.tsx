@@ -1,53 +1,121 @@
 import Header from "../Header";
 
 import curveImg from "assets/img/Dashboard/Vector 2.png";
-import MarketImg from "assets/img/symbols/marketplace.png";
-import TradeImg from "assets/img/symbols/trade.png";
-import StoreImg from "assets/img/symbols/store.png";
-import CreateImg from "assets/img/symbols/create.png";
-import InventoryImg from "assets/img/symbols/inventory.png";
+import MarketImg from "assets/svg/navbar/market.svg";
+import TradeImg from "assets/svg/navbar/trade.svg";
+import StoreImg from "assets/svg/navbar/store.svg";
+import CreateImg from "assets/svg/navbar/create.svg";
+import InventoryImg from "assets/svg/navbar/inventory.svg";
 
 import { FC, PropsWithChildren } from "react";
+import { NavLink } from "react-router-dom";
 type Props = PropsWithChildren & {
   isDashboard?: boolean;
 };
 const Layout: FC<Props> = ({ children, isDashboard = false }) => {
   return (
-    <div className="gradient-background w-full min-h-screen z-[-1000]">
-      <Header isDashboard={isDashboard} />
-      <div className="curve">
-        {/* <img
-          src={curveImg}
-          alt="curve"
-          className="absolute top-0 w-full h-full z-1 bg-no-repeat bg-fixed object-cover"
-        /> */}
-      </div>
-      <div className="px-[15px] md:px-[150px] w-full h-full py-5 relative bg-fixed">
-        {children}
-        <div className="md:hidden  flex justify-between rounded-3xl w-full h-[60px] bottom-nav py-2 px-10 border-[1px] border-[#A09D9D] mt-5">
-          <a href="/marketplace" className="flex flex-col items-center">
-            <img src={MarketImg} alt="market" className="w-[60%]" />
-            <p className="text-[#707070]">Market</p>
-          </a>
-          <a href="/trade" className="flex flex-col items-center">
-            <img src={TradeImg} alt="trade" className="w-[60%]" />
-            <p className="text-[#707070]">Trade</p>
-          </a>
-          <a href="/store" className="flex flex-col items-center">
-            <img src={StoreImg} alt="store" className="w-[60%]" />
-            <p className="text-[#707070]">Store</p>
-          </a>
-          <a href="/inventory" className="flex flex-col items-center">
-            <img src={InventoryImg} alt="inventory" className="w-[50%]" />
-            <p className="text-[#707070]">Inventory</p>
-          </a>
-          <a href="/create" className="flex flex-col items-center">
-            <img src={CreateImg} alt="create" className="w-[60%]" />
-            <p className="text-[#707070]">Create</p>
-          </a>
+    <>
+      <div className="gradient-background w-full min-h-screen ">
+        <Header isDashboard={isDashboard} />
+
+        <div className="px-[1rem] md:px-[4rem] w-full h-full py-5  bg-fixed ">
+          <div className="min-h-screen z-50">{children}</div>
+
+          {/* placeholder div for gap at bottom content covered by mobile nav */}
+          <div className="block md:hidden h-24 w-screen"></div>
+          {/* mobile bottom nav */}
+          <div className="block md:hidden fixed bottom-3  left-0 w-full  max-h-[90px] p-4 z-50">
+            <div className="py-4 px-8 flex justify-between bg-[#1A1A1A] border-2 border-white/10 rounded-full max-w-lg mx-auto">
+              <NavLink
+                to="/marketplace"
+                className="flex flex-col items-center justify-between"
+              >
+                {({ isActive }) => (
+                  <>
+                    <img src={MarketImg} alt="market" className="w-8" />
+                    <p
+                      className={`${
+                        isActive ? "text-white" : "text-white/50"
+                      } leading-none pt-1 font-semibold`}
+                    >
+                      Market
+                    </p>
+                  </>
+                )}
+              </NavLink>
+              <NavLink
+                to="/trade"
+                className="flex flex-col items-center justify-between"
+              >
+                {({ isActive }) => (
+                  <>
+                    <img src={TradeImg} alt="market" className="w-6" />
+                    <p
+                      className={`${
+                        isActive ? "text-white" : "text-white/50"
+                      } leading-none pt-1 font-semibold`}
+                    >
+                      Trade
+                    </p>
+                  </>
+                )}
+              </NavLink>
+              <NavLink
+                to="/store"
+                className="flex flex-col items-center justify-between"
+              >
+                {({ isActive }) => (
+                  <>
+                    <img src={StoreImg} alt="market" className="h-8" />
+                    <p
+                      className={`${
+                        isActive ? "text-white" : "text-white/50"
+                      } leading-none pt-1 font-semibold`}
+                    >
+                      Store
+                    </p>
+                  </>
+                )}
+              </NavLink>
+              <NavLink
+                to="/inventory"
+                className="flex flex-col items-center justify-between"
+              >
+                {({ isActive }) => (
+                  <>
+                    <img src={InventoryImg} alt="market" className="w-8" />
+                    <p
+                      className={`${
+                        isActive ? "text-white" : "text-white/50"
+                      } leading-none pt-1 font-semibold`}
+                    >
+                      Inventory
+                    </p>
+                  </>
+                )}
+              </NavLink>
+              <NavLink
+                to="/create"
+                className="flex flex-col items-center justify-between"
+              >
+                {({ isActive }) => (
+                  <>
+                    <img src={CreateImg} alt="market" className="w-8" />
+                    <p
+                      className={`${
+                        isActive ? "text-white" : "text-white/50"
+                      } leading-none pt-1 font-semibold`}
+                    >
+                      Create
+                    </p>
+                  </>
+                )}
+              </NavLink>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

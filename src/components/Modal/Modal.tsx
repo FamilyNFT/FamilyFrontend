@@ -30,7 +30,7 @@ export default function Modal({
   return (
     <ReactModal
       isOpen={__isOpen}
-      className="overflow-y-auto overflow-x-hidden fixed top-5 right-0 left-0 w-full md:inset-0 h-modal md:h-full z-[1000] bg-transparent  flex justify-center items-center"
+      className="overflow-hidden fixed top-5 right-0 left-0 w-full md:inset-0 h-full md:h-full z-[1000] bg-transparent  flex justify-center items-center p-3 "
       onRequestClose={closeModal}
       contentLabel="Example Modal"
       // style={customStyles}

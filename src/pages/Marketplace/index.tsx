@@ -72,32 +72,36 @@ export const datas = [
   },
 ];
 
-const MarketPlace = () => {
+const Marketplace = () => {
   return (
     <Layout>
-      <div>
-        <div>
-          <h1 className="text-white text-[55px] md:text-[75px] pt-[10px] md:pt-0 clash-font font-semibold leading-[0.8] mt-10">
+      <div className="max-w-screen-2xl mx-auto">
+        <div className="md:flex items-end mt-5  z-50 ">
+          <h1 className="text-white text-[55px] md:text-[75px] pt-[10px] md:pt-0 clash-font font-semibold leading-[0.8] z-50">
             Marketplace
           </h1>
-          <div className="w-full flex justify-center md:justify-end mt-3 md:mt-0">
-            <Button text="Price" imgSrc={SortImg} />
+          <div className="w-full flex justify-start md:justify-end my-7 md:my-0">
+            <Button
+              text="Price"
+              rightImgSrc={SortImg}
+              className="text-xl border-white/10 text-white/70"
+              imgClassName="w-5"
+            />
           </div>
-          <div className="flex flex-wrap item-container w-full">
-            {datas.map((data: any, key: any) => (
-              <MarketplaceCard
-                id={key}
-                key={key}
-                title={data.title}
-                imgSrc={data.cover}
-                amount={data.amount}
-              />
-            ))}
-          </div>
+        </div>
+        <div className="mt-2 md:mt-12 grid items-stretch grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {datas.map((data: any, key: any) => (
+            <MarketplaceCard
+              id={key}
+              key={key}
+              title={data.title}
+              imgSrc={data.cover}
+              amount={data.amount}
+            />
+          ))}
         </div>
       </div>
     </Layout>
   );
 };
-
-export default MarketPlace;
+export default Marketplace;

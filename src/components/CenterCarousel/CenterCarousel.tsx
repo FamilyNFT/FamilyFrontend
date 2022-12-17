@@ -81,25 +81,6 @@ export const CenterCarousel = (props: any) => {
           );
         }}
       />
-      <div>
-        <img
-          src={LeftButton}
-          alt="left"
-          className="absolute top-[40%] left-0 md:left-[28%] z-20 cursor-pointer"
-          // @ts-ignore
-          onClick={() => ref.current?.goBack()}
-        />
-      </div>
-
-      <div>
-        <img
-          src={RightButton}
-          alt="right"
-          className="absolute top-[40%] right-0 md:right-[28%] z-20 cursor-pointer"
-          // @ts-ignore
-          onClick={() => ref.current?.goNext()}
-        />
-      </div>
     </div>
   );
 };

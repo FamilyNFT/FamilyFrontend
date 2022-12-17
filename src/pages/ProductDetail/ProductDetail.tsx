@@ -21,6 +21,8 @@ import RightArrow from "assets/img/symbols/rightArrow.png";
 import TshirtImg from "assets/img/symbols/TShirt.png";
 import CloseButton from "assets/img/symbols/close.png";
 import RightArrowImg from "assets/img/symbols/rightArrow.png";
+import FamilyMark from "assets/img/symbols/family.png";
+import chevron from "assets/svg/chevron-right.svg";
 
 import Button from "components/Button";
 import Modal from "components/Modal";
@@ -61,277 +63,271 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
 
   return (
     <Layout>
-      <div className="block md:flex items-end w-full text-center">
-        <h1 className="text-white text-[55px] md:text-[75px] clash-font font-semibold leading-[0.8]">
-          The Hoodie
-        </h1>
-        <Typography
-          children="50/80 Sold"
-          className="text-white pl-[50px] text-[20px]"
-        />
-      </div>
-
-      <div className="flex flex-wrap px-3 md:px-20 mt-8">
-        <div className="border-[1px] border-[#A09D9D] rounded-[32px] shadow-lg h-full custom-drop mx-auto px-[30px] py-[32px] gap-[16px] cover w-full md:w-1/2">
-          <img
-            src="https://i.ibb.co/0Bqtcyv/image-3.png"
-            alt="detail"
-            className="w-full"
-          />
-
-          <div className="flex justify-center -mt-20">
-            <img
-              src={LeftCircleButton}
-              alt="left-circle"
-              className="cursor-pointer"
-            ></img>
-            <img
-              src={RightCircleButton}
-              alt="right-circle"
-              className="pl-[30px] cursor-pointer"
-            ></img>
-          </div>
+      <div className=" container mx-auto ">
+        <div className="md:flex items-center max-w-lg sm:max-w-none mx-auto  mt-5  z-50">
+          <h1 className="text-white text-[55px] md:text-[75px] pt-[10px] md:pt-0 clash-font font-semibold leading-[0.8] z-50">
+            The Hoodie
+          </h1>
+          <p className="text-white/70 text-[20px] font-semibold mt-5 md:mt-0 ml-0 md:ml-16 z-50">
+            50/80 Sold
+          </p>
         </div>
 
-        <div className="w-full md:w-1/2  p-2 md:pl-20">
-          <Typography
-            children="Jumper"
-            className="text-[#A09D9D] text-[20px]"
-          />
-
-          <h5 className="text-white text-[20px] mt-[25px]">Description</h5>
-          <Typography
-            children="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien."
-            className="text-[#A09D9D] text-[17px] w-full md:w-[60%]"
-          />
-
-          <h5 className="text-white text-[20px] mt-[30px]">Details</h5>
-          <div className="flex w-full md:w-[50%] justify-between">
-            <div className="flex pt-3 ">
-              <img src={FlowerImg} alt="flower" />
-              <Typography
-                children="100% Coton"
-                className="text-[#A09D9D] text-[16px]"
+        <div className="flex flex-col items-center sm:items-start sm:flex-row my-9 gap-8 ">
+          <div className="w-full md:w-1/2 max-w-lg md:max-w-lg">
+            <div className=" border rounded-3xl  border-white/10 p-5 ">
+              <img
+                src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                alt="detail"
+                className="w-full "
               />
-            </div>
-            <div className="flex pt-3">
-              <img src={SparkleImg} alt="sparkle" />
-              <Typography
-                children="Made In..."
-                className="text-[#A09D9D] text-[16px]"
-              />
-            </div>
-          </div>
 
-          <h5 className="text-white text-[20px] mt-[30px]">Colors</h5>
-          <div className="flex mt-5">
-            <div
-              className={`${
-                color === "black" ? "text-white bg-[#2e2e2e]" : "text-[#A09D9D]"
-              } border-[#A09D9D] rounded-[16px] border-[1px] w-[67px] h-[76px] p-[8px] gap-[4px] flex flex-col items-center  cursor-pointer`}
-              onClick={() => {
-                colorButtonClicked("black");
-              }}
-            >
-              <img src={BlackColor} alt="black" />
-              Black
-            </div>
-            <div
-              className={`${
-                color === "white" ? "text-white bg-[#2e2e2e]" : "text-[#A09D9D]"
-              } border-[#A09D9D] rounded-[16px] border-[1px] w-[67px] h-[76px] p-[8px] gap-[4px] flex flex-col items-center  cursor-pointer ml-5`}
-              onClick={() => {
-                colorButtonClicked("white");
-              }}
-            >
-              <img src={WhitieColor} alt="white" />
-              White
-            </div>
-            <div
-              className={`${
-                color === "purple"
-                  ? "text-white bg-[#2e2e2e]"
-                  : "text-[#A09D9D]"
-              } border-[#A09D9D] rounded-[16px] border-[1px] w-[67px] h-[76px] p-[8px] gap-[4px] flex flex-col items-center  cursor-pointer ml-5`}
-              onClick={() => {
-                colorButtonClicked("purple");
-              }}
-            >
-              <img src={PurpleColor} alt="purple" />
-              Purple
-            </div>
-          </div>
-
-          <h5 className="text-white text-[20px] mt-[35px]">Size</h5>
-          <div className="flex mt-5">
-            <div
-              className={`${
-                size === "XS" ? "text-white bg-[#2e2e2e]" : "text-[#A09D9D]"
-              } border-[#A09D9D] rounded-[16px] border-[1px] w-[67px] h-[41px] p-[8px] gap-[4px] flex flex-col items-center  cursor-pointer`}
-              onClick={() => {
-                sizeButtonClicked("XS");
-              }}
-            >
-              XS
-            </div>
-            <div
-              className={`${
-                size === "S" ? "text-white bg-[#2e2e2e]" : "text-[#A09D9D]"
-              } border-[#A09D9D] rounded-[16px] border-[1px] w-[67px] h-[41px] p-[8px] gap-[4px] flex flex-col items-center  cursor-pointer ml-5`}
-              onClick={() => {
-                sizeButtonClicked("S");
-              }}
-            >
-              S
-            </div>
-            <div
-              className={`${
-                size === "L" ? "text-white bg-[#2e2e2e]" : "text-[#A09D9D]"
-              } border-[#A09D9D] rounded-[16px] border-[1px] w-[67px] h-[41px] p-[8px] gap-[4px] flex flex-col items-center  cursor-pointer ml-5`}
-              onClick={() => {
-                sizeButtonClicked("L");
-              }}
-            >
-              L
-            </div>
-            <div
-              className={`${
-                size === "XL" ? "text-white bg-[#2e2e2e]" : "text-[#A09D9D]"
-              } border-[#A09D9D] rounded-[16px] border-[1px] w-[67px] h-[41px] p-[8px] gap-[4px] flex flex-col items-center  cursor-pointer ml-5`}
-              onClick={() => {
-                sizeButtonClicked("XL");
-              }}
-            >
-              XL
-            </div>
-          </div>
-
-          <div className="flex justify-center mb-10 md:mb-0">
-            <Button
-              imgSrc={RightArrow}
-              text="Shop Now"
-              className="flex-row-reverse mt-10"
-              onClick={() => {
-                setModalOpen(true);
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <Modal __isOpen={modalOpen} dispatchModal={() => {}}>
-        <div className="relative w-[350px] md:w-[800px] h-full md:h-auto mt-5 max-h-[95vh] overflow-auto">
-          <div className="relative bg-[#0E0E0E] rounded-[32px] shadow border-[1px] border-[#A09D9D] p-[25px]">
-            <div className="flex justify-between items-start md:items-center">
-              <div className="flex items-start md:items-center">
+              <div className="flex justify-center items-center -mt-20 gap-6">
                 <img
-                  src={TshirtImg}
-                  className="w-[30px] h-[30px]"
-                  alt="Tshirt"
-                />
-                <Typography
-                  children="Purchase your phygital piece"
-                  className="text-white ml-3 text-[20px] md:text-[26px] clash-font font-semibold w-full"
-                />
+                  src={LeftCircleButton}
+                  alt="left-circle"
+                  className="cursor-pointer w-10 md:w-auto max-w-[72px] max-h-[72px]"
+                ></img>
+                <div className="flex gap-3 items-center">
+                  <img
+                    src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                    alt="detail"
+                    className="w-[30%] max-w-[72px] max-h-[72px] h-[30%] object-cover border border-white/10 rounded-lg"
+                  />
+                  <img
+                    src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                    alt="detail"
+                    className="w-[30%] max-w-[72px] max-h-[72px] h-[30%] object-cover border border-white/10 rounded-lg"
+                  />
+                  <img
+                    src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                    alt="detail"
+                    className="w-[30%] max-w-[72px] max-h-[72px] h-[30%] object-cover border border-white/10 rounded-lg"
+                  />
+                </div>
+
+                <img
+                  src={RightCircleButton}
+                  alt="right-circle"
+                  className="cursor-pointer w-10 md:w-auto max-w-[72px] max-h-[72px]"
+                ></img>
               </div>
-              <button
-                type="button"
-                className="top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                data-modal-toggle="authentication-modal"
-                onClick={() => {
-                  closeModal();
-                  setActiveStep(0);
-                }}
-              >
-                <img src={CloseButton} alt="closeButton" className="p-3" />
-                <span className="sr-only">Close modal</span>
+            </div>
+          </div>
+
+          <div className="w-fit  md:w-1/2 archivo-font flex flex-col gap-6 ">
+            <div>
+              <h5 className="text-white text-2xl font-semibold">Description</h5>
+              <Typography
+                children="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien."
+                className="text-white/50 font-medium text-xl max-w-lg mt-4"
+              />
+            </div>
+            <div className="mt-4">
+              <h5 className="text-white text-2xl font-semibold ">Details</h5>
+
+              <div class="grid overflow-hidden grid-cols-1 sm:grid-cols-3 grid-rows-1 md:grid-rows-2 gap-2 text-white gap-y-4 mt-4">
+                <div class="box">
+                  <h6 className="text-xl text-white/70 font-semibold">Drop</h6>
+                  <p className="text-lg text-white/50 font-medium">
+                    Hoodie 001
+                  </p>
+                </div>
+                <div class="box col-span-1 sm:col-span-2">
+                  <h6 className="text-xl text-white/70 font-semibold ">
+                    Original Minter
+                  </h6>
+                  <p className="text-lg text-white/50 font-medium text-ellipsis overflow-hidden">
+                    0xF1775305be0E293F4f83b51783B27F70Bae11689
+                  </p>
+                </div>
+                <div class="box">
+                  <h6 className="text-xl text-white/70 font-semibold">
+                    Material
+                  </h6>
+                  <p className="text-lg text-white/50 font-medium">Cotton</p>
+                </div>
+                <div class="box col-span-1 sm:col-span-2">
+                  <h6 className="text-xl text-white/70 font-semibold">
+                    Manufacturer details
+                  </h6>
+                  <p className="text-lg text-white/50 font-medium">
+                    Manufacturer Inc.
+                  </p>
+                </div>
+                <div class="box">
+                  <h6 className="text-xl text-white/70 font-semibold">Size</h6>
+                  <p className="text-lg text-white/50 font-medium">XS</p>
+                </div>
+                <div class="box col-span-1 sm:col-span-2">
+                  <h6 className="text-xl text-white/70 font-semibold">Color</h6>
+                  <p className="text-lg text-white/50 font-medium">Black</p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4">
+              <button className="flex items-center gap-3 border-[#B7B7B7] border-[1px]    justify-center  px-6 h-[50px] rounded-full  text-white whitespace-nowrap  archivo-font font-semibold text-lg capitalize ">
+                <img src={FamilyMark} alt="" className="w-6" />
+                Radical Transparency
+                <img src={chevron} alt="" className="w-3" />
               </button>
             </div>
-            <Typography
-              children="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien."
-              className="text-white"
-            />
-            <div className="flex flex-wrap mt-5">
-              <div className="w-full  md:w-1/2 h-full rounded-3xl border-[1px] border-[#A09D9D] p-[25px]">
-                <div className="flex justify-between items-center">
-                  <Typography
-                    children="The Hoodie"
-                    className="text-white text-xl clash-font font-semibold"
-                  />
-                  <Typography
-                    children="3"
-                    className="text-white text-xl clash-font font-semibold"
-                  />
-                </div>
-
-                <img
-                  src="https://i.ibb.co/0Bqtcyv/image-3.png"
-                  alt="detail"
-                  className="w-full h-full"
-                />
-                <div className="flex">
-                  <div className="flex">
-                    <img src={PalletImg} alt="pallete" />
-                    <Typography
-                      children="Black"
-                      className="text-[#A09D9D] clash-font ml-2"
-                    />
-                  </div>
-                  <div className="flex ml-4">
-                    <img src={ScissorImg} alt="scissor" />
-                    <Typography
-                      children="XS"
-                      className="text-[#A09D9D] clash-font ml-2"
-                    />
-                  </div>
-                </div>
-
-                <div className="md:flex mt-3">
-                  <div className="flex">
-                    <img src={FlowerImg} alt="material" />
-                    <Typography
-                      children="100% Cotton"
-                      className="text-[#A09D9D] clash-font ml-2"
-                    />
-                  </div>
-                  <div className="flex mt-2 md:mt-0 md:ml-4">
-                    <img src={SparkleImg} alt="sparkle" />
-                    <Typography
-                      children="Made in Philippines"
-                      className="text-[#A09D9D] clash-font ml-2"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="w-full md:w-1/2 h-full px-5">
-                <StepWizard
-                  instance={assignStepWizard}
-                  onStepChange={handleStepChange}
-                >
-                  <FirstStep />
-                  <SecondStep />
-                  <ThirdStep />
-                </StepWizard>
-              </div>
-            </div>
-            <div className="flex justify-between items-center mt-5 md:-mt-20">
-              <Stepper
-                activeStep={activeStep}
-                styleConfig={{
-                  activeBgColor: "transparent",
-                  activeTextColor: "#fff",
-                  inactiveBgColor: "transparent",
-                  inactiveTextColor: "#A09D9D",
-                  completedBgColor: "#transparent",
-                  completedTextColor: "#A09D9D",
-                  size: "2em",
+            <div className="mt-2 md:mt-4">
+              <Button
+                rightImgSrc={RightArrow}
+                text="Shop Now"
+                className=" text-lg"
+                onClick={() => {
+                  setModalOpen(true);
                 }}
-                stepClassName={"stepper__step"}
-              >
-                <Step label="Shipping Details" />
-                <Step label="Payment Details" />
-              </Stepper>
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/*  modal*/}
+      <Modal __isOpen={modalOpen} dispatchModal={() => {}}>
+        <div className="relative w-full max-w-screen-lg h-full md:h-auto   my-8 ">
+          {/* <div className=" overflow-auto"> */}
+          <div className="relative  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#212121]/90 to-white/10   rounded-[32px]  shadow border-[1px] border-white/10  max-h-[100vh] overflow-hidden inline-block">
+            <div className="overflow-y-scroll mt-2 h-[42rem]  p-8">
+              <div className="flex justify-between items-start md:items-center">
+                <div className="flex items-start md:items-center">
+                  <img
+                    src={TshirtImg}
+                    className="w-[30px] h-[30px]"
+                    alt="Tshirt"
+                  />
+                  <Typography
+                    children="Purchase your phygital piece"
+                    className="text-white ml-3 text-[20px] md:text-[26px] clash-font font-semibold w-full"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  className="top-3 right-2.5  rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                  data-modal-toggle="authentication-modal"
+                  onClick={() => {
+                    closeModal();
+                    setActiveStep(0);
+                  }}
+                >
+                  <img
+                    src={CloseButton}
+                    alt="closeButton"
+                    className="p-1 sm:p-3"
+                  />
+                  <span className="sr-only">Close modal</span>
+                </button>
+              </div>
+              <Typography
+                children="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien."
+                className="text-white"
+              />
+
+              {/* left card */}
+              <div className="flex flex-col gap-4 sm:flex-row  mt-5">
+                <div className="w-full md:w-1/2 h-full rounded-3xl border-[1px] border-white/10 p-[25px]  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/[.08] to-white/[.01] ">
+                  <div className="flex justify-between items-center">
+                    <Typography
+                      children="The Hoodie"
+                      className="text-white text-xl clash-font font-semibold"
+                    />
+                    <Typography
+                      children="3"
+                      className="text-white/70 text-xl clash-font font-semibold"
+                    />
+                  </div>
+
+                  <img
+                    src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                    alt="detail"
+                    className=""
+                  />
+                  <div className="flex flex-wrap gap-x-4 gap-y-3">
+                    <div className="flex gap-2 font-medium text-lg 	">
+                      <img src={PalletImg} alt="pallete" />
+                      <Typography
+                        children="Black"
+                        className="text-white/70 clash-font whitespace-nowrap"
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      <img src={ScissorImg} alt="scissor" />
+                      <Typography
+                        children="XS"
+                        className="text-white/70 clash-font whitespace-nowrap"
+                      />
+                    </div>
+
+                    <div className="flex gap-2">
+                      <img src={FlowerImg} alt="material" />
+                      <Typography
+                        children="100% Cotton"
+                        className="text-white/70 clash-font whitespace-nowrap"
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      <img src={SparkleImg} alt="sparkle" />
+                      <Typography
+                        children="Made in Philippines"
+                        className="text-white/70 clash-font whitespace-nowrap"
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* right form */}
+                <div className="w-full md:w-1/2 h-full px-5">
+                  <StepWizard
+                    instance={assignStepWizard}
+                    onStepChange={handleStepChange}
+                  >
+                    <FirstStep />
+                    <SecondStep />
+                    <ThirdStep />
+                  </StepWizard>
+                </div>
+              </div>
+
+              <div className="w-full md:w-1/2">
+                <Stepper
+                  activeStep={activeStep}
+                  styleConfig={{
+                    activeBgColor: "transparent",
+                    activeTextColor: "#fff",
+                    inactiveBgColor: "transparent",
+                    inactiveTextColor: "#A09D9D",
+                    completedBgColor: "transparent",
+                    completedTextColor: "#A09D9D",
+                    size: "2em",
+                  }}
+                  stepClassName={"stepper__step"}
+                >
+                  <Step label="Shipping Details" />
+                  <Step label="Payment Details" />
+                </Stepper>
+              </div>
+
+              {/* <div className="flex justify-between items-center mt-5 md:-mt-20">
+                <Stepper
+                  activeStep={activeStep}
+                  styleConfig={{
+                    activeBgColor: "transparent",
+                    activeTextColor: "#fff",
+                    inactiveBgColor: "transparent",
+                    inactiveTextColor: "#A09D9D",
+                    completedBgColor: "#transparent",
+                    completedTextColor: "#A09D9D",
+                    size: "2em",
+                  }}
+                  stepClassName={"stepper__step"}
+                >
+                  <Step label="Shipping Details" />
+                  <Step label="Payment Details" />
+                </Stepper>
+              </div> */}
             </div>
           </div>
         </div>

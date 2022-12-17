@@ -32,27 +32,29 @@ const MarketplaceCard: React.FC<PropsType> = ({
 }) => {
   return (
     <Link to={`/marketplace/${id}`}>
-      <div className="p-8 rounded-[30px] border-[1px] border-[#A09D9D] custom-nav w-full md:w-[500px] md:m-4 cursor-pointer mt-2 ">
+      <div className="p-8 rounded-[30px] border-[1px] border-white/10 custom-nav w-full h-full	 cursor-pointer  flex flex-col justify-between">
         <div className="flex justify-between text-white items-center">
           <Typography
             children={title}
-            className="text-white text-[35px] leading-[30px] font-semibold  w-2/3 md:w-full clash-font good-title"
+            className="text-white text-3xl md:text-4xl  leading-[30px] font-semibold  w-2/3 md:w-full clash-font good-title whitespace-pre-line	overflow-hidden"
           />
-          <p className="text-[25px] font-semibold">{amount}</p>
+          <p className="text-2xl md:text-3xl font-semibold text-white/70">
+            {amount}
+          </p>
         </div>
         <LazyLoadImage
           src={imgSrc}
           alt="goods"
-          className="w-full img-lazy h-[400px] text-align flex items-center"
+          className="w-full img-lazy h-full max-h-[320px] aspect-square text-align flex items-center my-5 object-cover "
           effect="blur"
         />
 
-        <div className="flex justify-between text-white">
+        <div className="flex justify-between items-center text-white">
           <Typography
             children="Edition 1/100"
-            className="font-semibold text-[18px]"
+            className="font-semibold text-[18px] text-white/70"
           />
-          <div className="flex">
+          <div className="flex items-center">
             <div
               className={` border-[#A09D9D] p-[8px] gap-[4px] flex flex-col items-center  cursor-pointer`}
             >
