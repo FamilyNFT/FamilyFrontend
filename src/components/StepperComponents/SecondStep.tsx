@@ -5,10 +5,14 @@ import Typography from "components/Typography";
 import CardImg from "assets/img/symbols/Cardholder.png";
 import CreditCardImg from "assets/img/symbols/CreditCard.png";
 import pencil from "assets/svg/pencil.svg";
+import { useAppSelector } from "redux/hooks/redux-hooks";
 
 const SecondStep = (props: any) => {
   const [info2, setInfo1] = useState({});
   const [error, setError] = useState("");
+  const shippingAddress = useAppSelector(
+    (state) => state.product.shippingAddress
+  );
 
   const validate = () => {
     // if (!info1.name) setError("Name is mandatory field");
@@ -27,7 +31,7 @@ const SecondStep = (props: any) => {
           className="text-white text font-semibold"
         />
         <p className="text-md text-white/50 flex items-center gap-2 font-semibold">
-          John David
+          {`${shippingAddress?.firstName} ${shippingAddress?.lastName}`}
           <img src={pencil} alt="" className="w-4 h-4" />
         </p>
 
@@ -37,7 +41,7 @@ const SecondStep = (props: any) => {
         />
 
         <p className="text-md text-white/50 flex items-center gap-2 ">
-          240 avenue de Boston, 75000 Paris
+          {`${shippingAddress?.address1}, ${shippingAddress?.city}, ${shippingAddress?.province}`}
           <img src={pencil} alt="" className="w-4 h-4" />
         </p>
 
@@ -46,7 +50,7 @@ const SecondStep = (props: any) => {
           className="text-white text-[18px] font-semibold mt-5"
         />
         <p className="text-md text-white/50 flex items-center gap-2 font-semibold">
-          France
+          {shippingAddress?.country}
           <img src={pencil} alt="" className="w-4 h-4" />
         </p>
         <Typography

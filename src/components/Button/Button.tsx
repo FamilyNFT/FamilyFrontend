@@ -1,3 +1,5 @@
+import { Oval } from "react-loader-spinner";
+
 interface PropsType {
   light?: boolean;
   text?: string;
@@ -9,6 +11,7 @@ interface PropsType {
   fixed?: boolean;
   imgSrc?: any;
   rightImgSrc?: any;
+  isLoading?: boolean;
   onClick?: (props: any) => void;
 }
 
@@ -23,6 +26,7 @@ const Button: React.FC<PropsType> = ({
   onClick,
   fixed = false,
   imgSrc,
+  isLoading,
   rightImgSrc,
 }) => {
   return (
@@ -46,7 +50,17 @@ const Button: React.FC<PropsType> = ({
           ></img>
         )}
         {text}
-        {rightImgSrc !== undefined && (
+        {isLoading && (
+          <Oval
+            height={20}
+            width={20}
+            strokeWidth={5}
+            strokeWidthSecondary={5}
+            color={"rgba(255, 255, 255)"}
+            secondaryColor="rgba(255, 255, 255, 0.1)"
+          />
+        )}
+        {rightImgSrc !== undefined && !isLoading && (
           <img
             src={rightImgSrc}
             alt="buttonImage"

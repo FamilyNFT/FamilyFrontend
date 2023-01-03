@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "components/Button";
 import RightArrow from "assets/img/symbols/rightArrow.png";
 
@@ -23,6 +23,7 @@ const StepperActionsButtons = (props: any) => {
         <>
           {props.currentStep === 1 && (
             <Button
+              isLoading={props.isLoading}
               onClick={handleNext}
               text="Payment Details"
               rightImgSrc={RightArrow}
@@ -30,6 +31,7 @@ const StepperActionsButtons = (props: any) => {
           )}
           {props.currentStep === 2 && (
             <Button
+              isLoading={props.isLoading}
               onClick={handleNext}
               text="Validate"
               rightImgSrc={RightArrow}
@@ -38,7 +40,12 @@ const StepperActionsButtons = (props: any) => {
         </>
       )}
       {props.currentStep === props.totalSteps && (
-        <Button onClick={handleNext} text="Shop now" rightImgSrc={RightArrow} />
+        <Button
+          isLoading={props.isLoading}
+          onClick={handleNext}
+          text="Shop now"
+          rightImgSrc={RightArrow}
+        />
       )}
     </div>
   );

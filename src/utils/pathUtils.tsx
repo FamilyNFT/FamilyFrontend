@@ -5,6 +5,7 @@ import MarketPlace from "pages/Marketplace";
 import Store from "pages/Store";
 import Trade from "pages/Trade";
 import ProductDetail from "pages/ProductDetail";
+import Order from "pages/Order";
 
 interface PathInterFace {
   path: string;
@@ -21,6 +22,7 @@ const routes: PathInterFace[] = [
   },
   { path: "/trade", title: "Trade", element: <Trade /> },
   { path: "/store", title: "Store", element: <Store /> },
+  { path: "/order", title: "Order", element: <Order /> },
   { path: "/inventory", title: "Inventory", element: <Inventory /> },
   { path: "/create", title: "Create", element: <Dashboard /> },
 ];
