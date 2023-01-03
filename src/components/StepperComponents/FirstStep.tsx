@@ -14,6 +14,7 @@ import chevronDown from "assets/svg/chevron-down.svg";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { useAppDispatch, useAppSelector } from "redux/hooks/redux-hooks";
 import { setEmail, setShipping } from "redux/product/reducer";
+import shopifyBackendURL from "constants/backendURL";
 const FirstStep = (props: any) => {
   const dispatch = useAppDispatch();
   const [mail, setMail] = useState("");
@@ -23,12 +24,13 @@ const FirstStep = (props: any) => {
   const [shippingAddress, setShippingAddress] = React.useState({});
   const checkout = useAppSelector((state) => state.product.checkout);
   const [loading, setLoading] = useState<boolean>(false);
+  const backend = shopifyBackendURL;
   console.log(checkout);
 
   const [postal, setPostal] = useState("");
   const updateCheckout = async () => {
     console.log(checkout);
-    let check = await fetch("http://localhost:8080/checkout/update", {
+    let check = await fetch(`${backend}/checkout/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

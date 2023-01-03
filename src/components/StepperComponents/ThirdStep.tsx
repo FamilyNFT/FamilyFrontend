@@ -4,6 +4,7 @@ import StepperActionButtons from "components/StepperActionButtons";
 import InputMask from "react-input-mask";
 import { useAppSelector } from "redux/hooks/redux-hooks";
 import { useNavigate } from "react-router-dom";
+import shopifyBackendURL from "constants/backendURL";
 
 const ThirdStep = (props: any) => {
   const [info3, setInfo1] = useState({});
@@ -17,6 +18,7 @@ const ThirdStep = (props: any) => {
   const product = useAppSelector((state) => state.product.product);
   const variant = useAppSelector((state) => state.product.variant);
   const account = useAppSelector((state) => state.auth.account);
+  const backend = shopifyBackendURL;
   const navigate = useNavigate();
 
   const inputChange = (e: any) => {
@@ -27,7 +29,7 @@ const ThirdStep = (props: any) => {
     console.log(cardDetails);
   };
   const completeCheckout = async () => {
-    let check = await fetch("http://localhost:8080/checkout/complete", {
+    let check = await fetch(`${backend}/checkout/complete`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -12,6 +12,7 @@ import { useAppDispatch } from "redux/hooks/redux-hooks";
 import { setProduct } from "redux/product/reducer";
 import StoreCard from "components/Card/StoreCard";
 import LoadingScreen from "components/LoadingScreen";
+import shopifyBackendURL from "constants/backendURL";
 
 export const datas = [
   {
@@ -21,16 +22,15 @@ export const datas = [
     amount: 5,
   },
 ];
-
 const Store = () => {
   const dispatch = useAppDispatch();
   const [isLoading, setLoading] = useState<boolean>(true);
   const [products, setProducts] = useState([]);
   const getProducts = useCallback(async () => {
-    let products = await fetch("http://localhost:8080/products").then((res) =>
+    let products = await fetch(`${shopifyBackendURL}/products`).then((res) =>
       res.json()
     );
-    console.log(products);
+    // console.log(products);
     setProducts(products);
     dispatch(setProduct(products[0]));
     setLoading(false);

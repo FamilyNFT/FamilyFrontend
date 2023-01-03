@@ -32,6 +32,7 @@ import { useAppDispatch, useAppSelector } from "redux/hooks/redux-hooks";
 import { setCheckout, setVariant } from "redux/product/reducer";
 import Web3 from "web3";
 import { setAuth } from "redux/auth/reducer";
+import shopifyBackendURL from "constants/backendURL";
 
 const ProductDetail: React.FC = (props: any): ReactElement => {
   const [color, setColor] = useState<String>("black");
@@ -39,6 +40,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
   const [loading, setLoading] = useState<boolean>(false);
   const product = useAppSelector((state) => state.product.product);
   const dispatch = useAppDispatch();
+  const backend = shopifyBackendURL;
   const [selectedVariant, setSelectedVariant] = useState<any>(
     product?.variants[0]
   );
@@ -81,7 +83,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
   };
   const createCheckout = async () => {
     console.log(selectedVariant.id);
-    let checkout = await fetch("http://localhost:8080/checkout", {
+    let checkout = await fetch(`${backend}/checkout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
