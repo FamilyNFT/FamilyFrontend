@@ -62,8 +62,8 @@ const Header: React.FC<Props> = ({ isDashboard = false }) => {
     let web3 = new Web3(ethereum);
 
     const addr = await web3.eth.requestAccounts();
-    let universalProfile = await getProfile(addr[0]);
-    if (universalProfile) {
+    // let universalProfile = await getProfile(addr[0]);
+    if (addr[0]) {
       setWallet(addr[0]);
       dispatch(setAuth(addr[0]));
     }

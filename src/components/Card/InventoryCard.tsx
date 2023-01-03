@@ -73,7 +73,7 @@ const customSelectStyles = {
 const InventoryCard = React.memo(function (props: any) {
   const { data, dataIndex, isCenterSlide, swipeTo } = props;
   console.log(props);
-  const { cover } = data[dataIndex];
+  const { imgUrl } = data[dataIndex];
 
   const [loadDelay, setLoadDelay] = React.useState<any>();
   const [removeDelay, setRemoveDelay] = React.useState<any>();
@@ -136,7 +136,7 @@ const InventoryCard = React.memo(function (props: any) {
         <div className="relative">
           <div className="flex justify-between">
             <h5 className="text-white clash-font text-[32px] font-semibold">
-              {data[dataIndex].title}
+              {data[dataIndex].name}
             </h5>
           </div>
 
@@ -146,20 +146,21 @@ const InventoryCard = React.memo(function (props: any) {
           />
         </div>
 
-        <LazyLoadImage
+        {/* <LazyLoadImage
           src={cover}
           alt="goods"
           className=" rounded-lg img-lazy mx-auto max-h-[50rem] "
           effect="blur"
           draggable={false}
-        />
-
-        {/* <img
-          className="h-[250px] md:h-[450px] w-[250px] md:w-[450px] rounded-lg "
-          draggable={false}
-          src={cover}
-          alt=""
         /> */}
+
+        <video
+          className="mx-auto max-h-[50rem] w-[250px] md:w-[450px] rounded-lg "
+          draggable={false}
+          src={imgUrl}
+          autoPlay
+          loop
+        />
 
         <div className="flex justify-between items-end">
           <Typography
