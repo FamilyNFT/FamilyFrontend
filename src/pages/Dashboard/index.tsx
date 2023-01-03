@@ -122,13 +122,8 @@ const Dashboard = () => {
                 />
 
                 <div className="mt-10">
-                  <Link to="/marketplace">
-                    <Button
-                      type="button"
-                      text="Enter"
-                      className="px-20"
-                      disabled
-                    />
+                  <Link to="/store">
+                    <Button type="button" text="Enter" className="px-20" />
                   </Link>
                 </div>
               </div>
