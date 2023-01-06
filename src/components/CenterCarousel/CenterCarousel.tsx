@@ -59,12 +59,12 @@ export const CenterCarousel = (props: any) => {
   const [isLoading, setIsLoading] = useState(true);
   const [meta, setData] = useState<any[]>([]);
   const contract = useMulticallContract(
-    "0xa31Be2dB7fF2A97c4c21a0a18D86c515b67BB5CC"
+    "0x450a0461D584449386e008afa848d76217dC9e91"
   );
   const account = useAppSelector((state) => state.auth.account);
   const getURI = useCallback(async () => {
     const uris = await contract.methods
-      .getTokenIds("0x450a0461d584449386e008afa848d76217dc9e91", account)
+      .getTokenIds("0x99e6e48Fb48841cb39e7fe5fbE16d42e8a928118", account)
       .call();
     let metadata = [];
     for (let uri of uris) {
@@ -93,7 +93,7 @@ export const CenterCarousel = (props: any) => {
             render={(parentWidth, carouselRef) => {
               let currentVisibleSlide = 3;
               if (parentWidth <= 1440)
-                currentVisibleSlide = datas.length >= 3 ? 3 : 1;
+                currentVisibleSlide = meta.length >= 3 ? 3 : 1;
               if (parentWidth <= 1080) currentVisibleSlide = 1;
               return (
                 <StackedCarousel
@@ -106,7 +106,7 @@ export const CenterCarousel = (props: any) => {
                   carouselWidth={parentWidth}
                   data={meta}
                   currentVisibleSlide={currentVisibleSlide}
-                  maxVisibleSlide={datas.length >= 3 ? 3 : 1}
+                  maxVisibleSlide={meta.length >= 3 ? 3 : 1}
                   useGrabCursor
                   fadeDistance={0.22}
                 />
