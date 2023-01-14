@@ -6,7 +6,7 @@ import MarketplaceCard from "components/Card/MarketplaceCard";
 
 import topImg from "assets/img/symbols/top.png";
 import belowImg from "assets/img/symbols/below.png";
-import SortImg from "assets/img/symbols/ArrowsDownUp.png";
+import SortImg from "assets/svg/ArrowsDownUp.svg";
 
 export const datas = [
   {

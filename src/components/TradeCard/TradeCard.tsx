@@ -3,6 +3,7 @@ import Button from "components/Button";
 import Typography from "components/Typography";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Modal from "components/Modal";
+import { Modal as MantineModal } from "@mantine/core";
 
 import FlowerImg from "assets/img/symbols/Flower.png";
 import SparkleImg from "assets/img/symbols/Sparkle.png";
@@ -16,6 +17,8 @@ import Chip from "assets/img/symbols/Scan.png";
 import CloseButton from "assets/img/symbols/close.png";
 import ChipPhone from "assets/img/symbols/chip-phone.png";
 import FamilyMark from "assets/img/symbols/family.png";
+import Chatbox from "components/Chatbox/Chatbox";
+import { CgCloseO } from "react-icons/cg";
 
 const TradeCard = React.memo(function (props: any) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -23,6 +26,8 @@ const TradeCard = React.memo(function (props: any) {
   const [registered, setRegistered] = React.useState(false);
   const [reportOption, setReportOption] = React.useState("");
   const [optionClicked, setOptionClicked] = React.useState(false);
+
+  const [chatOpen, setChatOpen] = React.useState(false);
 
   const closeModal = () => {
     setModalOpen(false);
@@ -131,10 +136,14 @@ const TradeCard = React.memo(function (props: any) {
           <p className="archivo-font font-semibold text-[18px]  text-white/50 mt-10">
             Tracking Details
           </p>
-          <Typography
-            children="https://auspost.au/mypost/track/#/search"
+
+          <a
+            href="https://auspost.au/mypost/track/#/search"
+            target="_blank"
             className="text-white/70 text-md md:text-lg  leading-[24px] font-semibold archivo-font mt-2 max-w-[70vw] text-ellipsis overflow-hidden"
-          />
+          >
+            https://auspost.au/mypost/track/#/search
+          </a>
 
           <p className="archivo-font font-semibold text-[18px]  text-white/50 mt-14">
             Details
@@ -168,8 +177,9 @@ const TradeCard = React.memo(function (props: any) {
             <div className="w-fit ">
               <div className="flex gap-4 flex-wrap ">
                 <Button
-                  text="Contact James"
+                  text="Message"
                   imgSrc={messageImg}
+                  onClick={() => setChatOpen(true)}
                   className="flex-1 gradient-button"
                 />
                 <Button
@@ -291,7 +301,7 @@ const TradeCard = React.memo(function (props: any) {
                   closeReportModal();
                 }}
               >
-                <img src={CloseButton} alt="closeButton" className="" />
+                <CgCloseO className="text-2xl text-white/50 hover:text-white/90 transition-all duration-200" />
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
@@ -391,6 +401,20 @@ const TradeCard = React.memo(function (props: any) {
           </div>
         </div>
       </Modal>
+
+      {/* chat modal */}
+      <MantineModal
+        opened={chatOpen}
+        onClose={() => {}}
+        withCloseButton={false}
+        classNames={{
+          inner: "bg-[#000000]/30 backdrop-blur	",
+          modal:
+            "bg-[#212121]/90 w-full max-w-lg h-full max-h-[50rem] rounded-3xl text-white",
+        }}
+      >
+        <Chatbox closeModal={() => setChatOpen(false)} />
+      </MantineModal>
     </div>
   );
 });

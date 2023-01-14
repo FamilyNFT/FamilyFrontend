@@ -6,6 +6,7 @@ interface PropsType {
   type?: "button" | "submit" | "reset" | undefined;
   className?: string;
   imgClassName?: string;
+  textClassName?: string;
   imgPositionReverse?: boolean;
   disabled?: boolean;
   fixed?: boolean;
@@ -20,6 +21,7 @@ const Button: React.FC<PropsType> = ({
   text = "",
   className = "",
   imgClassName = "",
+  textClassName = "",
   imgPositionReverse = false,
   light = false,
   disabled = false,
@@ -49,7 +51,7 @@ const Button: React.FC<PropsType> = ({
             className={`${imgClassName}`}
           ></img>
         )}
-        {text}
+        <span className={`${textClassName}`}>{text}</span>
         {isLoading && (
           <Oval
             height={20}

@@ -6,29 +6,28 @@ import StepWizard from "react-step-wizard";
 
 import Layout from "components/Layout";
 import Typography from "components/Typography";
-import StepperActionButtons from "components/StepperActionButtons";
 
-import LeftCircleButton from "assets/img/symbols/left-circle.png";
-import RightCircleButton from "assets/img/symbols/right-circle.png";
+import LeftCircleButton from "assets/svg/left-arrow.svg";
+import RightCircleButton from "assets/svg/right-arrow.svg";
 import FlowerImg from "assets/img/symbols/Flower.png";
 import SparkleImg from "assets/img/symbols/Sparkle.png";
 import PalletImg from "assets/img/symbols/Palette.png";
 import ScissorImg from "assets/img/symbols/Scissors.png";
-import BlackColor from "assets/img/symbols/black-color.png";
-import WhitieColor from "assets/img/symbols/white-color.png";
-import PurpleColor from "assets/img/symbols/purple-color.png";
+
 import RightArrow from "assets/img/symbols/rightArrow.png";
 import TshirtImg from "assets/img/symbols/TShirt.png";
-import CloseButton from "assets/img/symbols/close.png";
-import RightArrowImg from "assets/img/symbols/rightArrow.png";
+import HoodieImg from "assets/img/Goods/demo-small.png";
+
 import FamilyMark from "assets/img/symbols/family.png";
-import chevron from "assets/svg/chevron-right.svg";
+import { BiChevronRight } from "react-icons/bi";
+import { CgCloseO } from "react-icons/cg";
 
 import Button from "components/Button";
-import Modal from "components/Modal";
 import FirstStep from "components/StepperComponents/FirstStep";
 import SecondStep from "components/StepperComponents/SecondStep";
 import ThirdStep from "components/StepperComponents/ThirdStep";
+import { Modal as MantineModal } from "@mantine/core";
+import { HiOutlineLocationMarker } from "react-icons/hi";
 
 const ProductDetail: React.FC = (props: any): ReactElement => {
   const [color, setColor] = useState<String>("black");
@@ -42,6 +41,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
     setSize(size);
   };
   const [modalOpen, setModalOpen] = useState(false);
+  const [historyModalOpen, setHistoryModalOpen] = useState(false);
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -86,7 +86,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                 <img
                   src={LeftCircleButton}
                   alt="left-circle"
-                  className="cursor-pointer w-10 md:w-auto max-w-[72px] max-h-[72px]"
+                  className="cursor-pointer w-auto max-w-[72px] max-h-[72px] bg-[#2B2B2B] border border-white/50 shadow-[inset_2px_0px_6px_rgba(255,255,255,0.15)] px-4 py-[1.2rem] rounded-full hover:shadow-[inset_1px_1px_10px_rgba(255,255,255,0.30)] transition-all duration-100  "
                 ></img>
                 <div className="flex gap-3 items-center">
                   <img
@@ -109,7 +109,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                 <img
                   src={RightCircleButton}
                   alt="right-circle"
-                  className="cursor-pointer w-10 md:w-auto max-w-[72px] max-h-[72px]"
+                  className="cursor-pointer w-auto max-w-[72px] max-h-[72px] bg-[#2B2B2B] border border-white/50 shadow-[inset_2px_0px_6px_rgba(255,255,255,0.15)] px-4 py-[1.2rem] rounded-full hover:shadow-[inset_1px_1px_10px_rgba(255,255,255,0.30)] transition-all duration-100 "
                 ></img>
               </div>
             </div>
@@ -126,14 +126,14 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
             <div className="mt-4">
               <h5 className="text-white text-2xl font-semibold ">Details</h5>
 
-              <div class="grid overflow-hidden grid-cols-1 sm:grid-cols-3 grid-rows-1 md:grid-rows-2 gap-2 text-white gap-y-4 mt-4">
-                <div class="box">
+              <div className="grid overflow-hidden grid-cols-1 sm:grid-cols-3 grid-rows-1 md:grid-rows-2 gap-2 text-white gap-y-4 mt-4">
+                <div className="box">
                   <h6 className="text-xl text-white/70 font-semibold">Drop</h6>
                   <p className="text-lg text-white/50 font-medium">
                     Hoodie 001
                   </p>
                 </div>
-                <div class="box col-span-1 sm:col-span-2">
+                <div className="box col-span-1 sm:col-span-2">
                   <h6 className="text-xl text-white/70 font-semibold ">
                     Original Minter
                   </h6>
@@ -141,13 +141,13 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                     0xF1775305be0E293F4f83b51783B27F70Bae11689
                   </p>
                 </div>
-                <div class="box">
+                <div className="box">
                   <h6 className="text-xl text-white/70 font-semibold">
                     Material
                   </h6>
                   <p className="text-lg text-white/50 font-medium">Cotton</p>
                 </div>
-                <div class="box col-span-1 sm:col-span-2">
+                <div className="box col-span-1 sm:col-span-2">
                   <h6 className="text-xl text-white/70 font-semibold">
                     Manufacturer details
                   </h6>
@@ -155,28 +155,55 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                     Manufacturer Inc.
                   </p>
                 </div>
-                <div class="box">
+                <div className="box">
                   <h6 className="text-xl text-white/70 font-semibold">Size</h6>
                   <p className="text-lg text-white/50 font-medium">XS</p>
                 </div>
-                <div class="box col-span-1 sm:col-span-2">
+                <div className="box col-span-1 sm:col-span-2">
                   <h6 className="text-xl text-white/70 font-semibold">Color</h6>
                   <p className="text-lg text-white/50 font-medium">Black</p>
                 </div>
               </div>
             </div>
-            <div className="mt-4">
-              <button className="flex items-center gap-3 border-[#B7B7B7] border-[1px]    justify-center  px-6 h-[50px] rounded-full  text-white whitespace-nowrap  archivo-font font-semibold text-lg capitalize ">
+            <div className="mt-4 relative group">
+              <button className="flex items-center gap-3 border-white/10 border-[1px]    justify-center  px-6 h-[50px] rounded-full  text-white whitespace-nowrap  archivo-font font-semibold text-lg capitalize bg-white/5 hover:bg-white/5 transition-all duration-150">
                 <img src={FamilyMark} alt="" className="w-6" />
                 Radical Transparency
-                <img src={chevron} alt="" className="w-3" />
+                <BiChevronRight className="text-3xl  text-white/70 " />
               </button>
+
+              <div className="bg-black/90 xl:bg-white/10 border border-white/10 absolute top-14  xl:top-0 left-0 xl:left-80 text-white rounded-3xl p-6 archivo-font    gap-x-8 gap-y-3 grid-cols-2 hidden group-hover:grid">
+                <div>
+                  <p className="text-md font-semibold  text-white/70">
+                    Manufacturer details
+                  </p>
+                  <p className="text-lg font-medium text-white/50">
+                    Manufacturer Inc.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-md font-semibold  text-white/70">
+                    BTS Phygital Cost
+                  </p>
+                  <p className="text-lg font-medium text-white/50">
+                    BTS Phygital Cost
+                  </p>
+                </div>
+                <div>
+                  <p className="text-md font-semibold  text-white/70">
+                    Team's Profit
+                  </p>
+                  <p className="text-lg font-medium text-white/50">
+                    Team's Profit
+                  </p>
+                </div>
+              </div>
             </div>
             <div className="mt-2 md:mt-4">
               <Button
                 rightImgSrc={RightArrow}
                 text="Shop Now"
-                className=" text-lg"
+                className=" text-lg shadow-[inset_1px_1px_5px_rgba(255,255,255,0.40)] bg-white/10"
                 onClick={() => {
                   setModalOpen(true);
                 }}
@@ -184,14 +211,24 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
             </div>
           </div>
         </div>
+        <div className="h-10">{/* placeholder */}</div>
       </div>
 
       {/*  modal*/}
-      <Modal __isOpen={modalOpen} dispatchModal={() => {}}>
+      <MantineModal
+        opened={modalOpen}
+        onClose={() => {}}
+        withCloseButton={false}
+        classNames={{
+          inner: "bg-[#000000]/30 backdrop-blur	",
+          modal:
+            "bg-transparent w-full flex items-center justify-center h-full  rounded-3xl text-white",
+        }}
+      >
         <div className="relative w-full max-w-screen-lg h-full md:h-auto   my-8 ">
           {/* <div className=" overflow-auto"> */}
           <div className="relative  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#212121]/90 to-white/10   rounded-[32px]  shadow border-[1px] border-white/10  max-h-[100vh] overflow-hidden inline-block">
-            <div className="overflow-y-scroll mt-2 h-[42rem]  p-8">
+            <div className="overflow-y-scroll mt-2 max-h-[40rem]  p-4 md:p-8">
               <div className="flex justify-between items-start md:items-center">
                 <div className="flex items-start md:items-center">
                   <img
@@ -214,11 +251,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                     setActiveStep(0);
                   }}
                 >
-                  <img
-                    src={CloseButton}
-                    alt="closeButton"
-                    className="p-1 sm:p-3"
-                  />
+                  <CgCloseO className="text-2xl text-white/50 hover:text-white/90 transition-all duration-200" />
                   <span className="sr-only">Close modal</span>
                 </button>
               </div>
@@ -227,59 +260,104 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                 className="text-white"
               />
 
-              {/* left card */}
               <div className="flex flex-col gap-4 sm:flex-row  mt-5">
-                <div className="w-full md:w-1/2 h-full rounded-3xl border-[1px] border-white/10 p-[25px]  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/[.08] to-white/[.01] ">
-                  <div className="flex justify-between items-center">
-                    <Typography
-                      children="The Hoodie"
-                      className="text-white text-xl clash-font font-semibold"
+                {/* left card */}
+                <div className="w-full md:w-1/2 ">
+                  <div className="h-fit rounded-3xl border-[1px] border-white/10 p-[25px]  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/[.08] to-white/[.01] max-w-sm mx-auto">
+                    <div className="flex justify-between items-center">
+                      <Typography
+                        children="The Hoodie"
+                        className="text-white text-xl clash-font font-semibold"
+                      />
+                      <Typography
+                        children="3"
+                        className="text-white/70 text-xl clash-font font-semibold"
+                      />
+                    </div>
+
+                    <img
+                      src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                      alt="detail"
+                      className=""
                     />
-                    <Typography
-                      children="3"
-                      className="text-white/70 text-xl clash-font font-semibold"
-                    />
+                    <div className="flex flex-wrap gap-x-4 gap-y-3">
+                      <div className="flex gap-2 font-medium text-lg 	">
+                        <img src={PalletImg} alt="pallete" />
+                        <Typography
+                          children="Black"
+                          className="text-white/70 clash-font whitespace-nowrap"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <img src={ScissorImg} alt="scissor" />
+                        <Typography
+                          children="XS"
+                          className="text-white/70 clash-font whitespace-nowrap"
+                        />
+                      </div>
+
+                      <div className="flex gap-2">
+                        <img src={FlowerImg} alt="material" />
+                        <Typography
+                          children="100% Cotton"
+                          className="text-white/70 clash-font whitespace-nowrap"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <img src={SparkleImg} alt="sparkle" />
+                        <Typography
+                          children="Made in Philippines"
+                          className="text-white/70 clash-font whitespace-nowrap"
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  <img
-                    src="https://i.ibb.co/0Bqtcyv/image-3.png"
-                    alt="detail"
-                    className=""
-                  />
-                  <div className="flex flex-wrap gap-x-4 gap-y-3">
-                    <div className="flex gap-2 font-medium text-lg 	">
-                      <img src={PalletImg} alt="pallete" />
-                      <Typography
-                        children="Black"
-                        className="text-white/70 clash-font whitespace-nowrap"
-                      />
-                    </div>
-                    <div className="flex gap-2">
-                      <img src={ScissorImg} alt="scissor" />
-                      <Typography
-                        children="XS"
-                        className="text-white/70 clash-font whitespace-nowrap"
-                      />
-                    </div>
+                  <div className="w-full  float-left ">
+                    {/* <Stepper
+                      activeStep={activeStep}
+                      styleConfig={{
+                        activeBgColor: "transparent",
+                        activeTextColor: "#fff",
+                        inactiveBgColor: "transparent",
+                        inactiveTextColor: "#A09D9D",
+                        completedBgColor: "transparent",
+                        completedTextColor: "#A09D9D",
+                        size: "2em",
+                      }}
+                      stepClassName={"stepper__step"}
+                    >
+                      <Step label="Shipping Details" />
+                      <Step label="Payment Details" />
+                    </Stepper> */}
 
-                    <div className="flex gap-2">
-                      <img src={FlowerImg} alt="material" />
-                      <Typography
-                        children="100% Cotton"
-                        className="text-white/70 clash-font whitespace-nowrap"
-                      />
-                    </div>
-                    <div className="flex gap-2">
-                      <img src={SparkleImg} alt="sparkle" />
-                      <Typography
-                        children="Made in Philippines"
-                        className="text-white/70 clash-font whitespace-nowrap"
-                      />
-                    </div>
+                    <Stepper
+                      styleConfig={{
+                        activeBgColor: "transparent",
+                        activeTextColor: "#fff",
+                        inactiveBgColor: "transparent",
+                        inactiveTextColor: "#A09D9D",
+                        completedBgColor: "transparent",
+                        completedTextColor: "#fff",
+                        size: "2em",
+                      }}
+                      ConnectorStyleProps={{
+                        activeColor: "#ffffff",
+                        completedColor: "#ffffff",
+                        disabledColor: "#ffffff",
+                        style: "solid",
+                      }}
+                      stepClassName={"stepper__step"}
+                      steps={[
+                        { label: "Shipping details" },
+                        { label: "Payment details" },
+                      ]}
+                      activeStep={activeStep}
+                    />
                   </div>
                 </div>
                 {/* right form */}
-                <div className="w-full md:w-1/2 h-full px-5">
+                <div className="w-full md:w-1/2 h-min px-5 ">
                   <StepWizard
                     instance={assignStepWizard}
                     onStepChange={handleStepChange}
@@ -289,25 +367,6 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                     <ThirdStep />
                   </StepWizard>
                 </div>
-              </div>
-
-              <div className="w-full md:w-1/2">
-                <Stepper
-                  activeStep={activeStep}
-                  styleConfig={{
-                    activeBgColor: "transparent",
-                    activeTextColor: "#fff",
-                    inactiveBgColor: "transparent",
-                    inactiveTextColor: "#A09D9D",
-                    completedBgColor: "transparent",
-                    completedTextColor: "#A09D9D",
-                    size: "2em",
-                  }}
-                  stepClassName={"stepper__step"}
-                >
-                  <Step label="Shipping Details" />
-                  <Step label="Payment Details" />
-                </Stepper>
               </div>
 
               {/* <div className="flex justify-between items-center mt-5 md:-mt-20">
@@ -331,7 +390,361 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
             </div>
           </div>
         </div>
-      </Modal>
+      </MantineModal>
+
+      {/* item history modal */}
+      <MantineModal
+        opened={historyModalOpen}
+        onClose={() => {}}
+        withCloseButton={false}
+        classNames={{
+          inner: "bg-[#000000]/30 backdrop-blur	",
+          modal:
+            "bg-transparent w-full flex items-center justify-center h-full  rounded-3xl text-white",
+        }}
+      >
+        <div className="relative w-full max-w-screen-lg h-full md:h-auto   my-8 ">
+          {/* <div className=" overflow-auto"> */}
+          <div className="relative  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#212121]/90 to-white/10   rounded-[32px]  shadow border-[1px] border-white/10  max-h-[100vh] overflow-hidden inline-block">
+            <div className="overflow-y-scroll mt-2 max-h-[40rem]  p-8">
+              <div className="flex justify-between items-start md:items-center">
+                <div className="flex items-start md:items-center">
+                  <img
+                    src={TshirtImg}
+                    className="w-[30px] h-[30px]"
+                    alt="Tshirt"
+                  />
+                  <Typography
+                    children="Item History"
+                    className="text-white ml-3 text-[20px] md:text-[26px] clash-font font-semibold w-full"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  className="top-3 right-2.5  rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                  data-modal-toggle="authentication-modal"
+                  onClick={() => {
+                    setHistoryModalOpen(false);
+                  }}
+                >
+                  <CgCloseO className="text-2xl text-white/50 hover:text-white/90 transition-all duration-200" />
+                  <span className="sr-only">Close modal</span>
+                </button>
+              </div>
+              <Typography
+                children="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien."
+                className="text-white"
+              />
+
+              {/* component */}
+              <div className="relative my-8">
+                <div
+                  className="border-r-2 border-white/10 absolute h-full top-0"
+                  style={{ left: "9px" }}
+                ></div>
+                <ul className="list-none m-0 p-0">
+                  <li className="mb-12">
+                    <div className="flex group items-center archivo-font">
+                      <div className="bg-white/10 ml-1  z-10 rounded-full  h-3 w-3">
+                        <div className="bg-[#333333] h-0.5 w-8 items-center  ml-3 mt-1.5"></div>
+                      </div>
+                      <p className="ml-8 text-white/50">2 Days ago</p>
+                      <div className="flex-1  z-10 font-medium text-white flex items-center justify-between ml-8">
+                        {/* image */}
+                        <div>
+                          <div className="bg-white/10 rounded-3xl border border-white/10 w-28 h-28 flex items-center justify-center p-1">
+                            <img
+                              src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+
+                        {/* details */}
+                        <div>
+                          <p className="mb-2 font-semibold text-white">
+                            Hoodie Sold for 3
+                          </p>
+
+                          <div className="flex gap-8">
+                            <div>
+                              <p className="leading-6 font-semibold text-white/70">
+                                From
+                              </p>
+                              <p className="leading-6 text-white/50 text-base font-semibold">
+                                John David
+                              </p>
+                              <p className="flex items-center leading-6 gap-2 text-white/50 font-semibold text-base">
+                                <HiOutlineLocationMarker />
+                                France
+                              </p>
+                            </div>
+
+                            <div>
+                              <p className="leading-6 font-semibold text-white/70">
+                                To
+                              </p>
+                              <p className="leading-6 text-white/50 text-base font-semibold">
+                                John David
+                              </p>
+                              <p className="flex items-center leading-6 gap-2 text-white/50 font-semibold text-base">
+                                <HiOutlineLocationMarker />
+                                France
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* condition */}
+                        <div className="mt-8">
+                          <div className="flex gap-3">
+                            <div>
+                              <p className="font-semibold">Condition</p>
+                              <p className="font-semibold text-white/50">
+                                Good
+                              </p>
+                            </div>
+
+                            <div className="flex gap-2">
+                              <div className=" rounded-xl border border-white/10 w-12 h-12 flex items-center justify-center ">
+                                <img
+                                  src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                                  alt=""
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+
+                              <div className=" rounded-xl border border-white/10 w-12 h-12 flex items-center justify-center ">
+                                <img
+                                  src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                                  alt=""
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+
+                              <div className=" rounded-xl border border-white/10 w-12 h-12 flex items-center justify-center ">
+                                <img
+                                  src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                                  alt=""
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <p className="max-w-xs overflow-hidden text-ellipsis whitespace-nowrap mt-2 font-semibold text-white/50">
+                            Additional notes about the condition of your garment
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Optio, laboriosam.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li className="mb-12">
+                    <div className="flex group items-center archivo-font">
+                      <div className="bg-white/10 ml-1  z-10 rounded-full  h-3 w-3">
+                        <div className="bg-[#333333] h-0.5 w-8 items-center  ml-3 mt-1.5"></div>
+                      </div>
+                      <p className="ml-8 text-white/50">2 Days ago</p>
+                      <div className="flex-1  z-10 font-medium text-white flex items-center justify-between ml-8">
+                        {/* image */}
+                        <div>
+                          <div className="bg-white/10 rounded-3xl border border-white/10 w-28 h-28 flex items-center justify-center p-1">
+                            <img
+                              src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+
+                        {/* details */}
+                        <div>
+                          <p className="mb-2 font-semibold text-white">
+                            Hoodie Sold for 3
+                          </p>
+
+                          <div className="flex gap-8">
+                            <div>
+                              <p className="leading-6 font-semibold text-white/70">
+                                From
+                              </p>
+                              <p className="leading-6 text-white/50 text-base font-semibold">
+                                John David
+                              </p>
+                              <p className="flex items-center leading-6 gap-2 text-white/50 font-semibold text-base">
+                                <HiOutlineLocationMarker />
+                                France
+                              </p>
+                            </div>
+
+                            <div>
+                              <p className="leading-6 font-semibold text-white/70">
+                                To
+                              </p>
+                              <p className="leading-6 text-white/50 text-base font-semibold">
+                                John David
+                              </p>
+                              <p className="flex items-center leading-6 gap-2 text-white/50 font-semibold text-base">
+                                <HiOutlineLocationMarker />
+                                France
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* condition */}
+                        <div className="mt-8">
+                          <div className="flex gap-3">
+                            <div>
+                              <p className="font-semibold">Condition</p>
+                              <p className="font-semibold text-white/50">
+                                Good
+                              </p>
+                            </div>
+
+                            <div className="flex gap-2">
+                              <div className=" rounded-xl border border-white/10 w-12 h-12 flex items-center justify-center ">
+                                <img
+                                  src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                                  alt=""
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+
+                              <div className=" rounded-xl border border-white/10 w-12 h-12 flex items-center justify-center ">
+                                <img
+                                  src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                                  alt=""
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+
+                              <div className=" rounded-xl border border-white/10 w-12 h-12 flex items-center justify-center ">
+                                <img
+                                  src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                                  alt=""
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <p className="max-w-xs overflow-hidden text-ellipsis whitespace-nowrap mt-2 font-semibold text-white/50">
+                            Additional notes about the condition of your garment
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Optio, laboriosam.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li className="mb-12">
+                    <div className="flex group items-center archivo-font">
+                      <div className="bg-white/10 ml-1  z-10 rounded-full  h-3 w-3">
+                        <div className="bg-[#333333] h-0.5 w-8 items-center  ml-3 mt-1.5"></div>
+                      </div>
+                      <p className="ml-8 text-white/50">2 Days ago</p>
+                      <div className="flex-1  z-10 font-medium text-white flex items-center justify-between ml-8">
+                        {/* image */}
+                        <div>
+                          <div className="bg-white/10 rounded-3xl border border-white/10 w-28 h-28 flex items-center justify-center p-1">
+                            <img
+                              src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+
+                        {/* details */}
+                        <div>
+                          <p className="mb-2 font-semibold text-white">
+                            Hoodie Sold for 3
+                          </p>
+
+                          <div className="flex gap-8">
+                            <div>
+                              <p className="leading-6 font-semibold text-white/70">
+                                From
+                              </p>
+                              <p className="leading-6 text-white/50 text-base font-semibold">
+                                John David
+                              </p>
+                              <p className="flex items-center leading-6 gap-2 text-white/50 font-semibold text-base">
+                                <HiOutlineLocationMarker />
+                                France
+                              </p>
+                            </div>
+
+                            <div>
+                              <p className="leading-6 font-semibold text-white/70">
+                                To
+                              </p>
+                              <p className="leading-6 text-white/50 text-base font-semibold">
+                                John David
+                              </p>
+                              <p className="flex items-center leading-6 gap-2 text-white/50 font-semibold text-base">
+                                <HiOutlineLocationMarker />
+                                France
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* condition */}
+                        <div className="mt-8">
+                          <div className="flex gap-3">
+                            <div>
+                              <p className="font-semibold">Condition</p>
+                              <p className="font-semibold text-white/50">
+                                Good
+                              </p>
+                            </div>
+
+                            <div className="flex gap-2">
+                              <div className=" rounded-xl border border-white/10 w-12 h-12 flex items-center justify-center ">
+                                <img
+                                  src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                                  alt=""
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+
+                              <div className=" rounded-xl border border-white/10 w-12 h-12 flex items-center justify-center ">
+                                <img
+                                  src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                                  alt=""
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+
+                              <div className=" rounded-xl border border-white/10 w-12 h-12 flex items-center justify-center ">
+                                <img
+                                  src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                                  alt=""
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <p className="max-w-xs overflow-hidden text-ellipsis whitespace-nowrap mt-2 font-semibold text-white/50">
+                            Additional notes about the condition of your garment
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Optio, laboriosam.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              {/* timeline ends */}
+            </div>
+          </div>
+        </div>
+      </MantineModal>
     </Layout>
   );
 };

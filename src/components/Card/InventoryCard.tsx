@@ -7,7 +7,7 @@ import Typography from "components/Typography";
 import Button from "components/Button";
 import Modal from "components/Modal";
 
-import Chip from "assets/img/symbols/Scan.png";
+import Chip from "assets/svg/scan.svg";
 import CloseButton from "assets/img/symbols/close.png";
 import ChipPhone from "assets/img/symbols/chip-phone.png";
 import FamilyMark from "assets/img/symbols/family.png";
@@ -15,6 +15,7 @@ import RightButton from "assets/img/symbols/right-circle.png";
 import LeftButton from "assets/img/symbols/left-circle.png";
 import UploadImageButton from "components/UploadImageButton";
 import RightArrowImg from "assets/img/symbols/rightArrow.png";
+import { CgCloseO } from "react-icons/cg";
 
 const paragraph =
   "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien.";
@@ -155,7 +156,7 @@ const InventoryCard = React.memo(function (props: any) {
         /> */}
 
         <video
-          className="mx-auto max-h-[50rem] w-[250px] md:w-[450px] rounded-lg "
+          className="mx-auto max-h-[50rem] w-[250px] md:w-[450px] rounded-lg py-3"
           draggable={false}
           src={imgUrl}
           autoPlay
@@ -170,7 +171,7 @@ const InventoryCard = React.memo(function (props: any) {
           <div className="flex gap-3">
             <Button
               text="Sell"
-              className="border-white/10 px-8 bg-white/5 "
+              className="border-white/10 px-7 bg-white/5 "
               onClick={() => handleSellButtonClick(dataIndex)}
             />
             {registered ? (
@@ -178,7 +179,7 @@ const InventoryCard = React.memo(function (props: any) {
                 onClick={() => handleRegisterButtonClick(dataIndex)}
                 text="Registered"
                 imgSrc={Chip}
-                className="gradient-button"
+                className=" border-white/40  text-lg shadow-[inset_1px_1px_8px_rgba(255,255,255,0.40)] bg-white/10"
                 disabled
               />
             ) : (
@@ -186,7 +187,7 @@ const InventoryCard = React.memo(function (props: any) {
                 onClick={() => handleRegisterButtonClick(dataIndex)}
                 text="Register"
                 imgSrc={Chip}
-                className="gradient-button border-white/10"
+                className=" border-white/40  text-lg shadow-[inset_1px_1px_8px_rgba(255,255,255,0.40)] bg-white/10"
               />
             )}
           </div>
@@ -217,7 +218,7 @@ const InventoryCard = React.memo(function (props: any) {
                       closeModal();
                     }}
                   >
-                    <img src={CloseButton} alt="closeButton" className="h-6" />
+                    <CgCloseO className="text-2xl text-white/50 hover:text-white/90 transition-all duration-200 cursor-pointer" />
                     <span className="sr-only">Close modal</span>
                   </button>
                 </div>
@@ -278,174 +279,8 @@ const InventoryCard = React.memo(function (props: any) {
                 </div>
               </div>
             </div>
-            {/* <div className="relative w-full max-w-xl p-2 md:px-4 h-full md:h-auto  ">
-              <div className="relative bg-[#0E0E0E] rounded-[32px] shadow border-[1px] border-[#A09D9D] p-2 md:p-5 pt-8">
-                <div className="flex items-center justify-between px-2 md:px-5">
-                  <div className="flex items-center gap-2 md:gap-3 font-semibold text-xl md:text-2xl leading-8">
-                    <img
-                      src={Chip}
-                      alt="chip"
-                      className="w-[25px]  h-[25px] "
-                    />
-                    <p className="text-white clash-font">
-                      Scan to confirm the reception
-                    </p>
-                  </div>
-
-                  <button
-                    type="button"
-                    className=" text-gray-400 bg-transparent  rounded-lg text-sm "
-                    data-modal-toggle="authentication-modal"
-                    onClick={() => {
-                      closeModal();
-                    }}
-                  >
-                    <img src={CloseButton} alt="closeButton" className="h-6" />
-                    <span className="sr-only">Close modal</span>
-                  </button>
-                </div>
-
-                <div className="py-6 px-2 md:px-6 lg:px-8">
-                  <div className="flex items-center">
-                    <h3 className="ml-2 text-[18px] md:text-xl font-medium text-gray-900 dark:text-white">
-                      Register your phygital piece
-                    </h3>
-                  </div>
-
-                  <div className="flex relative">
-                    {!registered ? (
-                      <img
-                        src="https://i.ibb.co/0Bqtcyv/image-3.png"
-                        alt="goods"
-                        className="w-[80%]"
-                      />
-                    ) : (
-                      <img
-                        src="https://i.ibb.co/0Bqtcyv/image-3.png"
-                        alt="goods"
-                        className="w-full"
-                      />
-                    )}
-
-                    {!registered ? (
-                      <img
-                        src={ChipPhone}
-                        alt="chip-phone"
-                        className="absolute w-[60%] top-12 -right-5 md:top-14"
-                      />
-                    ) : (
-                      <img
-                        src={FamilyMark}
-                        alt="mark"
-                        className="absolute w-14 top-28 right-16 md:top-52 md:right-24"
-                      />
-                    )}
-                  </div>
-
-                  {!registered ? (
-                    <Typography
-                      children="To link your physical garment to its digital twin, you only need to scan the NFC ship on your  clothes directly with your phone."
-                      className="text-[#A09D9D] mt-5 "
-                    />
-                  ) : (
-                    <Typography
-                      children="You have successfully confirmed the reception of your physical fashion device.yyy"
-                      className="text-[#A09D9D] mt-5 text-center"
-                    />
-                  )}
-
-                  {!registered && (
-                    <Button
-                      text="Start Registering"
-                      className="mt-8 text-lg gradient-button"
-                      imgSrc={Chip}
-                      onClick={() => {
-                        ChipRegister(props.id);
-                      }}
-                    />
-                  )}
-                </div>
-              </div>
-            </div> */}
-            {/* <div className="relative w-[350px] md:w-[600px] h-full md:h-auto mt-5">
-              <div className="relative bg-[#0E0E0E] rounded-[32px] shadow border-[1px] border-[#A09D9D] p-[15px]">
-                <button
-                  type="button"
-                  className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                  data-modal-toggle="authentication-modal"
-                  onClick={() => {
-                    closeModal();
-                  }}
-                >
-                  <img src={CloseButton} alt="closeButton" className="p-3" />
-                  <span className="sr-only">Close modal</span>
-                </button>
-
-                <div className="py-6 px-2 md:px-6 lg:px-8">
-                  <div className="flex items-center">
-                    <img src={Chip} alt="chip" className="w-[25px] h-[25px]" />
-
-                    <h3 className="ml-2 text-[18px] md:text-xl font-medium text-gray-900 dark:text-white">
-                      Register your phygital piece
-                    </h3>
-                  </div>
-
-                  <div className="flex">
-                    {!registered ? (
-                      <img
-                        src="https://i.ibb.co/0Bqtcyv/image-3.png"
-                        alt="goods"
-                        className="w-[60%] md:w-[70%]"
-                      />
-                    ) : (
-                      <img
-                        src="https://i.ibb.co/0Bqtcyv/image-3.png"
-                        alt="goods"
-                        className="w-[90%] md:w-[70%]"
-                      />
-                    )}
-
-                    {!registered ? (
-                      <img
-                        src={ChipPhone}
-                        alt="chip-phone"
-                        className="w-[90%] -ml-[120px] md:h-[180px] mt-[50px]"
-                      />
-                    ) : (
-                      <img
-                        src={FamilyMark}
-                        alt="mark"
-                        className="w-[80px] h-[80px] -ml-[70px] md:-ml-[100px] mt-[100px] md:mt-[150px]"
-                      />
-                    )}
-                  </div>
-
-                  {!registered ? (
-                    <Typography
-                      children="To link your physical garment to its digital twin, you only need to scan the NFC ship on your  clothes directly with your phone."
-                      className="text-[#A09D9D] mt-5 text-center"
-                    />
-                  ) : (
-                    <Typography
-                      children="You have successfully registered your phygital fashion piece."
-                      className="text-[#A09D9D] mt-5 text-center"
-                    />
-                  )}
-
-                  {!registered && (
-                    <Button
-                      text="Start Registering"
-                      className="mt-8 "
-                      imgSrc={Chip}
-                      onClick={() => {
-                        ChipRegister(dataIndex);
-                      }}
-                    />
-                  )}
-                </div>
-              </div>
-            </div> */}
           </Modal>
+
           <Modal __isOpen={sellModalOpen} dispatchModal={() => {}}>
             <div className="relative w-full max-w-lg h-full md:h-auto   my-8 ">
               <div className="relative  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#212121]/90 to-white/10   rounded-[32px]  shadow border-[1px] border-white/10  max-h-[100vh] overflow-hidden inline-block">
@@ -466,11 +301,7 @@ const InventoryCard = React.memo(function (props: any) {
                         closeSellModal();
                       }}
                     >
-                      <img
-                        src={CloseButton}
-                        alt="closeButton"
-                        className="p-1 sm:p-3"
-                      />
+                      <CgCloseO className="text-2xl text-white/50 hover:text-white/90 transition-all duration-200 cursor-pointer" />
                       <span className="sr-only">Close modal</span>
                     </button>
                   </div>

@@ -49,7 +49,7 @@ const ThirdStep = (props: any) => {
     // else {
     setLoading(true);
     setError("");
-    props.nextStep();
+    // props.nextStep();
     await completeCheckout();
     setLoading(false);
     navigate("/inventory");

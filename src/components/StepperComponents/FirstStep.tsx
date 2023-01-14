@@ -213,7 +213,7 @@ const FirstStep = (props: any) => {
                 value={selectedOption}
                 onChange={changeAddressCountry}
                 classes="w-full p-4 rounded-2xl border-[1px] border-white/10  mt-3 outline-none text-md placeholder:text-white/50 
-          text-white leading-6 tracking-wider"
+          text-white leading-6 tracking-wider selectNative "
               />
               {/* <Select
                 value={selectedOption}
@@ -285,7 +285,7 @@ const FirstStep = (props: any) => {
           placeholder="Number, street"
           required
         ></input>
-        <div className="flex gap-3">
+        <div className="flex gap-0 md:gap-3 flex-col md:flex-row">
           <div className="sm:flex-1">
             <Typography
               children="Address line 2 (Optional)"

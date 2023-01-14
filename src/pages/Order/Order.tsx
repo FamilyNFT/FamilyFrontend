@@ -33,6 +33,7 @@ import { setCheckout, setVariant } from "redux/product/reducer";
 import Web3 from "web3";
 import { setAuth } from "redux/auth/reducer";
 import shopifyBackendURL from "constants/backendURL";
+import { CgCloseO } from "react-icons/cg";
 
 const ProductDetail: React.FC = (props: any): ReactElement => {
   const [color, setColor] = useState<String>("black");
@@ -287,11 +288,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                         setActiveStep(0);
                       }}
                     >
-                      <img
-                        src={CloseButton}
-                        alt="closeButton"
-                        className="p-1 sm:p-3"
-                      />
+                      <CgCloseO className="text-2xl text-white/50 hover:text-white/90 transition-all duration-200" />
                       <span className="sr-only">Close modal</span>
                     </button>
                   </div>
@@ -302,59 +299,86 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
 
                   {/* left card */}
                   <div className="flex flex-col gap-4 sm:flex-row  mt-5">
-                    <div className="w-full md:w-1/2 h-full rounded-3xl border-[1px] border-white/10 p-[25px]  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/[.08] to-white/[.01] ">
-                      <div className="flex justify-between items-center">
-                        <Typography
-                          children={product.title}
-                          className="text-white text-xl clash-font font-semibold"
+                    <div className="w-full md:w-1/2  ">
+                      <div className=" rounded-3xl border-[1px] border-white/10 p-[25px]  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/[.08] to-white/[.01] h-fit md:h-[30rem] flex flex-col justify-between">
+                        <div className="flex justify-between items-center">
+                          <Typography
+                            children={product.title}
+                            className="text-white text-xl clash-font font-semibold"
+                          />
+                          <Typography
+                            children="3"
+                            className="text-white/70 text-xl clash-font font-semibold"
+                          />
+                        </div>
+
+                        <video
+                          src={product?.video}
+                          loop
+                          autoPlay
+                          alt="detail"
+                          className="mb-5 "
                         />
-                        <Typography
-                          children="3"
-                          className="text-white/70 text-xl clash-font font-semibold"
-                        />
+                        <div className="flex flex-wrap gap-x-4 gap-y-3">
+                          <div className="flex gap-2 font-medium text-lg 	">
+                            <img src={PalletImg} alt="pallete" />
+                            <Typography
+                              children="Black"
+                              className="text-white/70 clash-font whitespace-nowrap"
+                            />
+                          </div>
+                          <div className="flex gap-2">
+                            <img src={ScissorImg} alt="scissor" />
+                            <Typography
+                              children="XS"
+                              className="text-white/70 clash-font whitespace-nowrap"
+                            />
+                          </div>
+
+                          <div className="flex gap-2">
+                            <img src={FlowerImg} alt="material" />
+                            <Typography
+                              children="100% Cotton"
+                              className="text-white/70 clash-font whitespace-nowrap"
+                            />
+                          </div>
+                          <div className="flex gap-2">
+                            <img src={SparkleImg} alt="sparkle" />
+                            <Typography
+                              children="Made in Philippines"
+                              className="text-white/70 clash-font whitespace-nowrap"
+                            />
+                          </div>
+                        </div>
                       </div>
 
-                      <video
-                        src={product?.video}
-                        loop
-                        autoPlay
-                        alt="detail"
-                        className="mb-5 "
+                      <Stepper
+                        styleConfig={{
+                          activeBgColor: "transparent",
+                          activeTextColor: "#fff",
+                          inactiveBgColor: "transparent",
+                          inactiveTextColor: "#A09D9D",
+                          completedBgColor: "transparent",
+                          completedTextColor: "#fff",
+                          size: "2em",
+                        }}
+                        ConnectorStyleProps={{
+                          activeColor: "#ffffff",
+                          completedColor: "#ffffff",
+                          disabledColor: "#ffffff",
+                          style: "solid",
+                        }}
+                        stepClassName={"stepper__step"}
+                        steps={[
+                          { label: "Shipping details" },
+                          { label: "Payment details" },
+                        ]}
+                        activeStep={activeStep}
                       />
-                      <div className="flex flex-wrap gap-x-4 gap-y-3">
-                        <div className="flex gap-2 font-medium text-lg 	">
-                          <img src={PalletImg} alt="pallete" />
-                          <Typography
-                            children="Black"
-                            className="text-white/70 clash-font whitespace-nowrap"
-                          />
-                        </div>
-                        <div className="flex gap-2">
-                          <img src={ScissorImg} alt="scissor" />
-                          <Typography
-                            children="XS"
-                            className="text-white/70 clash-font whitespace-nowrap"
-                          />
-                        </div>
-
-                        <div className="flex gap-2">
-                          <img src={FlowerImg} alt="material" />
-                          <Typography
-                            children="100% Cotton"
-                            className="text-white/70 clash-font whitespace-nowrap"
-                          />
-                        </div>
-                        <div className="flex gap-2">
-                          <img src={SparkleImg} alt="sparkle" />
-                          <Typography
-                            children="Made in Philippines"
-                            className="text-white/70 clash-font whitespace-nowrap"
-                          />
-                        </div>
-                      </div>
                     </div>
+
                     {/* right form */}
-                    <div className="w-full md:w-1/2 h-full px-5">
+                    <div className="w-full md:w-1/2 h-min px-5">
                       <StepWizard
                         instance={assignStepWizard}
                         onStepChange={handleStepChange}
@@ -365,44 +389,6 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                       </StepWizard>
                     </div>
                   </div>
-
-                  <div className="w-full md:w-1/2">
-                    <Stepper
-                      activeStep={activeStep}
-                      styleConfig={{
-                        activeBgColor: "transparent",
-                        activeTextColor: "#fff",
-                        inactiveBgColor: "transparent",
-                        inactiveTextColor: "#A09D9D",
-                        completedBgColor: "transparent",
-                        completedTextColor: "#A09D9D",
-                        size: "2em",
-                      }}
-                      stepClassName={"stepper__step"}
-                    >
-                      <Step label="Shipping Details" />
-                      <Step label="Payment Details" />
-                    </Stepper>
-                  </div>
-
-                  {/* <div className="flex justify-between items-center mt-5 md:-mt-20">
-                <Stepper
-                  activeStep={activeStep}
-                  styleConfig={{
-                    activeBgColor: "transparent",
-                    activeTextColor: "#fff",
-                    inactiveBgColor: "transparent",
-                    inactiveTextColor: "#A09D9D",
-                    completedBgColor: "#transparent",
-                    completedTextColor: "#A09D9D",
-                    size: "2em",
-                  }}
-                  stepClassName={"stepper__step"}
-                >
-                  <Step label="Shipping Details" />
-                  <Step label="Payment Details" />
-                </Stepper>
-              </div> */}
                 </div>
               </div>
             </div>

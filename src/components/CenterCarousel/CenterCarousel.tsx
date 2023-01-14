@@ -58,6 +58,7 @@ export const CenterCarousel = (props: any) => {
   const ref = React.useRef(StackedCarousel);
   const [isLoading, setIsLoading] = useState(true);
   const [meta, setData] = useState<any[]>([]);
+  const [metaCount, setDataCount] = useState<number>(0);
   const contract = useMulticallContract(
     "0x450a0461D584449386e008afa848d76217dC9e91"
   );
@@ -72,8 +73,9 @@ export const CenterCarousel = (props: any) => {
       metadata.push(await data.json());
     }
     setData(metadata);
-    setIsLoading(false);
     console.log(metadata);
+    setIsLoading(false);
+    setDataCount(metadata.length);
     // console.log(data);
   }, []);
   useEffect(() => {
@@ -91,7 +93,7 @@ export const CenterCarousel = (props: any) => {
             // @ts-ignore
             carouselRef={ref}
             render={(parentWidth, carouselRef) => {
-              let currentVisibleSlide = 3;
+              let currentVisibleSlide = metaCount >= 3 ? 3 : 1;
               if (parentWidth <= 1440)
                 currentVisibleSlide = meta.length >= 3 ? 3 : 1;
               if (parentWidth <= 1080) currentVisibleSlide = 1;
