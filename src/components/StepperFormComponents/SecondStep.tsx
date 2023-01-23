@@ -15,19 +15,41 @@ import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { useAppDispatch, useAppSelector } from "redux/hooks/redux-hooks";
 import { setEmail, setShipping } from "redux/product/reducer";
 import shopifyBackendURL from "constants/backendURL";
-const FirstStep = (props: any) => {
+
+const SecondStep = (props: any) => {
   const dispatch = useAppDispatch();
   const [mail, setMail] = useState("");
   const [error, setError] = useState("");
-  const [selectedOption, setSelectedOption] = React.useState("");
-  const [province, setProvince] = React.useState("");
-  const [shippingAddress, setShippingAddress] = React.useState({});
+
+  const [shippingAddress, setShippingAddress] = React.useState({
+    country: "",
+    province: "",
+    city: "",
+    address1: "",
+    address2: "",
+    zip: "",
+  });
   const checkout = useAppSelector((state) => state.product.checkout);
+  console.log(checkout);
   const [loading, setLoading] = useState<boolean>(false);
   const backend = shopifyBackendURL;
   console.log(checkout);
 
+  const [selectedOption, setSelectedOption] = React.useState("");
+  const [province, setProvince] = React.useState("");
+  const [city, setCity] = useState("");
+  const [address1, setAddress1] = useState("");
+  const [address2, setAddress2] = useState("");
   const [postal, setPostal] = useState("");
+
+  const [formErrors, setFormErrors] = useState({
+    country: "",
+    province: "",
+    city: "",
+    address1: "",
+    address2: "",
+    postal: "",
+  });
   const updateCheckout = async () => {
     console.log(checkout);
     let check = await fetch(`${backend}/checkout/update`, {
@@ -42,9 +64,7 @@ const FirstStep = (props: any) => {
       }),
     });
   };
-  useEffect(() => {
-    dispatch(setEmail(mail));
-  }, [mail]);
+
   useEffect(() => {
     dispatch(setShipping(shippingAddress));
   }, [shippingAddress]);
@@ -52,41 +72,87 @@ const FirstStep = (props: any) => {
   const validate = async () => {
     // if (!info1.name) setError("Name is mandatory field");
     // else {
-    setLoading(true);
-    setError("");
-    await updateCheckout();
-    props.nextStep();
-    setLoading(false);
+    setFormErrors({
+      country: "",
+      province: "",
+      city: "",
+      address1: "",
+      address2: "",
+      postal: "",
+    });
+    let validForm = true;
+    if (selectedOption === "") {
+      setFormErrors((e) => {
+        return { ...e, country: "Required" };
+      });
+      validForm = false;
+    }
+    if (province === "") {
+      setFormErrors((e) => {
+        return { ...e, province: "Required" };
+      });
+      validForm = false;
+    }
+    if (city === "") {
+      setFormErrors((e) => {
+        return { ...e, city: "City required" };
+      });
+      validForm = false;
+    }
+    if (address1 === "") {
+      setFormErrors((e) => {
+        return { ...e, address1: "Address details required" };
+      });
+      validForm = false;
+    }
+    if (postal === "") {
+      setFormErrors((e) => {
+        return { ...e, postal: "Required" };
+      });
+      validForm = false;
+    }
+
+    if (validForm) {
+      setLoading(true);
+      setShippingAddress((e) => {
+        return {
+          ...e,
+          city,
+          address1,
+          address2,
+          zip: postal,
+        };
+      });
+      await updateCheckout();
+      props.nextStep();
+      setLoading(false);
+    }
     // props.userCallback(info1);
     // }
   };
 
-  const changeAddressForm = (e: any) => {
-    console.log(e?.target?.name);
-    setShippingAddress((address) => ({
-      [e?.target?.name]: e.target?.value,
-      ...address,
-    }));
-  };
+  // const changeAddressForm = (e: any) => {
+  //   console.log(e?.target?.name);
+  //   setShippingAddress((address) => ({
+  //     [e?.target?.name]: e.target?.value,
+  //     ...address,
+  //   }));
+  // };
   const changeAddressCountry = (value: string) => {
     setSelectedOption(value);
     setShippingAddress((address) => ({
-      country: value,
       ...address,
+      country: value,
     }));
   };
   const changeAddressProvince = (value: string) => {
     setProvince(value);
     setShippingAddress((address) => ({
-      province: value,
       ...address,
+      province: value,
     }));
   };
-  const options = [
-    { value: "US", label: "United States" },
-    { value: "AU", label: "Australia" },
-    { value: "IN", label: "India" },
-  ];
+
   const customSelectStyles = {
     option: (provided: any, state: any) => ({
       ...provided,
@@ -144,101 +210,45 @@ const FirstStep = (props: any) => {
           className="text-white text-[18px] font-semibold"
         />
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div>
-            <Typography
-              children="Firstname"
-              className="text-md text-white/70 mt-5"
-            />
-
-            <input
-              onChange={(e) => changeAddressForm(e)}
-              type="text"
-              name="firstName"
-              className="w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
-          text-white leading-6 tracking-wider"
-              placeholder="John"
-            ></input>
-          </div>
-          <div>
-            <Typography
-              children="Lastname"
-              className="text-md text-white/70 mt-5"
-            />
-            <input
-              onChange={(e) => changeAddressForm(e)}
-              type="text"
-              name="lastName"
-              className="w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
-          text-white leading-6 tracking-wider"
-              placeholder="David"
-              required
-            ></input>
-          </div>
-        </div>
-        <div>
-          <Typography
-            children="Email Address"
-            className="text-md text-white/70 mt-5"
-          />
-
-          <input
-            type="email"
-            name="email"
-            onChange={(e) => {
-              setMail(e.target.value);
-            }}
-            className="w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
-          text-white leading-6 tracking-wider"
-            placeholder="John@example.com"
-            required
-          ></input>
-        </div>
-
         <div className="flex justify-between flex-col sm:flex-row gap-3">
           <div className="my-1 w-full sm:w-1/2 max-w-xs ">
-            <Typography
-              children="Country"
-              className="text-md text-white/70 mt-5"
-            />
+            <div className="flex justify-start gap-4 items-end">
+              <Typography
+                children="Country"
+                className="text-md text-white/70 mt-3"
+              />
+              <p className="text-[#E46060] text-sm">{formErrors.country}</p>
+            </div>
 
             <div className="relative ">
-              {/* <input
-                type="text"
-                className="w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
-              text-white leading-6 tracking-wider"
-                placeholder="Country"
-              ></input> */}
               <CountryDropdown
                 value={selectedOption}
                 onChange={changeAddressCountry}
-                classes="w-full p-4 rounded-2xl border-[1px] border-white/10  mt-3 outline-none text-md placeholder:text-white/50 
-          text-white leading-6 tracking-wider selectNative "
+                classes={`w-full p-4 rounded-2xl border-[1px] border-white/10  mt-3 outline-none text-md placeholder:text-white/50 
+          text-white leading-6 tracking-wider selectNative focus:border-white/30 focus:text-white ${
+            formErrors.province ? "border-[#E46060] border-2" : ""
+          }`}
               />
-              {/* <Select
-                value={selectedOption}
-                onChange={(option: any) => {
-                  setSelectedOption(option);
-                }}
-                options={options}
-                styles={customSelectStyles}
-                placeholder="Country"
-              /> */}
             </div>
           </div>
           <div className="my-1 w-full sm:w-1/2 max-w-xs ">
-            <Typography
-              children="State/Province"
-              className="text-md text-white/70 mt-5"
-            />
+            <div className="flex justify-start gap-4 items-end">
+              <Typography
+                children="State/Province"
+                className="text-md text-white/70 mt-3"
+              />
+              <p className="text-[#E46060] text-sm">{formErrors.province}</p>
+            </div>
 
             <div className="relative ">
               <RegionDropdown
                 onChange={changeAddressProvince}
                 country={selectedOption}
                 value={province}
-                classes="w-full p-4 rounded-2xl border-[1px] border-white/10  mt-3 outline-none text-md placeholder:text-white/50 
-          text-white leading-6 tracking-wider"
+                classes={`w-full p-4 rounded-2xl border-[1px] border-white/10  mt-3 outline-none text-md placeholder:text-white/50 
+          text-white leading-6 tracking-wider focus:border-white/30 focus:text-white ${
+            formErrors.province ? "border-[#E46060] border-2" : ""
+          }`}
               />
               {/* <input
                 type="text"
@@ -258,36 +268,46 @@ const FirstStep = (props: any) => {
             </div>
           </div>
         </div>
-
-        <div className="flex">
+        <div className="">
           <div>
-            <Typography
-              children="City"
-              className="text-md text-white/70 mt-5"
-            />
+            <div className="flex justify-start gap-4 items-end">
+              <Typography
+                children="City"
+                className="text-md text-white/70 mt-3"
+              />
+              <p className="text-[#E46060] text-sm">{formErrors.city}</p>
+            </div>
 
             <input
               type="text"
               name="city"
-              onChange={(e) => changeAddressForm(e)}
-              className="w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
-            text-white leading-6 tracking-wider"
+              onChange={(e) => setCity(e.target.value)}
+              value={city}
+              className={`w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
+          text-white leading-6 tracking-wider focus:border-white/30 focus:text-white ${
+            formErrors.city ? "border-[#E46060] border-2" : ""
+          }`}
               placeholder="Paris"
               required
             ></input>
           </div>
-
           <div>
-            <Typography
-              children="Address line 1"
-              className="text-md text-white/70 mt-5"
-            />
+            <div className="flex justify-start gap-4 items-end">
+              <Typography
+                children="Address Line 1"
+                className="text-md text-white/70 mt-5"
+              />
+              <p className="text-[#E46060] text-sm">{formErrors.address1}</p>
+            </div>
             <input
               type="text"
-              onChange={(e) => changeAddressForm(e)}
+              onChange={(e) => setAddress1(e.target.value)}
+              value={address1}
               name="address1"
-              className="w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
-          text-white leading-6 tracking-wider"
+              className={`w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
+          text-white leading-6 tracking-wider focus:border-white/30 focus:text-white ${
+            formErrors.address1 ? "border-[#E46060] border-2" : ""
+          }`}
               placeholder="Number, street"
               required
             ></input>
@@ -295,41 +315,49 @@ const FirstStep = (props: any) => {
         </div>
 
         <div className="flex gap-0 md:gap-3 flex-col md:flex-row">
-          <div className="sm:flex-1">
+          <div className="">
             <Typography
               children="Address line 2 (Optional)"
               className="text-md text-white/70 mt-5"
             />
 
             <input
-              onChange={(e) => changeAddressForm(e)}
+              onChange={(e) => setAddress2(e.target.value)}
+              value={address2}
               type="text"
               name="address2"
               className="w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
-          text-white leading-6 tracking-wider"
+          text-white leading-6 tracking-wider focus:border-white/30 focus:text-white"
               placeholder="address line 2"
             ></input>
           </div>
-          <div className="my-1 w-full sm:w-1/3">
-            <Typography
-              children="Postal Code"
-              className="text-md text-white/70 mt-5"
-            />
+          <div className="">
+            <div className="flex justify-start gap-4 items-end">
+              <Typography
+                children="Postal Code"
+                className="text-md text-white/70 mt-5"
+              />
+              <p className="text-[#E46060] text-sm">{formErrors.postal}</p>
+            </div>
 
             <input
               // mask="99999"
               // maskChar=" "
-              onChange={(e) => changeAddressForm(e)}
+              onChange={(e) => setPostal(e.target.value)}
+              value={postal}
               name="zip"
-              className="w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
-          text-white leading-6 tracking-wider"
+              className={`w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
+          text-white leading-6 tracking-wider focus:border-white/30 focus:text-white ${
+            formErrors.postal ? "border-[#E46060] border-2" : ""
+          }`}
               placeholder="00000"
+              type="number"
               required
             />
           </div>
         </div>
       </div>
-      <div className="float-right">
+      <div>
         <StepperActionButtons
           isLoading={loading}
           {...props}
@@ -340,4 +368,4 @@ const FirstStep = (props: any) => {
   );
 };
 
-export default FirstStep;
+export default SecondStep;

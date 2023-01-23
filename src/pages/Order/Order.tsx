@@ -25,9 +25,10 @@ import chevron from "assets/svg/chevron-right.svg";
 
 import Button from "components/Button";
 import Modal from "components/Modal";
-import FirstStep from "components/StepperComponents/FirstStep";
-import SecondStep from "components/StepperComponents/SecondStep";
-import ThirdStep from "components/StepperComponents/ThirdStep";
+import FirstStep from "components/StepperFormComponents/FirstStep";
+import SecondStep from "components/StepperFormComponents/SecondStep";
+import ThirdStep from "components/StepperFormComponents/ThirdStep";
+import FourthStep from "components/StepperFormComponents/FourthStep";
 import { useAppDispatch, useAppSelector } from "redux/hooks/redux-hooks";
 import { setCheckout, setVariant } from "redux/product/reducer";
 import Web3 from "web3";
@@ -142,17 +143,17 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                 ></img>
                 <div className="flex gap-3 items-center">
                   <img
-                    src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                    src={HoodieImg}
                     alt="detail"
                     className="w-[30%] max-w-[72px] max-h-[72px] h-[30%] object-cover border border-white/10 rounded-lg"
                   />
                   <img
-                    src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                    src={HoodieImg}
                     alt="detail"
                     className="w-[30%] max-w-[72px] max-h-[72px] h-[30%] object-cover border border-white/10 rounded-lg"
                   />
                   <img
-                    src="https://i.ibb.co/0Bqtcyv/image-3.png"
+                    src={HoodieImg}
                     alt="detail"
                     className="w-[30%] max-w-[72px] max-h-[72px] h-[30%] object-cover border border-white/10 rounded-lg"
                   />
@@ -183,7 +184,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                   </h5>
 
                   <div className="text-white gap-7 flex mt-4">
-                    <div class="flex gap-2">
+                    <div className="flex gap-2">
                       {/* <h6 className="text-xl text-white/70 font-semibold">Drop</h6> */}
                       <img src={FlowerImg} alt="flower" />
                       <p className="text-base text-white/50 font-semibold">
@@ -202,8 +203,8 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                 <div className="mt-4">
                   <h5 className="text-white text-2xl font-semibold ">Size</h5>
 
-                  <div class="text-white gap-7 flex mt-4">
-                    <div class="flex flex-wrap gap-2">
+                  <div className="text-white gap-7 flex mt-4">
+                    <div className="flex flex-wrap gap-2">
                       {/* <h6 className="text-xl text-white/70 font-semibold">Drop</h6> */}
                       {product?.variants.map((variant) => {
                         return (
@@ -216,6 +217,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                                 ? "active-size-button"
                                 : "size-button text-white/50"
                             }
+                            key={variant.title}
                           >
                             {variant.title}
                           </div>
@@ -231,6 +233,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                 <img src={chevron} alt="" className="w-3" />
               </button>
             </div> */}
+
                 <div className="mt-2 md:mt-4">
                   {auth ? (
                     <Button
@@ -297,11 +300,11 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                     className="text-white"
                   />
 
-                  {/* left card */}
                   <div className="flex flex-col gap-4 sm:flex-row  mt-5">
+                    {/* left card */}
                     <div className="w-full md:w-1/2  ">
-                      <div className=" rounded-3xl border-[1px] border-white/10 p-[25px]  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/[.08] to-white/[.01] h-fit md:h-[30rem] flex flex-col justify-between">
-                        <div className="flex justify-between items-center">
+                      <div className=" rounded-3xl border-[1px] border-white/10 p-[25px]  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/[.08] to-white/[.01] h-fit  flex flex-col justify-between">
+                        <div className="flex justify-between items-center mb-4">
                           <Typography
                             children={product.title}
                             className="text-white text-xl clash-font font-semibold"
@@ -317,7 +320,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                           loop
                           autoPlay
                           alt="detail"
-                          className="mb-5 "
+                          className="mb-4"
                         />
                         <div className="flex flex-wrap gap-x-4 gap-y-3">
                           <div className="flex gap-2 font-medium text-lg 	">
@@ -370,6 +373,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                         }}
                         stepClassName={"stepper__step"}
                         steps={[
+                          { label: "Personal details" },
                           { label: "Shipping details" },
                           { label: "Payment details" },
                         ]}
@@ -386,6 +390,7 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                         <FirstStep />
                         <SecondStep />
                         <ThirdStep />
+                        <FourthStep />
                       </StepWizard>
                     </div>
                   </div>

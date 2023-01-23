@@ -147,7 +147,7 @@ const Header: React.FC<Props> = ({ isDashboard = false }) => {
               onClick={() => {
                 connectWallet();
               }}
-              className={`shadow-[inset_1px_1px_10px_rgba(255,255,255,0.40)] bg-white/10 tracking-wider archivo-font text-md ${
+              className={`shadow-[inset_1px_1px_4px_rgba(255,255,255,0.40)] bg-gradient-to-r from-[#2B2B2B]/80  to-[#2B2B2B]/100 tracking-wider archivo-font text-md border-white/30 ${
                 location.pathname === "/inventory" && auth ? "px-3 sm:px-6" : ""
               }`}
               textClassName={` ${

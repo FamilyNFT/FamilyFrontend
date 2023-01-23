@@ -17,32 +17,50 @@ const StepperActionsButtons = (props: any) => {
   };
 
   return (
-    <div className="flex justify-between gap-4 ">
+    <div className="flex justify-between gap-4  ">
       {props.currentStep > 1 && (
-        <Button text="Back" imgSrc={leftArrow} onClick={handleBack} />
+        <Button
+          text="Back"
+          imgSrc={leftArrow}
+          onClick={handleBack}
+          className="shadow-[inset_1px_1px_4px_rgba(255,255,255,0.30)] bg-gradient-to-r from-[#2B2B2B]/80  to-[#2B2B2B]/100 border-white/20"
+          {...(props.isLoading && { disabled: props.isLoading })}
+        />
       )}
 
       {props.currentStep < props.totalSteps && (
-        <>
+        <div>
           {props.currentStep === 1 && (
             <Button
               isLoading={props.isLoading}
               onClick={handleNext}
-              text="Payment Details"
+              text="Shipping Details"
               rightImgSrc={RightArrow}
-              className="shadow-[inset_1px_1px_4px_rgba(255,255,255,0.30)] bg-white/5 border-white/20"
+              className="shadow-[inset_1px_1px_4px_rgba(255,255,255,0.30)] bg-gradient-to-r from-[#2B2B2B]/80  to-[#2B2B2B]/100 border-white/20"
+              {...(props.isLoading && { disabled: props.isLoading })}
             />
           )}
           {props.currentStep === 2 && (
             <Button
               isLoading={props.isLoading}
               onClick={handleNext}
-              text="Validate"
+              text="Payment Details"
               rightImgSrc={RightArrow}
-              className="shadow-[inset_1px_1px_4px_rgba(255,255,255,0.30)] bg-white/5 border-white/20"
+              className="shadow-[inset_1px_1px_4px_rgba(255,255,255,0.30)] bg-gradient-to-r from-[#2B2B2B]/80  to-[#2B2B2B]/100 border-white/20"
+              {...(props.isLoading && { disabled: props.isLoading })}
             />
           )}
-        </>
+          {props.currentStep === 3 && (
+            <Button
+              isLoading={props.isLoading}
+              onClick={handleNext}
+              text="Validate"
+              rightImgSrc={RightArrow}
+              className="shadow-[inset_1px_1px_4px_rgba(255,255,255,0.30)] bg-gradient-to-r from-[#2B2B2B]/80  to-[#2B2B2B]/100 border-white/20"
+              {...(props.isLoading && { disabled: props.isLoading })}
+            />
+          )}
+        </div>
       )}
       {props.currentStep === props.totalSteps && (
         <Button
@@ -50,7 +68,8 @@ const StepperActionsButtons = (props: any) => {
           onClick={handleNext}
           text="Shop now"
           rightImgSrc={RightArrow}
-          className="shadow-[inset_1px_1px_4px_rgba(255,255,255,0.30)] bg-white/5 border-white/20"
+          className="shadow-[inset_1px_1px_2px_rgba(255,255,255,0.45)] bg-gradient-to-r from-[#2B2B2B]/80  to-[#2B2B2B]/100 border-white/20"
+          {...(props.isLoading && { disabled: props.isLoading })}
         />
       )}
     </div>

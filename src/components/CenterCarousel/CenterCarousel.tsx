@@ -6,6 +6,7 @@ import {
 
 import InventoryCard from "components/Card/InventoryCard";
 import MarketplaceCard from "components/Card/MarketplaceCard";
+import HoodieImg from "assets/img/black-hoodie.png";
 
 import RightButton from "assets/img/symbols/right-circle.png";
 import LeftButton from "assets/img/symbols/left-circle.png";
@@ -16,40 +17,40 @@ import { useAppSelector } from "redux/hooks/redux-hooks";
 export const datas = [
   {
     id: 1,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: { HoodieImg },
     title: "Interstaller",
   },
-  { id: 2, cover: "https://i.ibb.co/0Bqtcyv/image-3.png", title: "Inception" },
+  { id: 2, cover: { HoodieImg }, title: "Inception" },
   {
     id: 3,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: { HoodieImg },
     title: "Blade Runner 2049",
   },
-  { id: 4, cover: "https://i.ibb.co/0Bqtcyv/image-3.png", title: "Icon man 3" },
-  { id: 5, cover: "https://i.ibb.co/0Bqtcyv/image-3.png", title: "Venom" },
+  { id: 4, cover: { HoodieImg }, title: "Icon man 3" },
+  { id: 5, cover: { HoodieImg }, title: "Venom" },
   {
     id: 6,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: { HoodieImg },
     title: "Steins Gate",
   },
   {
     id: 7,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: { HoodieImg },
     title: "One Punch Man",
   },
   {
     id: 8,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: { HoodieImg },
     title: "A Silent Voice",
   },
   {
     id: 9,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: { HoodieImg },
     title: "Demon Slayer",
   },
   {
     id: 10,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: { HoodieImg },
     title: "Attack On Titan",
   },
 ];
