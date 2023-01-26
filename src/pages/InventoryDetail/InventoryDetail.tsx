@@ -1,26 +1,33 @@
 // @ts-nocheck
-import { ReactElement, useState } from "react";
+import React, { ReactElement, useState } from "react";
 
 import { Stepper, Step } from "react-form-stepper";
 import StepWizard from "react-step-wizard";
+import Autocomplete from "react-google-autocomplete";
 
 import Layout from "components/Layout";
 import Typography from "components/Typography";
 
+import Chip from "assets/svg/scan.svg";
+import ChipPhone from "assets/img/symbols/chip-phone.png";
 import LeftCircleButton from "assets/svg/left-arrow.svg";
 import RightCircleButton from "assets/svg/right-arrow.svg";
 import FlowerImg from "assets/img/symbols/Flower.png";
 import SparkleImg from "assets/img/symbols/Sparkle.png";
 import PalletImg from "assets/img/symbols/Palette.png";
 import ScissorImg from "assets/img/symbols/Scissors.png";
+import Modal from "components/Modal";
 
 import RightArrow from "assets/img/symbols/rightArrow.png";
 import TshirtImg from "assets/img/symbols/TShirt.svg";
 import HoodieImg from "assets/img/black-hoodie.png";
+import Select from "react-select";
 
 import FamilyMark from "assets/img/symbols/family.png";
 import { BiChevronRight } from "react-icons/bi";
 import { CgCloseO } from "react-icons/cg";
+import UploadImageButton from "components/UploadImageButton";
+import RightArrowImg from "assets/img/symbols/rightArrow.png";
 
 import Button from "components/Button";
 import FirstStep from "components/StepperFormComponents/FirstStep";
@@ -30,28 +37,76 @@ import FourthStep from "components/StepperFormComponents/FourthStep";
 import { Modal as MantineModal } from "@mantine/core";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
-const ProductDetail: React.FC = (props: any): ReactElement => {
+const InventoryDetail: React.FC = (props: any): ReactElement => {
   const [color, setColor] = useState<String>("black");
-  const [size, setSize] = useState<String>("XS");
   const [selectedVariant, setSelectedVariant] = useState<String>("XS");
 
+  const options = [
+    { value: "new", label: "New" },
+    { value: "used", label: "Used" },
+  ];
+
+  const customSelectStyles = {
+    option: (provided: any, state: any) => ({
+      ...provided,
+      borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+      color: state.isSelected ? "white" : "#A09D9D",
+      fontWeignt: state.isSelected ? "600" : "500",
+      background: state.isSelected ? "rgba(0,0,0, 0.7)" : "rgba(0,0,0)",
+    }),
+    control: () => ({
+      // none of react-select's styles are passed to <Control />
+      // width: "100%",
+
+      display: "flex",
+      backgroundColor: " rgba(255, 255, 255, 0.01)",
+      width: "100%",
+      borderRadius: "1rem",
+      border: "1px solid rgba(255, 255, 255, 0.08)",
+      padding: "8px",
+      marginTop: "13px",
+      fontFamily: "Archivo",
+    }),
+    menu: (provided: any, state: any) => ({
+      ...provided,
+      backgroundColor: " rgba(255, 255, 255, 0.01)",
+      fontFamily: "Archivo",
+    }),
+    // singleValue: (provided: any, state: any) => {
+    //   const opacity = state.isDisabled ? 0.5 : 1;
+    //   const transition = "opacity 300ms";
+
+    //   return { ...provided, opacity, transition };
+    // },
+    indicatorSeparator: () => ({
+      display: "none",
+    }),
+    singleValue: (provided: any, state: any) => ({
+      ...provided,
+      color: "#ffffff",
+      textColor: "#ffffff",
+      fontWeight: "600",
+    }),
+  };
   const product = { variants: ["XXS", "XS", "S", "M", "L", "XL", "XXL"] };
 
   const colorButtonClicked = (color: string) => {
     setColor(color);
   };
 
-  const sizeButtonClicked = (size: string) => {
-    setSize(size);
-  };
   const [modalOpen, setModalOpen] = useState(false);
+  const [registerModalOpen, setRegisterModalOpen] = useState(false);
   const [historyModalOpen, setHistoryModalOpen] = useState(false);
+  const [sellModal, setSellModal] = useState(false);
+  const [registered, setRegistered] = useState(false);
+
   const closeModal = () => {
     setModalOpen(false);
   };
 
   const [stepWizard, setStepWizard] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
+  const [selectedOption, setSelectedOption] = React.useState(null);
 
   const assignStepWizard = (instance: any) => {
     setStepWizard(instance);
@@ -111,32 +166,6 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                   alt="right-circle"
                   className="cursor-pointer w-auto max-w-[72px] max-h-[72px] bg-[#2B2B2B] border border-white/50 shadow-[inset_2px_0px_6px_rgba(255,255,255,0.15)] px-4 py-[1.2rem] rounded-full hover:shadow-[inset_1px_1px_10px_rgba(255,255,255,0.30)] transition-all duration-100 "
                 ></img>
-              </div>
-            </div>
-            <div className="mt-4">
-              <h5 className="text-white text-2xl font-semibold ">Size</h5>
-
-              <div className="text-white gap-7 flex mt-4">
-                <div className="flex flex-wrap gap-2">
-                  {/* <h6 className="text-xl text-white/70 font-semibold">Drop</h6> */}
-                  {product?.variants.map((variant) => {
-                    return (
-                      <div
-                        onClick={() => {
-                          setSelectedVariant(variant);
-                        }}
-                        className={
-                          selectedVariant === variant
-                            ? "active-size-button"
-                            : "size-button text-white/50 hover:bg-white/5 hover:text-white/90 transition-all duration-150"
-                        }
-                        key={variant}
-                      >
-                        {variant}
-                      </div>
-                    );
-                  })}
-                </div>
               </div>
             </div>
           </div>
@@ -225,26 +254,39 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
                 </div>
               </div>
             </div>
-            <div className="flex mt-0 xl:mt-[0.8rem] gap-5">
-              <div className="mt-2">
+            <div className="mt-2">
+              <Button
+                // rightImgSrc={RightArrow}
+                text="History"
+                className=" text-lg shadow-[inset_1px_1px_5px_rgba(255,255,255,0.40)] bg-white/10"
+                onClick={() => {
+                  setHistoryModalOpen(true);
+                }}
+              />
+            </div>
+            <div className="flex  gap-5">
+              <div className="mt-2 flex gap-3">
                 <Button
-                  // rightImgSrc={RightArrow}
-                  text="History"
-                  className=" text-lg shadow-[inset_1px_1px_5px_rgba(255,255,255,0.40)] bg-white/10"
-                  onClick={() => {
-                    setHistoryModalOpen(true);
-                  }}
+                  text="Sell"
+                  className="border-white/10 px-7 bg-white/5 "
+                  onClick={() => setSellModal(true)}
                 />
-              </div>
-              <div className="mt-2 ">
-                <Button
-                  rightImgSrc={RightArrow}
-                  text="Shop Now"
-                  className=" text-lg shadow-[inset_1px_1px_5px_rgba(255,255,255,0.40)] bg-white/10"
-                  onClick={() => {
-                    setModalOpen(true);
-                  }}
-                />
+                {registered ? (
+                  <Button
+                    // onClick={() => handleRegisterButtonClick(dataIndex)}
+                    text="Registered"
+                    // imgSrc={Chip}
+                    className=" border-white/40  text-lg shadow-[inset_1px_1px_8px_rgba(255,255,255,0.40)] bg-white/10"
+                    disabled
+                  />
+                ) : (
+                  <Button
+                    onClick={() => setRegisterModalOpen(true)}
+                    text="Register"
+                    // imgSrc={Chip}
+                    className=" border-white/40  text-lg shadow-[inset_1px_1px_8px_rgba(255,255,255,0.40)] bg-white/10"
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -772,8 +814,211 @@ const ProductDetail: React.FC = (props: any): ReactElement => {
           </div>
         </div>
       </MantineModal>
+
+      {
+        <>
+          <Modal __isOpen={registerModalOpen} dispatchModal={() => {}}>
+            <div className="relative w-full max-w-xl p-2 md:px-4 h-full md:h-auto  ">
+              <div className="relative bg-[#0E0E0E] rounded-[32px] shadow border-[1px] border-[#A09D9D] p-2 md:p-5 pt-8">
+                <div className="flex items-center justify-between px-2 md:px-5">
+                  <div className="flex items-center gap-2 md:gap-3 font-semibold text-xl md:text-2xl leading-8">
+                    <img
+                      src={Chip}
+                      alt="chip"
+                      className="w-[25px]  h-[25px] "
+                    />
+                    <p className="text-white clash-font">
+                      Scan to confirm the reception
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    className=" text-gray-400 bg-transparent  rounded-lg text-sm "
+                    data-modal-toggle="authentication-modal"
+                    onClick={() => {
+                      setRegisterModalOpen(false);
+                    }}
+                  >
+                    <CgCloseO className="text-2xl text-white/50 hover:text-white/90 transition-all duration-200 cursor-pointer" />
+                    <span className="sr-only">Close modal</span>
+                  </button>
+                </div>
+
+                <div className="py-6 px-2 md:px-6 lg:px-8">
+                  <div className="flex relative">
+                    {!registered ? (
+                      <img src={HoodieImg} alt="goods" className="w-[80%]" />
+                    ) : (
+                      <img src={HoodieImg} alt="goods" className="w-full" />
+                    )}
+
+                    {!registered ? (
+                      <img
+                        src={ChipPhone}
+                        alt="chip-phone"
+                        className="absolute w-[60%] top-12 -right-5 md:top-14"
+                      />
+                    ) : (
+                      <img
+                        src={FamilyMark}
+                        alt="mark"
+                        className="absolute w-14 right-[20%] top-[45%]"
+                      />
+                    )}
+                  </div>
+
+                  {!registered ? (
+                    <Typography
+                      children="To link your physical garment to its digital twin, you only need to scan the NFC ship on your  clothes directly with your phone."
+                      className="text-[#A09D9D] mt-5 "
+                    />
+                  ) : (
+                    <Typography
+                      children="You have successfully confirmed the reception of your physical fashion device."
+                      className="text-[#A09D9D] mt-5 text-center"
+                    />
+                  )}
+
+                  {!registered && (
+                    <Button
+                      text="Start Registering"
+                      className="mt-8 text-lg gradient-button"
+                      imgSrc={Chip}
+                      onClick={() => {
+                        setRegistered(true);
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+          </Modal>
+
+          <MantineModal
+            opened={sellModal}
+            onClose={() => {}}
+            withCloseButton={false}
+            classNames={{
+              inner: "bg-[#000000]/30 backdrop-blur	",
+              modal:
+                "bg-transparent w-full max-w-lg h-full  rounded-3xl text-white overflow-auto",
+            }}
+          >
+            <div className="relative w-full max-w-lg h-full md:h-auto   my-8 ">
+              <div className="relative  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#212121]/90 to-white/10   rounded-[32px]  shadow border-[1px] border-white/10  h-fit max-h-[calc(100vh-100px)] overflow-hidden inline-block">
+                <div className="overflow-y-auto mt-2   p-8">
+                  <div className="flex justify-between items-center ">
+                    <div className="flex items-start md:items-center">
+                      <Typography
+                        children="Sell your phygital piece"
+                        className="text-white  text-xl clash-font font-semibold w-full"
+                      />
+                    </div>
+
+                    <button
+                      type="button"
+                      className="top-3 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                      data-modal-toggle="authentication-modal"
+                      onClick={() => {
+                        setSellModal(false);
+                      }}
+                    >
+                      <CgCloseO className="text-2xl text-white/50 hover:text-white/90 transition-all duration-200 cursor-pointer" />
+                      <span className="sr-only">Close modal</span>
+                    </button>
+                  </div>
+
+                  <div>
+                    {/* content */}
+                    <Typography
+                      children="Picture"
+                      className="text-white/70 font-semibold mt-4 "
+                    />
+                    <div className="flex justify-start gap-4 mt-3">
+                      <UploadImageButton
+                        id={1}
+                        isSelect={true}
+                      ></UploadImageButton>
+                      <UploadImageButton
+                        id={2}
+                        isSelect={false}
+                      ></UploadImageButton>
+                      <UploadImageButton
+                        id={3}
+                        isSelect={false}
+                      ></UploadImageButton>
+                      <UploadImageButton
+                        id={4}
+                        isSelect={false}
+                      ></UploadImageButton>
+                    </div>
+                    <Typography
+                      children="Location"
+                      className="text-white/70 font-semibold mt-4 "
+                    />
+                    <Autocomplete
+                      // apiKey={GOOGLE_MAP_API_KEY}
+                      onPlaceSelected={(place) => {
+                        console.log(place);
+                      }}
+                      className="w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.01]  mt-3 outline-none text-md placeholder:text-white/50 
+                      text-white leading-6 tracking-wider"
+                    />
+                    <div className="w-full">
+                      <Typography
+                        children="Condition"
+                        className="text-white/70 font-semibold mt-4 "
+                      />
+                      <Select
+                        value={selectedOption}
+                        onChange={(option: any) => {
+                          setSelectedOption(option);
+                        }}
+                        options={options}
+                        styles={customSelectStyles}
+                        className="text-white w-full "
+                      />
+                    </div>
+
+                    <textarea
+                      className="w-full mt-4 h-[100px] p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.01]  outline-none text-md placeholder:text-white/50 
+                      text-white leading-6 tracking-wider"
+                      placeholder="Additional notes about the condition of your garment..."
+                    ></textarea>
+
+                    <Typography
+                      children="Price (including shipping)"
+                      className="text-white/70 font-semibold mt-4 "
+                    />
+
+                    <div className="flex items-center gap-3 mt-3">
+                      <p className="text-white/70 text-xl">$</p>
+                      <input
+                        type="number"
+                        className="max-w-[120px]  p-3 px-5 rounded-2xl border-[1px] border-white/10 bg-white/[.01]  outline-none text-md placeholder:text-white/50 
+                        text-white leading-6 tracking-wider font-semibold"
+                        placeholder="200"
+                      ></input>
+                    </div>
+
+                    <Button
+                      text="Sell your Price"
+                      className="mt-8 flex-row-reverse gradient-button"
+                      imgSrc={RightArrowImg}
+                      onClick={() => {
+                        setRegistered(true);
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </MantineModal>
+        </>
+      }
     </Layout>
   );
 };
 
-export default ProductDetail;
+export default InventoryDetail;

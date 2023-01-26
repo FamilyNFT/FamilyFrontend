@@ -32,7 +32,7 @@ const MarketplaceCard: React.FC<PropsType> = ({
 }) => {
   return (
     <Link to={`/marketplace/${id}`}>
-      <div className="p-8 rounded-[30px] border-[1px] border-white/10 custom-nav w-full h-full	 cursor-pointer  flex flex-col justify-between">
+      <div className="p-8 rounded-[30px] border-[1px] border-white/10 custom-nav w-full h-full	 cursor-pointer  flex flex-col justify-between hover:scale-[1.02] transition-all duration-200 hover:shadow-[rgba(255,_255,_200,_0.2)_0px_3px_8px]  ">
         <div className="flex justify-between text-white items-center">
           <Typography
             children={title}
@@ -54,7 +54,7 @@ const MarketplaceCard: React.FC<PropsType> = ({
             children="Edition 1/100"
             className="font-semibold text-[18px] text-white/70"
           />
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <div
               className={` border-[#A09D9D] p-[8px] gap-[4px] flex flex-col items-center  cursor-pointer`}
             >
@@ -70,7 +70,7 @@ const MarketplaceCard: React.FC<PropsType> = ({
             >
               <img src={PurpleColor} alt="purple" />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </Link>

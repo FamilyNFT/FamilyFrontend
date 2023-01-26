@@ -3,15 +3,15 @@ import Typography from "components/Typography";
 import CenterCarousel from "components/CenterCarousel";
 import Button from "components/Button";
 import MarketplaceCard from "components/Card/MarketplaceCard";
-
 import topImg from "assets/img/symbols/top.png";
 import belowImg from "assets/img/symbols/below.png";
 import SortImg from "assets/svg/ArrowsDownUp.svg";
+import HoodieImg from "assets/img/black-hoodie.png";
 
 export const datas = [
   {
     id: 1,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: HoodieImg,
     title: "Interstaller",
     amount: 5,
   },
@@ -24,49 +24,49 @@ export const datas = [
   },
   {
     id: 3,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: HoodieImg,
     title: "Blade Runner 2049",
     amount: 5,
   },
   {
     id: 4,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: HoodieImg,
     title: "Icon man 3",
     amount: 5,
   },
   {
     id: 5,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: HoodieImg,
     title: "Venom",
     amount: 5,
   },
   {
     id: 6,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: HoodieImg,
     title: "Steins Gate",
     amount: 5,
   },
   {
     id: 7,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: HoodieImg,
     title: "One Punch Man",
     amount: 5,
   },
   {
     id: 8,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: HoodieImg,
     title: "A Silent Voice",
     amount: 5,
   },
   {
     id: 9,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: HoodieImg,
     title: "Demon Slayer",
     amount: 5,
   },
   {
     id: 10,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: HoodieImg,
     title: "Attack On Titan",
     amount: 5,
   },
@@ -84,7 +84,7 @@ const Marketplace = () => {
             <Button
               text="Price"
               rightImgSrc={SortImg}
-              className="text-xl border-white/10 text-white/70"
+              className="text-xl border-white/10 text-white/70 hover:border hover:border-white/70  hover:text-white transition-all duration-100"
               imgClassName="w-5"
             />
           </div>

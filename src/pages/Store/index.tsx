@@ -13,11 +13,12 @@ import { setProduct } from "redux/product/reducer";
 import StoreCard from "components/Card/StoreCard";
 import LoadingScreen from "components/LoadingScreen";
 import shopifyBackendURL from "constants/backendURL";
+import HoodieImg from "assets/img/black-hoodie.png";
 
 export const datas = [
   {
     id: 1,
-    cover: "https://i.ibb.co/0Bqtcyv/image-3.png",
+    cover: { HoodieImg },
     title: "Interstaller",
     amount: 5,
   },
@@ -36,6 +37,7 @@ const Store = () => {
     setLoading(false);
   }, []);
   useEffect(() => {
+    setLoading(true);
     getProducts();
   }, []);
   return (
@@ -54,20 +56,26 @@ const Store = () => {
             />
           </div>
         </div>
-        <div className="mt-2 md:mt-12 grid items-stretch grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {products?.map((data: any, key: any) => (
-            <StoreCard
-              id={key}
-              key={key}
-              title={data.title}
-              imgSrc={data.video}
-              amount={data.variants[0].price}
-              onClick={() => {
-                dispatch(setProduct(data));
-              }}
-            />
-          ))}
-        </div>
+        <>
+          {isLoading ? (
+            <LoadingScreen />
+          ) : (
+            <div className="mt-2 md:mt-12 grid items-stretch grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {products?.map((data: any, key: any) => (
+                <StoreCard
+                  id={key}
+                  key={key}
+                  title={data.title}
+                  imgSrc={data.video}
+                  amount={data.variants[0].price}
+                  onClick={() => {
+                    dispatch(setProduct(data));
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </>
       </div>
     </Layout>
   );

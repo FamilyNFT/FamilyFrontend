@@ -14,7 +14,7 @@ const initialState: ProductState = {
   variant: null,
   checkout: null,
   email: "",
-  shippingAddress: null,
+  shippingAddress: {},
 };
 
 const productSlice = createSlice({
@@ -34,7 +34,7 @@ const productSlice = createSlice({
       state.email = action.payload;
     },
     setShipping: (state, action: PayloadAction<any>) => {
-      state.shippingAddress = action.payload;
+      state.shippingAddress = { ...state.shippingAddress, ...action.payload };
     },
   },
 });

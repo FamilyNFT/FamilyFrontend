@@ -38,7 +38,7 @@ const StoreCard: React.FC<PropsType> = ({
       }}
       to={`/order`}
     >
-      <div className="p-8 rounded-[30px] border-[1px] border-white/10 custom-nav w-full h-full	 cursor-pointer  flex flex-col justify-between">
+      <div className="p-8 rounded-[30px] border-[1px] border-white/10 custom-nav w-full h-full	 cursor-pointer  flex flex-col justify-between hover:scale-[1.02] transition-all duration-200 hover:shadow-[rgba(255,_255,_200,_0.2)_0px_3px_8px]">
         <div className="flex justify-between text-white items-center">
           <Typography
             children={title}

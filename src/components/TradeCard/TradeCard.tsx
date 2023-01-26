@@ -19,6 +19,7 @@ import ChipPhone from "assets/img/symbols/chip-phone.png";
 import FamilyMark from "assets/img/symbols/family.png";
 import Chatbox from "components/Chatbox/Chatbox";
 import { CgCloseO } from "react-icons/cg";
+import HoodieImg from "assets/img/black-hoodie.png";
 
 const TradeCard = React.memo(function (props: any) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -68,12 +69,12 @@ const TradeCard = React.memo(function (props: any) {
             <p className="text-[25px] font-semibold text-white">3</p>
           </div>
           <LazyLoadImage
-            src="https://i.ibb.co/0Bqtcyv/image-3.png"
+            src={HoodieImg}
             alt="goods"
-            className="w-full  img-lazy max-h-300px"
+            className="w-full  img-lazy max-h-400px  mt-[10%]"
             effect="blur"
           />
-          <div className="flex  flex-wrap gap-x-4 gap-3 w-11/12 p-2">
+          {/* <div className="flex  flex-wrap gap-x-4 gap-3 w-11/12 p-2">
             <div className="flex">
               <img src={PalletImg} alt="pallete" />
               <Typography
@@ -103,7 +104,7 @@ const TradeCard = React.memo(function (props: any) {
                 className="text-white/70 text-[18px] leading-[24px] font-medium archivo-font ml-2"
               />
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* details */}
@@ -228,17 +229,9 @@ const TradeCard = React.memo(function (props: any) {
             <div className="py-6 px-2 md:px-6 lg:px-8">
               <div className="flex relative">
                 {!registered ? (
-                  <img
-                    src="https://i.ibb.co/0Bqtcyv/image-3.png"
-                    alt="goods"
-                    className="w-[80%]"
-                  />
+                  <img src={HoodieImg} alt="goods" className="w-[80%]" />
                 ) : (
-                  <img
-                    src="https://i.ibb.co/0Bqtcyv/image-3.png"
-                    alt="goods"
-                    className="w-full"
-                  />
+                  <img src={HoodieImg} alt="goods" className="w-full" />
                 )}
 
                 {!registered ? (
@@ -392,6 +385,14 @@ const TradeCard = React.memo(function (props: any) {
                   }}
                 />
                 <Button
+                  text="Cancel"
+                  className="flex-1"
+                  onClick={() => {
+                    closeReportModal();
+                    setOptionClicked(false);
+                  }}
+                />
+                <Button
                   text="Confirm"
                   className=" report-btn flex-auto"
                   onClick={() => {}}
@@ -410,10 +411,24 @@ const TradeCard = React.memo(function (props: any) {
         classNames={{
           inner: "bg-[#000000]/30 backdrop-blur	",
           modal:
-            "bg-[#212121]/90 w-full max-w-lg h-full max-h-[50rem] rounded-3xl text-white",
+            "bg-[#212121]/90 w-full max-w-lg h-full max-h-[50rem] rounded-3xl text-white overflow-auto",
         }}
       >
         <Chatbox closeModal={() => setChatOpen(false)} />
+      </MantineModal>
+
+      {/* chat modal */}
+      <MantineModal
+        opened={false}
+        onClose={() => {}}
+        withCloseButton={false}
+        classNames={{
+          inner: "bg-[#000000]/30 backdrop-blur	",
+          modal:
+            "bg-[#212121]/90 w-full max-w-lg h-full max-h-[50rem] rounded-3xl text-white overflow-auto",
+        }}
+      >
+        <h1>Report Loss of the product</h1>
       </MantineModal>
     </div>
   );

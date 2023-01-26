@@ -6,6 +6,7 @@ import Store from "pages/Store";
 import Trade from "pages/Trade";
 import ProductDetail from "pages/ProductDetail";
 import Order from "pages/Order";
+import InventoryDetail from "pages/InventoryDetail";
 
 interface PathInterFace {
   path: string;
@@ -22,8 +23,13 @@ const routes: PathInterFace[] = [
   },
   { path: "/trade", title: "Trade", element: <Trade /> },
   { path: "/store", title: "Store", element: <Store /> },
-  { path: "/order", title: "Order", element: <Order /> },
+  { path: "/order", title: null, element: <Order /> },
   { path: "/inventory", title: "Inventory", element: <Inventory /> },
+  {
+    path: "/inventory/:id",
+    title: null,
+    element: <InventoryDetail />,
+  },
   { path: "/create", title: "Create", element: <Dashboard /> },
 ];
 

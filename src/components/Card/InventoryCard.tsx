@@ -6,6 +6,7 @@ import Select from "react-select";
 import Typography from "components/Typography";
 import Button from "components/Button";
 import Modal from "components/Modal";
+import HoodieImg from "assets/img/black-hoodie.png";
 
 import Chip from "assets/svg/scan.svg";
 import CloseButton from "assets/img/symbols/close.png";
@@ -16,6 +17,8 @@ import LeftButton from "assets/img/symbols/left-circle.png";
 import UploadImageButton from "components/UploadImageButton";
 import RightArrowImg from "assets/img/symbols/rightArrow.png";
 import { CgCloseO } from "react-icons/cg";
+import { Modal as MantineModal } from "@mantine/core";
+import { Link } from "react-router-dom";
 
 const paragraph =
   "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien.";
@@ -23,9 +26,8 @@ const paragraph =
 const GOOGLE_MAP_API_KEY = "AIzaSyCdestPnok8TkEx7sl4fENuFaQuS5uXaH4";
 
 const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
+  { value: "new", label: "New" },
+  { value: "used", label: "Used" },
 ];
 
 const customSelectStyles = {
@@ -129,25 +131,26 @@ const InventoryCard = React.memo(function (props: any) {
       }}
       className="my-slide-component"
     >
-      <div
-        className={`border-[1px] border-[#A09D9D] rounded-[32px] shadow-lg h-full w-[100%] mx-auto px-[30px] py-[32px] gap-[16px] cover ${
-          isCenterSlide && loaded ? "off" : "on"
-        }`}
-      >
-        <div className="relative">
-          <div className="flex justify-between">
-            <h5 className="text-white clash-font text-[32px] font-semibold">
-              {data[dataIndex].name}
-            </h5>
+      <Link to="/inventory/1">
+        <div
+          className={`border-[1px] border-[#A09D9D] rounded-[32px] shadow-lg h-full w-[100%] mx-auto px-[30px] py-[32px] gap-[16px] cover ${
+            isCenterSlide && loaded ? "off" : "on"
+          }`}
+        >
+          <div className="relative">
+            <div className="flex justify-between">
+              <h5 className="text-white clash-font text-[32px] font-semibold">
+                {data[dataIndex].name}
+              </h5>
+            </div>
+
+            <Typography
+              children={paragraph}
+              className="text-[#A09D9D] text-[16px] leading-[24px]"
+            />
           </div>
 
-          <Typography
-            children={paragraph}
-            className="text-[#A09D9D] text-[16px] leading-[24px]"
-          />
-        </div>
-
-        {/* <LazyLoadImage
+          {/* <LazyLoadImage
           src={cover}
           alt="goods"
           className=" rounded-lg img-lazy mx-auto max-h-[50rem] "
@@ -155,44 +158,46 @@ const InventoryCard = React.memo(function (props: any) {
           draggable={false}
         /> */}
 
-        <video
-          className="mx-auto max-h-[50rem] w-[250px] md:w-[450px] rounded-lg py-3"
-          draggable={false}
-          src={imgUrl}
-          autoPlay
-          loop
-        />
-
-        <div className="flex justify-between items-end">
-          <Typography
-            children="Edition 1/100"
-            className="text-white/70 hidden md:inline-block"
+          <video
+            className="mx-auto max-h-[50rem] w-[250px] md:w-[450px] rounded-lg py-3"
+            draggable={false}
+            src={imgUrl}
+            autoPlay
+            loop
           />
-          <div className="flex gap-3">
-            <Button
-              text="Sell"
-              className="border-white/10 px-7 bg-white/5 "
-              onClick={() => handleSellButtonClick(dataIndex)}
+
+          <div className="flex justify-between items-end">
+            <Typography
+              children="Edition 1/100"
+              className="text-white/70 hidden md:inline-block"
             />
-            {registered ? (
+            <div className="flex gap-3">
               <Button
-                onClick={() => handleRegisterButtonClick(dataIndex)}
-                text="Registered"
-                imgSrc={Chip}
-                className=" border-white/40  text-lg shadow-[inset_1px_1px_8px_rgba(255,255,255,0.40)] bg-white/10"
-                disabled
+                text="Sell"
+                className="border-white/10 px-7 bg-white/5 "
+                onClick={() => handleSellButtonClick(dataIndex)}
               />
-            ) : (
-              <Button
-                onClick={() => handleRegisterButtonClick(dataIndex)}
-                text="Register"
-                imgSrc={Chip}
-                className=" border-white/40  text-lg shadow-[inset_1px_1px_8px_rgba(255,255,255,0.40)] bg-white/10"
-              />
-            )}
+              {registered ? (
+                <Button
+                  onClick={() => handleRegisterButtonClick(dataIndex)}
+                  text="Registered"
+                  imgSrc={Chip}
+                  className=" border-white/40  text-lg shadow-[inset_1px_1px_8px_rgba(255,255,255,0.40)] bg-white/10"
+                  disabled
+                />
+              ) : (
+                <Button
+                  onClick={() => handleRegisterButtonClick(dataIndex)}
+                  text="Register"
+                  imgSrc={Chip}
+                  className=" border-white/40  text-lg shadow-[inset_1px_1px_8px_rgba(255,255,255,0.40)] bg-white/10"
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
+
       {
         <>
           <Modal __isOpen={modalOpen} dispatchModal={() => {}}>
@@ -226,17 +231,9 @@ const InventoryCard = React.memo(function (props: any) {
                 <div className="py-6 px-2 md:px-6 lg:px-8">
                   <div className="flex relative">
                     {!registered ? (
-                      <img
-                        src="https://i.ibb.co/0Bqtcyv/image-3.png"
-                        alt="goods"
-                        className="w-[80%]"
-                      />
+                      <img src={HoodieImg} alt="goods" className="w-[80%]" />
                     ) : (
-                      <img
-                        src="https://i.ibb.co/0Bqtcyv/image-3.png"
-                        alt="goods"
-                        className="w-full"
-                      />
+                      <img src={HoodieImg} alt="goods" className="w-full" />
                     )}
 
                     {!registered ? (
@@ -281,10 +278,19 @@ const InventoryCard = React.memo(function (props: any) {
             </div>
           </Modal>
 
-          <Modal __isOpen={sellModalOpen} dispatchModal={() => {}}>
+          <MantineModal
+            opened={sellModalOpen}
+            onClose={() => {}}
+            withCloseButton={false}
+            classNames={{
+              inner: "bg-[#000000]/30 backdrop-blur	",
+              modal:
+                "bg-transparent w-full max-w-lg h-full  rounded-3xl text-white overflow-auto",
+            }}
+          >
             <div className="relative w-full max-w-lg h-full md:h-auto   my-8 ">
-              <div className="relative  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#212121]/90 to-white/10   rounded-[32px]  shadow border-[1px] border-white/10  max-h-[100vh] overflow-hidden inline-block">
-                <div className="overflow-y-scroll mt-2 h-[42rem]  p-8">
+              <div className="relative  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#212121]/90 to-white/10   rounded-[32px]  shadow border-[1px] border-white/10  h-fit max-h-[calc(100vh-100px)] overflow-hidden inline-block">
+                <div className="overflow-y-auto mt-2   p-8">
                   <div className="flex justify-between items-center ">
                     <div className="flex items-start md:items-center">
                       <Typography
@@ -305,10 +311,6 @@ const InventoryCard = React.memo(function (props: any) {
                       <span className="sr-only">Close modal</span>
                     </button>
                   </div>
-                  <Typography
-                    children="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien."
-                    className="text-white"
-                  />
 
                   <div>
                     {/* content */}
@@ -346,7 +348,7 @@ const InventoryCard = React.memo(function (props: any) {
                       className="w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.01]  mt-3 outline-none text-md placeholder:text-white/50 
                       text-white leading-6 tracking-wider"
                     />
-                    <div className="max-w-[200px]">
+                    <div className="w-full">
                       <Typography
                         children="Condition"
                         className="text-white/70 font-semibold mt-4 "
@@ -358,7 +360,7 @@ const InventoryCard = React.memo(function (props: any) {
                         }}
                         options={options}
                         styles={customSelectStyles}
-                        className="text-white w-full md:w-[50%]"
+                        className="text-white w-full "
                       />
                     </div>
 
@@ -494,7 +496,7 @@ const InventoryCard = React.memo(function (props: any) {
                 </div>
               </div>
             </div> */}
-          </Modal>
+          </MantineModal>
         </>
       }
       {isCenterSlide && (
