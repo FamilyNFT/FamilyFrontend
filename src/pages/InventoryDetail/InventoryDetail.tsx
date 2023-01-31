@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 
 import { Stepper, Step } from "react-form-stepper";
 import StepWizard from "react-step-wizard";
@@ -36,16 +36,39 @@ import ThirdStep from "components/StepperFormComponents/ThirdStep";
 import FourthStep from "components/StepperFormComponents/FourthStep";
 import { Modal as MantineModal } from "@mantine/core";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { useParams } from "react-router-dom";
+import web3 from "hooks/useWeb3";
+import abi from "../../utils/abis/familynft.json";
+import { ethers } from "ethers";
 
 const InventoryDetail: React.FC = (props: any): ReactElement => {
   const [color, setColor] = useState<String>("black");
   const [selectedVariant, setSelectedVariant] = useState<String>("XS");
+  const { address, id } = useParams();
+  const [data, setData] = useState({});
 
   const options = [
     { value: "new", label: "New" },
     { value: "used", label: "Used" },
   ];
 
+  const getDetails = async (address, id) => {
+    const Web3 = web3;
+    const lsp8 = new web3.eth.Contract(abi.abi as any, address);
+    let _id = parseInt(id) - 1;
+    let hex = ethers.utils.hexZeroPad(ethers.utils.hexlify(_id), 32);
+    // let byte = web3.hexZ(hex, 32);
+    console.log(hex);
+    const uri = await lsp8.methods.getMetadata(hex).call();
+    let response = await fetch(uri);
+    let data = await response.json();
+    return data;
+  };
+  useEffect(() => {
+    if (address && id) {
+      getDetails(address, id).then((res) => setData(res));
+    }
+  }, [address, id]);
   const customSelectStyles = {
     option: (provided: any, state: any) => ({
       ...provided,
@@ -135,7 +158,7 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
         <div className="flex flex-col items-center sm:items-start sm:flex-row my-9 gap-8 ">
           <div className="w-full md:w-1/2 max-w-lg md:max-w-lg">
             <div className=" border rounded-3xl  border-white/10 p-5 ">
-              <img src={HoodieImg} alt="detail" className="w-full " />
+              <video src={data?.imgUrl} alt="detail" className="w-full " />
 
               <div className="flex justify-center items-center -mt-20 gap-6">
                 <img
@@ -185,7 +208,7 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
                 <div className="box">
                   <h6 className="text-xl text-white/70 font-semibold">Drop</h6>
                   <p className="text-lg text-white/50 font-medium">
-                    Hoodie 001
+                    {data?.name}
                   </p>
                 </div>
                 <div className="box col-span-1 sm:col-span-2">
@@ -193,7 +216,7 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
                     Original Minter
                   </h6>
                   <p className="text-lg text-white/50 font-medium text-ellipsis overflow-hidden">
-                    0xF1775305be0E293F4f83b51783B27F70Bae11689
+                    {data?.originalMinter}
                   </p>
                 </div>
                 <div className="box">

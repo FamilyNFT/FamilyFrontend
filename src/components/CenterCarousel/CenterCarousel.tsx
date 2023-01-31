@@ -70,8 +70,12 @@ export const CenterCarousel = (props: any) => {
       .call();
     let metadata = [];
     for (let uri of uris) {
-      let data = await fetch(uri);
-      metadata.push(await data.json());
+      let res = await fetch(uri);
+      let data = await res.json();
+      metadata.push({
+        ...data,
+        contract: "0x99e6e48Fb48841cb39e7fe5fbE16d42e8a928118",
+      });
     }
     setData(metadata);
     console.log(metadata);
