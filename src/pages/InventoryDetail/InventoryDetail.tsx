@@ -40,12 +40,27 @@ import { useParams } from "react-router-dom";
 import web3 from "hooks/useWeb3";
 import abi from "../../utils/abis/familynft.json";
 import { ethers } from "ethers";
+import {
+  marketContractAddress,
+  useNFTContract,
+  useWeb3MarketplaceContract,
+  useWeb3NFTContract,
+} from "hooks/marketplaceContract";
+import { useAppSelector } from "redux/hooks/redux-hooks";
 
 const InventoryDetail: React.FC = (props: any): ReactElement => {
   const [color, setColor] = useState<String>("black");
-  const [selectedVariant, setSelectedVariant] = useState<String>("XS");
   const { address, id } = useParams();
   const [data, setData] = useState({});
+  const [price, setPrice] = useState();
+  const [isOperator, setOperator] = useState(false);
+  let contract = useNFTContract(address);
+  let contract1 = useWeb3NFTContract(address);
+  const marketContract = useWeb3MarketplaceContract();
+  console.log(marketContract);
+  const auth = useAppSelector((state) => state.auth.account);
+  const [approvalLoading, setApproval] = useState(false);
+  // console.log(contract);
 
   const options = [
     { value: "new", label: "New" },
@@ -53,7 +68,6 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
   ];
 
   const getDetails = async (address, id) => {
-    const Web3 = web3;
     const lsp8 = new web3.eth.Contract(abi.abi as any, address);
     let _id = parseInt(id) - 1;
     let hex = ethers.utils.hexZeroPad(ethers.utils.hexlify(_id), 32);
@@ -64,9 +78,23 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
     let data = await response.json();
     return data;
   };
+  const getOperator = async (address, id) => {
+    const lsp8 = new web3.eth.Contract(abi.abi as any, address);
+    let _id = parseInt(id);
+    let hex = ethers.utils.hexZeroPad(ethers.utils.hexlify(_id), 32);
+    // let byte = web3.hexZ(hex, 32);
+    console.log(hex);
+    const data = await contract.isOperatorFor(address, hex);
+    return data;
+  };
   useEffect(() => {
     if (address && id) {
       getDetails(address, id).then((res) => setData(res));
+    }
+  }, [address, id]);
+  useEffect(() => {
+    if (address && id) {
+      getOperator(marketContractAddress, id).then((res) => setOperator(res));
     }
   }, [address, id]);
   const customSelectStyles = {
@@ -141,6 +169,48 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
 
   const handleComplete = () => {
     alert("You r done. TQ");
+  };
+  const handleListing = async () => {
+    // alert("You r done. TQ");
+    console.log("hey");
+    let _id = parseInt(id);
+    let hex = ethers.utils.hexZeroPad(ethers.utils.hexlify(_id), 32);
+    // console.log("list", hex);
+    let txn = await marketContract.methods
+      .putLSP8OnSale(address, hex, price, [true, false, false])
+      .send({ from: auth })
+      .on("receipt", async function (receipt) {
+        await fetch("http://localhost:8080/items/", {
+          method: "POST",
+          body: {
+            id: ethers.utils.hexZeroPad(ethers.utils.hexlify(_id), 32),
+            contractAddress: address,
+            originalMinter: data?.originalMinter,
+            size: data?.size ?? "XS",
+            drop: data.title,
+            seller: auth,
+            price: price,
+            imgUrl: data?.imgUrl,
+          },
+        });
+        setApproval(false);
+        setOperator(true);
+      });
+  };
+  const handleApprove = async () => {
+    setApproval(true);
+    // alert("You r done. TQ");
+    let _id = parseInt(id);
+    let hex = ethers.utils.hexZeroPad(ethers.utils.hexlify(_id), 32);
+    // console.log(marketContractAddress, hex);
+    // let txn = await contract.authorizeOperator(marketContractAddress, hex);
+    let txn = await contract1.methods
+      .authorizeOperator(marketContractAddress, hex)
+      .send({ from: auth })
+      .on("receipt", function (receipt) {
+        setApproval(false);
+        setOperator(true); // contains the new contract address
+      });
   };
 
   return (
@@ -928,8 +998,8 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
                 "bg-transparent w-full max-w-lg h-full  rounded-3xl text-white overflow-auto",
             }}
           >
-            <div className="relative w-full max-w-lg h-full md:h-auto   my-8 ">
-              <div className="relative  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#212121]/90 to-white/10   rounded-[32px]  shadow border-[1px] border-white/10  h-fit max-h-[calc(100vh-100px)] overflow-hidden inline-block">
+            <div className="relative w-full max-w-lg h-full md:h-auto  my-8 ">
+              <div className="relative overflow-scroll bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#212121]/90 to-white/10   rounded-[32px]  shadow border-[1px] border-white/10  h-fit max-h-[calc(100vh-100px)] overflow-hidden inline-block">
                 <div className="overflow-y-auto mt-2   p-8">
                   <div className="flex justify-between items-center ">
                     <div className="flex items-start md:items-center">
@@ -1019,20 +1089,32 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
                       <p className="text-white/70 text-xl">$</p>
                       <input
                         type="number"
+                        onChange={(e) => setPrice(e.target.value)}
                         className="max-w-[120px]  p-3 px-5 rounded-2xl border-[1px] border-white/10 bg-white/[.01]  outline-none text-md placeholder:text-white/50 
                         text-white leading-6 tracking-wider font-semibold"
                         placeholder="200"
                       ></input>
                     </div>
 
-                    <Button
-                      text="Sell your Price"
-                      className="mt-8 flex-row-reverse gradient-button"
-                      imgSrc={RightArrowImg}
-                      onClick={() => {
-                        setRegistered(true);
-                      }}
-                    />
+                    {isOperator ? (
+                      <Button
+                        text="Sell your Price"
+                        className="mt-8 flex-row-reverse gradient-button"
+                        imgSrc={RightArrowImg}
+                        onClick={() => {
+                          handleListing();
+                        }}
+                      />
+                    ) : (
+                      <Button
+                        text="Approve"
+                        className="mt-8 flex-row-reverse gradient-button"
+                        onClick={() => {
+                          handleApprove();
+                        }}
+                        isLoading={approvalLoading}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
