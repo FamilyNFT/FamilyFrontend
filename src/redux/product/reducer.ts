@@ -3,6 +3,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 interface ProductState {
   product: any;
+  name: any;
   variant: any;
   checkout: any;
   email: string;
@@ -10,6 +11,7 @@ interface ProductState {
 }
 
 const initialState: ProductState = {
+  name: {},
   product: null,
   variant: null,
   checkout: null,
@@ -23,6 +25,9 @@ const productSlice = createSlice({
   reducers: {
     setProduct: (state, action: PayloadAction<any>) => {
       state.product = action.payload;
+    },
+    setName: (state, action: PayloadAction<any>) => {
+      state.name = action.payload;
     },
     setVariant: (state, action: PayloadAction<any>) => {
       state.variant = action.payload;
@@ -39,7 +44,13 @@ const productSlice = createSlice({
   },
 });
 
-export const { setProduct, setVariant, setCheckout, setEmail, setShipping } =
-  productSlice.actions;
+export const {
+  setProduct,
+  setName,
+  setVariant,
+  setCheckout,
+  setEmail,
+  setShipping,
+} = productSlice.actions;
 
 export default productSlice.reducer;

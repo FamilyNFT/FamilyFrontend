@@ -42,6 +42,8 @@ import abi from "../../utils/abis/familynft.json";
 import { ethers } from "ethers";
 import {
   marketContractAddress,
+  signer,
+  useMarketplaceContract,
   useNFTContract,
   useWeb3MarketplaceContract,
   useWeb3NFTContract,
@@ -56,7 +58,7 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
   const [isOperator, setOperator] = useState(false);
   let contract = useNFTContract(address);
   let contract1 = useWeb3NFTContract(address);
-  const marketContract = useWeb3MarketplaceContract();
+  const marketContract = useMarketplaceContract();
   console.log(marketContract);
   const auth = useAppSelector((state) => state.auth.account);
   const [approvalLoading, setApproval] = useState(false);
@@ -72,8 +74,9 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
     let _id = parseInt(id) - 1;
     let hex = ethers.utils.hexZeroPad(ethers.utils.hexlify(_id), 32);
     // let byte = web3.hexZ(hex, 32);
-    console.log(hex);
+    // console.log(hex);
     const uri = await lsp8.methods.getMetadata(hex).call();
+    console.log(uri);
     let response = await fetch(uri);
     let data = await response.json();
     return data;
@@ -89,7 +92,9 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
   };
   useEffect(() => {
     if (address && id) {
-      getDetails(address, id).then((res) => setData(res));
+      getDetails(address, id)
+        .then((res) => setData(res))
+        .catch((err) => console.log("err", err));
     }
   }, [address, id]);
   useEffect(() => {
@@ -174,43 +179,59 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
     // alert("You r done. TQ");
     console.log("hey");
     let _id = parseInt(id);
-    let hex = ethers.utils.hexZeroPad(ethers.utils.hexlify(_id), 32);
+    let hex = ethers.utils.hexZeroPad(ethers.utils.hexValue(_id), 32);
     // console.log("list", hex);
-    let txn = await marketContract.methods
-      .putLSP8OnSale(address, hex, price, [true, false, false])
-      .send({ from: auth })
-      .on("receipt", async function (receipt) {
-        await fetch("http://localhost:8080/items/", {
-          method: "POST",
-          body: {
-            id: ethers.utils.hexZeroPad(ethers.utils.hexlify(_id), 32),
-            contractAddress: address,
-            originalMinter: data?.originalMinter,
-            size: data?.size ?? "XS",
-            drop: data.title,
-            seller: auth,
-            price: price,
-            imgUrl: data?.imgUrl,
-          },
-        });
-        setApproval(false);
-        setOperator(true);
-      });
+    console.log(address, hex);
+    try {
+      let txn = await marketContract.isOnSale(address, hex);
+      console.log(txn);
+    } catch (err) {
+      console.log(err);
+    }
+
+    // let txn = await marketContract.methods
+    //   .putLSP8OnSale(address, hex, price, [true, false, false])
+    //   .send({ from: auth })
+    //   .on("receipt", async function (receipt) {
+    //     await fetch("http://localhost:8080/items/", {
+    //       method: "POST",
+    //       body: {
+    //         id: ethers.utils.hexZeroPad(ethers.utils.hexValue(id), 32),
+    //         contractAddress: address,
+    //         originalMinter: data?.originalMinter,
+    //         size: data?.size ?? "XS",
+    //         drop: data.title,
+    //         seller: auth,
+    //         price: price,
+    //         imgUrl: data?.imgUrl,
+    //       },
+    //     });
+    //     // setApproval(false);
+    //     // setOperator(true);
+    //   });
   };
   const handleApprove = async () => {
     setApproval(true);
     // alert("You r done. TQ");
-    let _id = parseInt(id);
-    let hex = ethers.utils.hexZeroPad(ethers.utils.hexlify(_id), 32);
+    let _id = Number(id);
+    console.log(_id);
+    let hex = ethers.utils.hexZeroPad(ethers.utils.hexValue(_id), 32);
     // console.log(marketContractAddress, hex);
-    // let txn = await contract.authorizeOperator(marketContractAddress, hex);
-    let txn = await contract1.methods
-      .authorizeOperator(marketContractAddress, hex)
-      .send({ from: auth })
-      .on("receipt", function (receipt) {
-        setApproval(false);
-        setOperator(true); // contains the new contract address
-      });
+    try {
+      // let txn = await contract
+      //   .connect(signer)
+      //   ["authorizeOperator"](marketContractAddress, hex);
+      let txn = await contract1.methods
+        .authorizeOperator(marketContractAddress, hex)
+        .send({ from: auth })
+        .on("receipt", function (receipt) {
+          setApproval(false);
+          setOperator(true); // contains the new contract address
+        });
+    } catch (err) {
+      console.log(err);
+      setApproval(false);
+    }
   };
 
   return (
@@ -1115,6 +1136,14 @@ const InventoryDetail: React.FC = (props: any): ReactElement => {
                         isLoading={approvalLoading}
                       />
                     )}
+                    <Button
+                      text="Approve"
+                      className="mt-8 flex-row-reverse gradient-button"
+                      onClick={() => {
+                        handleApprove();
+                      }}
+                      isLoading={approvalLoading}
+                    />
                   </div>
                 </div>
               </div>

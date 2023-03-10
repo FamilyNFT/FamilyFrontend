@@ -8,6 +8,8 @@ declare global {
     ethereum?: any;
   }
 }
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+export const signer = provider.getSigner();
 
 export const marketContractAddress =
   "0x6F263bCd831926B0F169F15a8eE39730d4e8067b";

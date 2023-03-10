@@ -37,22 +37,21 @@ const FirstStep = (props: any) => {
   });
 
   const backend = shopifyBackendURL;
-  console.log(checkout);
 
   const [postal, setPostal] = useState("");
   const updateCheckout = async () => {
-    console.log(checkout);
-    let check = await fetch(`${backend}/checkout/update`, {
-      method: "POST",
+    console.log(mail);
+    let check = await fetch(`${backend}/checkout/email`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         id: checkout?.id,
-        address: shippingAddress,
         email: mail,
       }),
     });
+    console.log(check.json());
   };
   useEffect(() => {
     dispatch(setEmail(mail));
