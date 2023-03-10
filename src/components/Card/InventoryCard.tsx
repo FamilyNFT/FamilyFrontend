@@ -131,7 +131,11 @@ const InventoryCard = React.memo(function (props: any) {
       }}
       className="my-slide-component"
     >
-      <Link to="/inventory/1">
+      <Link
+        to={`/inventory/${data[dataIndex].contract}/${parseInt(
+          data[dataIndex].name.slice(-3)
+        )}`}
+      >
         <div
           className={`border-[1px] border-[#A09D9D] rounded-[32px] shadow-lg h-full w-[100%] mx-auto px-[30px] py-[32px] gap-[16px] cover ${
             isCenterSlide && loaded ? "off" : "on"

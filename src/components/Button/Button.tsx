@@ -36,7 +36,7 @@ const Button: React.FC<PropsType> = ({
       <button
         type={type}
         onClick={onClick}
-        disabled={disabled}
+        disabled={disabled || isLoading}
         className={`border-[#B7B7B7] border-[1px]  flex  justify-center items-center  px-6 h-[50px] rounded-full gap-2 ${
           !light ? " text-white" : "bg-white text-theme"
         } font-semibold  ${className} ${disabled ? "opacity-70" : ""} ${

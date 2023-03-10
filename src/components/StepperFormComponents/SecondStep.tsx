@@ -30,10 +30,11 @@ const SecondStep = (props: any) => {
     zip: "",
   });
   const checkout = useAppSelector((state) => state.product.checkout);
-  console.log(checkout);
+  // console.log(checkout);
   const [loading, setLoading] = useState<boolean>(false);
   const backend = shopifyBackendURL;
-  console.log(checkout);
+  const name = useAppSelector((state) => state.product.shippingAddress);
+  console.log("name", name);
 
   const [selectedOption, setSelectedOption] = React.useState("");
   const [province, setProvince] = React.useState("");
@@ -51,23 +52,32 @@ const SecondStep = (props: any) => {
     postal: "",
   });
   const updateCheckout = async () => {
-    console.log(checkout);
-    let check = await fetch(`${backend}/checkout/update`, {
-      method: "POST",
+    console.log("address", name);
+    let check = await fetch(`${backend}/checkout/address`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         id: checkout?.id,
-        address: shippingAddress,
-        email: mail,
+        address: name,
       }),
     });
+    console.log(check.json());
   };
 
   useEffect(() => {
-    dispatch(setShipping(shippingAddress));
-  }, [shippingAddress]);
+    setShippingAddress((e) => ({
+      ...e,
+      address1: address1,
+      address2: address2,
+      city: city,
+      zip: postal,
+    }));
+  }, [address1, address2, city, postal]);
+  // useEffect(() => {
+  //   dispatch(setShipping(shippingAddress));
+  // }, [shippingAddress]);
 
   const validate = async () => {
     // if (!info1.name) setError("Name is mandatory field");
@@ -116,11 +126,12 @@ const SecondStep = (props: any) => {
       setLoading(true);
       setShippingAddress((e) => {
         return {
-          ...e,
-          city,
-          address1,
-          address2,
+          city: city,
+          province: province,
+          address1: address1,
+          address2: address2,
           zip: postal,
+          country: selectedOption,
         };
       });
       await updateCheckout();
@@ -152,6 +163,7 @@ const SecondStep = (props: any) => {
       province: value,
     }));
   };
+  console.log(shippingAddress, address1, address2);
 
   const customSelectStyles = {
     option: (provided: any, state: any) => ({
@@ -201,7 +213,9 @@ const SecondStep = (props: any) => {
     if (value.length > maxSize) return;
     setPostal(value);
   };
-
+  useEffect(() => {
+    dispatch(setShipping({ ...name, ...shippingAddress }));
+  }, [shippingAddress, dispatch]);
   return (
     <div>
       <div className="mt-2 md:mt-0 mb-8 archivo-font">

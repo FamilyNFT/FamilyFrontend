@@ -66,12 +66,16 @@ export const CenterCarousel = (props: any) => {
   const account = useAppSelector((state) => state.auth.account);
   const getURI = useCallback(async () => {
     const uris = await contract.methods
-      .getTokenIds("0x99e6e48Fb48841cb39e7fe5fbE16d42e8a928118", account)
+      .getTokenIds("0x353AF3A24A39031DA7c99155f5e9f7Bf09A3C55E", account)
       .call();
     let metadata = [];
     for (let uri of uris) {
-      let data = await fetch(uri);
-      metadata.push(await data.json());
+      let res = await fetch(uri);
+      let data = await res.json();
+      metadata.push({
+        ...data,
+        contract: "0x353AF3A24A39031DA7c99155f5e9f7Bf09A3C55E",
+      });
     }
     setData(metadata);
     console.log(metadata);

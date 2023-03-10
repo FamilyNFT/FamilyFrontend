@@ -26,7 +26,7 @@ const routes: PathInterFace[] = [
   { path: "/order", title: null, element: <Order /> },
   { path: "/inventory", title: "Inventory", element: <Inventory /> },
   {
-    path: "/inventory/:id",
+    path: "inventory/:address/:id",
     title: null,
     element: <InventoryDetail />,
   },
