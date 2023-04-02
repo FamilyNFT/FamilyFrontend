@@ -1,24 +1,16 @@
-import React, {
-  useState,
-  useCallback,
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-} from "react";
+import React, { useState, useEffect } from "react";
 import StepperActionButtons from "components/StepperActionButtons";
-import Select from "react-select";
-import InputMask from "react-input-mask";
 
 import Typography from "components/Typography";
 import chevronDown from "assets/svg/chevron-down.svg";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { useAppDispatch, useAppSelector } from "redux/hooks/redux-hooks";
 import { setEmail, setShipping } from "redux/product/reducer";
-import shopifyBackendURL from "constants/backendURL";
+
+import { updateCheckout } from "utils/shopifyBackend";
 
 const SecondStep = (props: any) => {
   const dispatch = useAppDispatch();
-  const [mail, setMail] = useState("");
   const [error, setError] = useState("");
 
   const [shippingAddress, setShippingAddress] = React.useState({
@@ -30,11 +22,9 @@ const SecondStep = (props: any) => {
     zip: "",
   });
   const checkout = useAppSelector((state) => state.product.checkout);
-  // console.log(checkout);
+
   const [loading, setLoading] = useState<boolean>(false);
-  const backend = shopifyBackendURL;
   const name = useAppSelector((state) => state.product.shippingAddress);
-  console.log("name", name);
 
   const [selectedOption, setSelectedOption] = React.useState("");
   const [province, setProvince] = React.useState("");
@@ -51,37 +41,20 @@ const SecondStep = (props: any) => {
     address2: "",
     postal: "",
   });
-  const updateCheckout = async () => {
-    console.log("address", name);
-    let check = await fetch(`${backend}/checkout/address`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: checkout?.id,
-        address: name,
-      }),
-    });
-    console.log(check.json());
-  };
 
   useEffect(() => {
     setShippingAddress((e) => ({
       ...e,
+      firstName: name.firstName,
+      lastName: name.lastName,
       address1: address1,
       address2: address2,
       city: city,
       zip: postal,
     }));
-  }, [address1, address2, city, postal]);
-  // useEffect(() => {
-  //   dispatch(setShipping(shippingAddress));
-  // }, [shippingAddress]);
+  }, [address1, address2, city, postal, name.firstName, name.lastName]);
 
   const validate = async () => {
-    // if (!info1.name) setError("Name is mandatory field");
-    // else {
     setFormErrors({
       country: "",
       province: "",
@@ -121,25 +94,55 @@ const SecondStep = (props: any) => {
       });
       validForm = false;
     }
+    console.log("Test", checkout.id);
 
     if (validForm) {
       setLoading(true);
-      setShippingAddress((e) => {
-        return {
-          city: city,
-          province: province,
-          address1: address1,
-          address2: address2,
-          zip: postal,
-          country: selectedOption,
-        };
-      });
-      await updateCheckout();
-      props.nextStep();
+      const updatedShippingAddress = {
+        city: city,
+        province: province,
+        address1: address1,
+        address2: address2,
+        zip: postal,
+        country: selectedOption,
+        firstName: name.firstName,
+        lastName: name.lastName,
+      };
+      setShippingAddress(updatedShippingAddress);
+
+      let id = checkout.id;
+      console.log("Test", checkout.id);
+      console.log("Test", id);
+      try {
+        dispatch(setShipping({ ...name, ...shippingAddress }));
+
+        if (!id) {
+          throw new Error("Checkout ID is invalid");
+        }
+        console.log("shippingAddress", shippingAddress);
+        const result = await updateCheckout(
+          id,
+          shippingAddress,
+          setEmail,
+          setShipping
+        );
+
+        console.log(result);
+        if (result.success) {
+          props.nextStep();
+        } else {
+          setError(result.error);
+        }
+      } catch (error) {
+        let message = "Something went wrong";
+        const errorString = JSON.stringify(error);
+        if (errorString.includes("checkoutId")) {
+          message = "Checkout ID is invalid";
+        }
+        setError(message);
+      }
       setLoading(false);
     }
-    // props.userCallback(info1);
-    // }
   };
 
   // const changeAddressForm = (e: any) => {
@@ -163,7 +166,6 @@ const SecondStep = (props: any) => {
       province: value,
     }));
   };
-  console.log(shippingAddress, address1, address2);
 
   const customSelectStyles = {
     option: (provided: any, state: any) => ({
@@ -213,9 +215,11 @@ const SecondStep = (props: any) => {
     if (value.length > maxSize) return;
     setPostal(value);
   };
-  useEffect(() => {
-    dispatch(setShipping({ ...name, ...shippingAddress }));
-  }, [shippingAddress, dispatch]);
+
+  // useEffect(() => {
+  //   console.log("name:", name);
+  //   dispatch(setShipping({ ...name, ...shippingAddress }));
+  // }, [shippingAddress, dispatch]);
   return (
     <div>
       <div className="mt-2 md:mt-0 mb-8 archivo-font">
@@ -353,7 +357,6 @@ const SecondStep = (props: any) => {
               />
               <p className="text-[#E46060] text-sm">{formErrors.postal}</p>
             </div>
-
             <input
               // mask="99999"
               // maskChar=" "
@@ -361,17 +364,24 @@ const SecondStep = (props: any) => {
               value={postal}
               name="zip"
               className={`w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
-          text-white leading-6 tracking-wider focus:border-white/30 focus:text-white ${
-            formErrors.postal ? "border-[#E46060] border-2" : ""
-          }`}
-              placeholder="00000"
-              type="number"
+      text-white leading-6 tracking-wider focus:border-white/30 focus:text-white ${
+        formErrors.postal ? "border-[#E46060] border-2" : ""
+      }`}
+              placeholder="Postal or Zip Code"
+              type="text"
               required
             />
           </div>
         </div>
       </div>
+
       <div>
+        {error && (
+          <div className="error-message" style={{ color: "red" }}>
+            {error}
+          </div>
+        )}
+
         <StepperActionButtons
           isLoading={loading}
           {...props}

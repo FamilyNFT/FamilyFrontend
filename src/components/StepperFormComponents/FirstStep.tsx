@@ -1,17 +1,8 @@
-import React, {
-  useState,
-  useCallback,
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-} from "react";
+import React, { useState, useEffect } from "react";
 import StepperActionButtons from "components/StepperActionButtons";
-import Select from "react-select";
-import InputMask from "react-input-mask";
 
 import Typography from "components/Typography";
 import chevronDown from "assets/svg/chevron-down.svg";
-import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { useAppDispatch, useAppSelector } from "redux/hooks/redux-hooks";
 import { setEmail, setShipping } from "redux/product/reducer";
 import shopifyBackendURL from "constants/backendURL";
@@ -19,8 +10,6 @@ const FirstStep = (props: any) => {
   const dispatch = useAppDispatch();
   const [mail, setMail] = useState("");
   const [error, setError] = useState("");
-  const [selectedOption, setSelectedOption] = React.useState("");
-  const [province, setProvince] = React.useState("");
   const [shippingAddress, setShippingAddress] = React.useState({
     firstName: "",
     lastName: "",
@@ -38,65 +27,77 @@ const FirstStep = (props: any) => {
 
   const backend = shopifyBackendURL;
 
-  const [postal, setPostal] = useState("");
   const updateCheckout = async () => {
-    console.log(mail);
-    let check = await fetch(`${backend}/checkout/email`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: checkout?.id,
-        email: mail,
-      }),
-    });
-    console.log(check.json());
+    try {
+      const response = await fetch(`${backend}/checkout/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: checkout?.id,
+          email: mail,
+          address: shippingAddress,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to update checkout email. Server returned: ${response.statusText}`
+        );
+      }
+
+      const data = await response.json();
+      if (data.errors) {
+        throw new Error(
+          data.errors.map((error: any) => error.message).join(", ")
+        );
+      }
+
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
   };
+
   useEffect(() => {
     dispatch(setEmail(mail));
-  }, [mail]);
+  }, [mail, dispatch]);
+
   useEffect(() => {
     dispatch(setShipping(shippingAddress));
-  }, [shippingAddress]);
+  }, [shippingAddress, dispatch]);
 
   const validate = async () => {
-    // if (!info1.name) setError("Name is mandatory field");
-    // else {
     setFormError({
       firstName: "",
       lastName: "",
       email: "",
     });
+
     if (firstName === "") {
-      setFormError((e) => {
-        return { ...e, firstName: "Invalid Name" };
-      });
+      setFormError((e) => ({ ...e, firstName: "Invalid Name" }));
     }
     if (lastName === "") {
-      setFormError((e) => {
-        return { ...e, lastName: "Invalid Name" };
-      });
+      setFormError((e) => ({ ...e, lastName: "Invalid Name" }));
     }
     if (!mail.includes("@")) {
-      setFormError((e) => {
-        return { ...e, email: "Invalid email" };
-      });
+      setFormError((e) => ({ ...e, email: "Invalid email" }));
     }
-    // setError("");
-
-    setLoading(true);
 
     if (firstName !== "" && lastName !== "" && mail.includes("@")) {
-      console.log(formError);
-      setShippingAddress({ firstName, lastName });
-      await updateCheckout();
-      props.nextStep();
+      setLoading(true);
+      let result = await updateCheckout();
+      console.log(result);
+      if (result) {
+        props.nextStep();
+      } else {
+        setError("Something went wrong");
+      }
+      setLoading(false);
+      console.log(mail, firstName, lastName);
     }
-    setLoading(false);
-
-    // props.userCallback(info1);
-    // }
   };
 
   // const changeAddressForm = (e: any) => {
@@ -106,6 +107,22 @@ const FirstStep = (props: any) => {
   //     ...address,
   //   }));
   // };
+
+  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(e.target.value);
+    setShippingAddress((address) => ({
+      ...address,
+      firstName: e.target.value,
+    }));
+  };
+
+  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(e.target.value);
+    setShippingAddress((address) => ({
+      ...address,
+      lastName: e.target.value,
+    }));
+  };
 
   return (
     <div>
@@ -125,8 +142,9 @@ const FirstStep = (props: any) => {
               <p className="text-[#E46060] text-sm">{formError.firstName}</p>
             </div>
             <input
-              onChange={(e) => setFirstName(e.target.value)}
+              onChange={(e) => handleFirstNameChange(e)}
               value={firstName}
+              tabIndex={1}
               type="text"
               name="firstName"
               className={`w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
@@ -145,8 +163,9 @@ const FirstStep = (props: any) => {
               <p className="text-[#E46060] text-sm">{formError.lastName}</p>
             </div>
             <input
-              onChange={(e) => setLastName(e.target.value)}
+              onChange={(e) => handleLastNameChange(e)}
               value={lastName}
+              tabIndex={2}
               type="text"
               name="lastName"
               className={`w-full p-3 rounded-2xl border-[1px] border-white/10 bg-white/[.03]  mt-3 outline-none text-md placeholder:text-white/50 
@@ -170,6 +189,7 @@ const FirstStep = (props: any) => {
           <input
             type="email"
             name="email"
+            tabIndex={3}
             onChange={(e) => {
               setMail(e.target.value);
             }}
@@ -183,6 +203,12 @@ const FirstStep = (props: any) => {
         </div>
       </div>
       <div className="float-right">
+        {error && (
+          <Typography
+            children={error}
+            className="text-[#E46060] text-sm font-semibold"
+          />
+        )}
         <StepperActionButtons
           isLoading={loading}
           {...props}

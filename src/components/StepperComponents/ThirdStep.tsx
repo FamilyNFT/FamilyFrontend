@@ -26,7 +26,6 @@ const ThirdStep = (props: any) => {
       ...detail,
       [e?.target?.name]: e.target?.value,
     }));
-    console.log(cardDetails);
   };
   const completeCheckout = async () => {
     let check = await fetch(`${backend}/checkout/complete`, {

@@ -26,36 +26,47 @@ const FourthStep = (props: any) => {
       ...detail,
       [e?.target?.name]: e.target?.value,
     }));
-    console.log(cardDetails);
   };
+
   const completeCheckout = async () => {
-    let check = await fetch(`${backend}/checkout/complete`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: checkout?.id,
-        billingAddress: shippingAddress,
-        cardDetail: cardDetails,
-        wallet: account,
-        product: product?.title,
-        size: variant?.title,
-      }),
-    });
+    try {
+      let check = await fetch(`${backend}/checkout/complete`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: checkout?.id,
+          billingAddress: shippingAddress,
+          cardDetail: cardDetails,
+          wallet: account,
+          product: product?.title,
+          size: variant?.title,
+        }),
+      });
+
+      // Check if the response is not ok (i.e., status code is not between 200 and 299)
+      if (!check.ok) {
+        throw new Error("Failed to complete checkout.");
+      }
+      return true; // Indicate success
+    } catch (error) {
+      setError("Error completing checkout. Please try again.");
+      console.error("Error completing checkout:", error);
+      return false; // Indicate failure
+    }
   };
+
   const validate = async () => {
-    // if (!info1.name) setError("Name is mandatory field");
-    // else {
     setLoading(true);
     setError("");
-    // props.nextStep();
-    await completeCheckout();
+    const isSuccess = await completeCheckout();
     setLoading(false);
-    navigate("/inventory");
-    // props.userCallback(info3);
-    // }
+    if (isSuccess) {
+      navigate("/inventory");
+    }
   };
+
   return (
     <div>
       <div className="mt-2 md:mt-0 max-h-fit md:min-h-[28rem]  archivo-font">
@@ -145,6 +156,14 @@ const FourthStep = (props: any) => {
         </div>
       </div>
       <div className="">
+        {error && (
+          <div className="mt-4">
+            <Typography
+              children={error}
+              className="text-red-600 text-md font-semibold"
+            />
+          </div>
+        )}
         <StepperActionButtons
           isLoading={loading}
           {...props}
