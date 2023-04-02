@@ -27,7 +27,6 @@ const FourthStep = (props: any) => {
       [e?.target?.name]: e.target?.value,
     }));
   };
-
   const completeCheckout = async () => {
     try {
       let check = await fetch(`${backend}/checkout/complete`, {
@@ -47,11 +46,18 @@ const FourthStep = (props: any) => {
 
       // Check if the response is not ok (i.e., status code is not between 200 and 299)
       if (!check.ok) {
-        throw new Error("Failed to complete checkout.");
+        const errorResponse = await check.json();
+        console.log(errorResponse);
+        const errorMessage = errorResponse.message
+          ? `${errorResponse.message}`
+          : "Failed to complete checkout.";
+        throw new Error(errorMessage);
       }
       return true; // Indicate success
-    } catch (error) {
-      setError("Error completing checkout. Please try again.");
+    } catch (error: any) {
+      setError(
+        `Error completing checkout: ${error.message}. Please try again.`
+      );
       console.error("Error completing checkout:", error);
       return false; // Indicate failure
     }
