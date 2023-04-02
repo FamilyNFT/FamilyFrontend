@@ -7,7 +7,7 @@ const development = process.env.REACT_APP_DEVELOPMENT_MODE === "true";
 
 const shopifyBackendURL = development
   ? "http://localhost:8080"
-  : "https://family-backend.herokuapp.com/";
+  : "https://family-backend.herokuapp.com";
 
 //"https://shopifyweb3backend-production.up.railway.app";
 
