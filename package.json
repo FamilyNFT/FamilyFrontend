@@ -19,6 +19,7 @@
     "@types/react-redux": "^7.1.24",
     "assert": "^2.0.0",
     "bootstrap": "^5.2.2",
+    "core-js": "^3.29.1",
     "crypto-browserify": "^3.12.0",
     "emoji-picker-react": "^4.4.7",
     "ethers": "^5.7.2",
@@ -49,6 +50,7 @@
     "react-stacked-center-carousel": "^1.0.12",
     "react-step-wizard": "5.3.4",
     "react-toastify": "^9.0.8",
+    "regenerator-runtime": "^0.13.11",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "typescript": "^4.8.4",
@@ -86,8 +88,8 @@
     "@types/react-dom": "^18.0.8",
     "@types/react-input-mask": "^3.0.2",
     "@types/react-lazy-load-image-component": "^1.5.2",
-    "autoprefixer": "^10.4.12",
-    "postcss": "^8.4.17",
-    "tailwindcss": "^3.1.8"
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.3.1"
   }
 }

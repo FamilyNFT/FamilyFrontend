@@ -36,21 +36,28 @@ const Dashboard = () => {
   // window.addEventListener("resize", () => {
   //   setLevel(zoomLevel());
   // });
+  const isSafari = /^((?!chrome|android).)*safari/i.test(
+    window.navigator.userAgent
+  );
 
   return (
     <React.Fragment>
       {isLoading && <LoadingScreen />}
       <div className="custom-container">
         <div className="relative w-full h-full overflow-hidden text-center flex items-center justify-center">
-          <video
-            autoPlay
-            muted
-            id="myVideo"
-            onLoadStart={() => setIsLoading(true)}
-            onLoadedData={() => setIsLoading(false)}
-          >
-            <source src={DashboardVideo} type="video/webm" />
-          </video>
+          {isSafari ? (
+            <div className="absolute w-full h-full bg-[#101010] z-0"></div>
+          ) : (
+            <video
+              autoPlay
+              muted
+              id="myVideo"
+              onLoadStart={() => setIsLoading(true)}
+              onLoadedData={() => setIsLoading(false)}
+            >
+              <source src={DashboardVideo} type="video/webm" />
+            </video>
+          )}
 
           {isDisplayed && (
             <div className="z-10 w-full h-full px-[10px] md:px-[100px] py-[20px]">
