@@ -20,6 +20,8 @@ import LoadingScreen from "components/LoadingScreen";
 
 import DashboardVideo from "assets/video/video.webm";
 
+import { OFFLINE_FOR_EDITS } from "../../constants/constants";
+
 const typhoText = "Where your Hopes, Dreams and Desires are Born";
 
 const Dashboard = () => {
@@ -129,14 +131,20 @@ const Dashboard = () => {
                 />
 
                 <div className="mt-10">
-                  <Link to="#">
-                    <Button
-                      type="button"
-                      disabled
-                      text="Check back soon!"
-                      className="px-20"
-                    />
-                  </Link>
+                  {OFFLINE_FOR_EDITS ? (
+                    <Link to="#">
+                      <Button
+                        type="button"
+                        disabled
+                        text="Check back soon!"
+                        className="px-20"
+                      />
+                    </Link>
+                  ) : (
+                    <Link to="/store">
+                      <Button type="button" text="Enter" className="px-20" />
+                    </Link>
+                  )}
                 </div>
               </div>
               <div

@@ -8,13 +8,19 @@ import ProductDetail from "pages/ProductDetail";
 import Order from "pages/Order";
 import InventoryDetail from "pages/InventoryDetail";
 
+import { OFFLINE_FOR_EDITS } from "../constants/constants";
+
 interface PathInterFace {
   path: string;
   title: string | null;
   element: React.ReactNode;
 }
 
-const routes: PathInterFace[] = [
+const routesForEdits: PathInterFace[] = [
+  { path: "/", title: "Dashboard", element: <Dashboard /> },
+];
+
+const routesForOnline: PathInterFace[] = [
   { path: "/marketplace", title: "MarketPlace", element: <MarketPlace /> },
   {
     path: "/marketplace/:id",
@@ -32,5 +38,7 @@ const routes: PathInterFace[] = [
   },
   { path: "/create", title: "Create", element: <Dashboard /> },
 ];
+
+const routes = OFFLINE_FOR_EDITS ? routesForEdits : routesForOnline;
 
 export default routes;
